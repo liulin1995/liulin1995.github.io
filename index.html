@@ -115,7 +115,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone username@hose:/path/to/repository</span><br></pre></td></tr></table></figure>
 
 <h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><p><strong>local  repository</strong> consists of three “trees” maintained by git. the fist one is your <strong>Working Directory</strong> which holds the actual files. the second one is the <strong>Index</strong> which acts as a staging area (充当临时区域) and finally the <strong>HEAD</strong> which points to the last commit you’ve made.</p>
-<p><img src="images/assets/1562033018197.png" alt="1562033018197"></p>
+<p><img src="/images/assets/1562033018197.png" alt="1562033018197"></p>
 <h2 id="add-amp-commit"><a href="#add-amp-commit" class="headerlink" title="add &amp; commit"></a>add &amp; commit</h2><p>To start version-controlling existing files you should start by tracking those files and do an initial commit. To accomplish that, you start by adding the files to git that you would like to be attached to you git project.</p>
 <p>you can popose changes (add it to the Index) using </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
@@ -157,7 +157,7 @@
 <h1 id="Branching-and-merging"><a href="#Branching-and-merging" class="headerlink" title="Branching and merging"></a>Branching and merging</h1><p>The <strong>master</strong> branch of your GitHub repository should always contain <strong>working and stable code</strong>. However, you may want to also back up some code that you are currently working on, but isn’t entirely stable. Maybe you’re adding a new feature, you’re experimenting and breaking the code a lot, but you still want to keep a back up to save your progress!</p>
 <p>Branching allows you to work on a <em>separate</em> copy of your code without affecting the master branch. When you first create a branch, a complete clone of your master branch is created under a new name. You can then modify the code in this new branch independently, including committing files and such. Once you’re new feature has been fully integrated and the code is stable, you <em>merge</em> it into the master branch!</p>
 <h2 id="branching"><a href="#branching" class="headerlink" title="branching"></a>branching</h2><p>branches are used to develop features isolated from each other. The master branch is the “default” branch when you create a repository. Use other branches for devolopment and merge then back  to the master branch upon compleiton.</p>
-<p><img src="images/assets/1562034120363.png" alt="1562034120363"></p>
+<p><img src="/images/assets/1562034120363.png" alt="1562034120363"></p>
 <p>create a new branch named ‘feature_x” and switch to it using </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b feature_x</span><br></pre></td></tr></table></figure>
 
