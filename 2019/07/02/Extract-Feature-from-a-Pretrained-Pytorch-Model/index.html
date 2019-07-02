@@ -3,19 +3,20 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Hello World | LZW</title>
+  <title>Extract Feature from a Pretrained Pytorch Model | LZW</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="Code123456import torchimport torchvision.models.vgg as modelsinput = torch.rand(1, 3, 5, 5)vgg16 = models.vgg16(pretrained=True)output = vgg16.features\[:3\](input)print(output)  其中，vgg16.features[:3]">
+<meta name="keywords" content="cnn,pytorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/07/02/hello-world/index.html">
+<meta property="og:title" content="Extract Feature from a Pretrained Pytorch Model">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/index.html">
 <meta property="og:site_name" content="LZW">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="Code123456import torchimport torchvision.models.vgg as modelsinput = torch.rand(1, 3, 5, 5)vgg16 = models.vgg16(pretrained=True)output = vgg16.features\[:3\](input)print(output)  其中，vgg16.features[:3]">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-02T11:34:26.847Z">
+<meta property="og:updated_time" content="2019-07-02T13:47:14.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Extract Feature from a Pretrained Pytorch Model">
+<meta name="twitter:description" content="Code123456import torchimport torchvision.models.vgg as modelsinput = torch.rand(1, 3, 5, 5)vgg16 = models.vgg16(pretrained=True)output = vgg16.features\[:3\](input)print(output)  其中，vgg16.features[:3]">
   
     <link rel="alternate" href="/atom.xml" title="LZW" type="application/atom+xml">
   
@@ -70,12 +71,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Extract-Feature-from-a-Pretrained-Pytorch-Model" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/07/02/hello-world/" class="article-date">
-  <time datetime="2019-07-02T11:34:26.847Z" itemprop="datePublished">2019-07-02</time>
+    <a href="/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/" class="article-date">
+  <time datetime="2019-07-02T13:46:18.000Z" itemprop="datePublished">2019-07-02</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -84,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      Extract Feature from a Pretrained Pytorch Model
     </h1>
   
 
@@ -94,27 +99,20 @@
       
         <!-- Table of Contents -->
         
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torchvision.models.vgg as models</span><br><span class="line">input = torch.rand(1, 3, 5, 5)</span><br><span class="line">vgg16 = models.vgg16(pretrained=True)</span><br><span class="line">output = vgg16.features\[:3\](input)</span><br><span class="line">print(output)</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>其中，vgg16.features[:3]的意思是只选取vgg16网络的前三层，然后input作为输入。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://discuss.pytorch.org/t/extracting-and-using-features-from-a-pretrained-model/20723/11" target="_blank" rel="noopener">https://discuss.pytorch.org/t/extracting-and-using-features-from-a-pretrained-model/20723/11</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/hello-world/" data-id="cjxlvrpq5000n8cul8v2t0w9s" class="article-share-link">分享</a>
+      <a data-url="http://yoursite.com/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/" data-id="cjxlvrpoe00008culei12o7r1" class="article-share-link">分享</a>
       
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cnn/">cnn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
     </footer>
   </div>
   
@@ -163,15 +161,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/07/02/Git-Quick-Tutorial/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/07/02/imaterialist-product-2019比赛总结/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">上一篇</strong>
       <div class="article-nav-title">
         
-          Git Quick Tutorial
+          imaterialist-product-2019比赛总结
         
       </div>
     </a>
   
+  
+    <a href="/2019/07/02/Snapshot-Ensembles/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Snapshot Ensembles</div>
+    </a>
   
 </nav>
 
@@ -206,7 +209,7 @@
       
         <strong class="toc-title">文章目录</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Code"><span class="toc-number">1.</span> <span class="toc-text">Code</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
           </div>
       </div>
     </div>

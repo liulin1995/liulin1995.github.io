@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Pytorch SGDR | LZW</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="SGDR paper学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色 的方块线。  这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍">
+<meta name="keywords" content="cnn,pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch SGDR">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/Pytorch-SGDR/index.html">
+<meta property="og:site_name" content="LZW">
+<meta property="og:description" content="SGDR paper学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色 的方块线。  这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/assets/1557729884981.png">
+<meta property="og:image" content="e:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557730343579.png">
+<meta property="og:image" content="http://yoursite.com/images/assets/1557731465430.png">
+<meta property="og:updated_time" content="2019-07-02T13:56:52.907Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pytorch SGDR">
+<meta name="twitter:description" content="SGDR paper学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色 的方块线。  这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍">
+<meta name="twitter:image" content="http://yoursite.com/images/assets/1557729884981.png">
+  
+    <link rel="alternate" href="/atom.xml" title="LZW" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+          <a class="main-nav-link" href="/categories">类别</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LZW</a>
+      </h1>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Pytorch-SGDR" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/Pytorch-SGDR/" class="article-date">
+  <time datetime="2019-07-02T13:55:31.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Pytorch SGDR
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="SGDR-paper"><a href="#SGDR-paper" class="headerlink" title="SGDR paper"></a>SGDR paper</h2><p>学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色</p>
+<p>的方块线。</p>
+<p><img src="/images/assets/1557729884981.png" alt="1557729884981"></p>
+<p>这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍达到一个好的效果或者更好的效果。</p>
+<p>warm started run SGD T_i 次，其中i是run的index。重要的是，重启不是从头开始执行，而是通过提高学习速率ηt来模拟，而旧的xt值用作初始解决方案</p>
+<p>在第i次run，lr decay 是对每个batch用cosine annealing.</p>
+<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557730343579.png" alt="1557730343579"><br>$$<br>\eta_{min} 和 \eta_{max}是学习率的范围。 \<br>T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch增加，他可以是小数。 \<br>当t=0\ and\ T_{cur} = 0时，T_{cur}=T_{max} \<br>当T_{cur}=T_{max}时， cos 函数会输出-1.因此，\eta_t = \eta_{min}^i</p>
+<p>$$<br>图1的绿色线、黑色线和灰色线显示了lr的变化过程。分别固定了$T_i$为50，100，200.</p>
+<p>SGDR更进一步选了这么一方法，首先开始的时候$T_i$很小，然后在每次restart都通过乘上一个 $T_{mult}$的因此来提高。例如图一中的暗绿和粉色线。</p>
+<h2 id="SGDR-in-pytorch"><a href="#SGDR-in-pytorch" class="headerlink" title="SGDR in pytorch"></a>SGDR in pytorch</h2><p>pytorch只实现了CosineAnnealingLR，并没有实现restart部分。</p>
+<p><code>torch.optim.lr_scheduler.CosineAnnealingLR</code>(<em>optimizer</em>, <em>T_max</em>, <em>eta_min=0</em>, <em>last_epoch=-1</em>)</p>
+<p><img src="/images/assets/1557731465430.png" alt="1557731465430"></p>
+<p>它的用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br></pre></td></tr></table></figure>
+
+<p>实际上，可以通过下面的方式来实现SGDR</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'Reset scheduler'</span>)</span><br><span class="line">    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18" target="_blank" rel="noopener">https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18</a></p>
+<p><a href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR" target="_blank" rel="noopener">https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR</a></p>
+<p><a href="https://arxiv.org/pdf/1608.03983.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1608.03983.pdf</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/Pytorch-SGDR/" data-id="cjxlvrppn000b8culqu8y539l" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cnn/">cnn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>推荐文章</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          Softmax and Logsoftmax in Pytorch
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/02/PIL-使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">PIL 使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">文章目录</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SGDR-paper"><span class="toc-number">1.</span> <span class="toc-text">SGDR paper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SGDR-in-pytorch"><span class="toc-number">2.</span> <span class="toc-text">SGDR in pytorch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+
+  
+    
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2019 John Doe&nbsp;|&nbsp;
+      主题 <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      联系方式&nbsp;|&nbsp;noemail.gmail.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+    <a href="/categories" class="mobile-nav-link">类别</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>

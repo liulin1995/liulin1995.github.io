@@ -68,6 +68,617 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Normalize的作用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/Normalize的作用/" class="article-date">
+  <time datetime="2019-07-02T14:00:04.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/Normalize的作用/">Normalize的作用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>normalize的最主要的一个作用是将数据中的不同的特征缩放到同一个量纲上（或者可以说无量纲化）。比如果说有一个特征值的范围是[0,1]另一个特征的范围是[0,1000],那么优化算法（尤其是基于梯度的优化方法）在更新的时候尤其会重视特征值大的特征，而忽视特征值小的特征。为了避免这个问题就需要normalization了，把所有的特征放在一个量纲上。</p>
+<p><img src="/images/assets/743682-20151108152327539-2039269197.png" alt="img"></p>
+<h2 id="常用的normalization的方法"><a href="#常用的normalization的方法" class="headerlink" title="常用的normalization的方法"></a>常用的normalization的方法</h2><p>主要有两种方法，min-max normalization 和 Z-score normalization。</p>
+<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><p>$$<br>x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}<br>$$</p>
+<p>主要有两个缺陷:</p>
+<ol>
+<li>新加入的数据会导致$x_{max}$和$x_{min}$ 会发生变化，需要重新定义</li>
+<li>异常值会极大地影响minmax的表现</li>
+<li>minmax不适用于长尾分布</li>
+</ol>
+<p>比较适合于min和max固定的任务，比如图像像素归一化。</p>
+<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><p>$$<br>x_{zscore} = \frac{x - min(x)}{stdev(x)}<br>$$</p>
+<p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
+<blockquote>
+<p>Caveat:* it is a common misconception that <em>standardized scores</em> such as <em>z-scores</em> alter the shape of a distribution; in particular, be aware that a <em>z</em>-scores cannot magically make a non-normal variable normal.</p>
+</blockquote>
+<p>其他的还有logistic，lognormal，TanH等，见</p>
+<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即<br>$$<br>x = \frac{x}{norm(x)}<br>$$<br>不同的norm会有不同的结果，常见的是L2 norm</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/Normalize的作用/" data-id="cjxlvrppb00068culnzx8f9aa" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/normalize/">normalize</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-PyTorch-weight-decay（转）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/PyTorch-weight-decay（转）/" class="article-date">
+  <time datetime="2019-07-02T13:58:33.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/PyTorch-weight-decay（转）/">PyTorch weight decay（转）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>torch.optim 中实现了很多优化器，只需要指定优化器的权重衰减即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = optim.SGD(model.parameters(), lr = <span class="number">0.01</span>, momentum=<span class="number">0.9</span>,weight_decay=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>优化器同时还支持per-parameter options操作，就是对每一个参数进行特定的制定，以满足更为细致的要求。此时，传入优化器的是可迭代的字典，字典中必须有params的key，用于指定特定优化变量，而其他key需要匹配优化器本身的设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">optim.SGD([</span><br><span class="line">                &#123;&apos;params&apos;: model.base.parameters()&#125;,</span><br><span class="line">                &#123;&apos;params&apos;: model.classifier.parameters(), &apos;lr&apos;: 1e-3&#125;</span><br><span class="line">            ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
+
+<p>可以灵活给每个子模块设置不同的学习率，权值衰减和momentum。也可以给权值设定权值衰减，而不作用于偏置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">weight_p, bias_p = [],[]</span><br><span class="line">for name, p in model.named_parameters():</span><br><span class="line">  if &apos;bias&apos; in name:</span><br><span class="line">     bias_p += [p]</span><br><span class="line">   else:</span><br><span class="line">     weight_p += [p]</span><br><span class="line"># 这里的model中每个参数的名字都是系统自动命名的，只要是权值都是带有weight，偏置都带有bias，</span><br><span class="line"></span><br><span class="line">optim.SGD([</span><br><span class="line">          &#123;&apos;params&apos;: weight_p, &apos;weight_decay&apos;:1e-5&#125;,</span><br><span class="line">          &#123;&apos;params&apos;: bias_p, &apos;weight_decay&apos;:0&#125;</span><br><span class="line">          ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.csdn.net/LoseInVain/article/details/81708474" target="_blank" rel="noopener">https://blog.csdn.net/LoseInVain/article/details/81708474</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/PyTorch-weight-decay（转）/" data-id="cjxlvrppk000a8cull29jnjmw" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/L2-Norm/">L2 Norm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weight-decay/">weight decay</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-Softmax-and-Logsoftmax-in-Pytorch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/" class="article-date">
+  <time datetime="2019-07-02T13:57:25.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">Softmax and Logsoftmax in Pytorch</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>Output layer and criterion options (all are equivalent, 1 is most popular) :</p>
+<ol>
+<li>Linear + LogSoftMax + ClassNLLCriterion</li>
+<li>Linear + SoftMax + Log + ClassNLLCriterion</li>
+<li>Linear + CrossEntropyCriterion</li>
+</ol>
+<p>It should be noted that <strong>CrossEntropyLoss includes a softmax operation.</strong></p>
+<p>softmax with log-likelihood cost can be more fast compared with softmax with MSELoss.</p>
+<p>The <strong>log-likelihood loss</strong> is<br>$$<br>C = - \Sigma_k y_klog(a_k)<br>$$<br>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
+<p>The <strong>cross-entropy loss</strong> is<br>$$<br>C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)<br>$$<br>And what’s the logsoftmax?<br>$$<br>Applies \ the \ <code>\log(\text{Softmax}(x))</code> function \  to \ an \ n-dimensional<br>    \ input \ Tensor. \ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\</p>
+<pre><code>\text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</code></pre><p>$$<br>what’s more, it’s actually realized in nn.functional<br>$$<br>While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\ This \  function \<br>    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \  and  \ gradient  \ correctly.<br>$$<br>The <strong>NLLoss</strong> is:<br>$$<br>Loss \ = - w_nx_{n,y_n}<br>$$<br>where $w_n$ default is 1.</p>
+<p>The <strong>BCELoss</strong> is a CrossEntropyLoss designed for binary classification. And it need a sigmoid function before useing the BCELoss. What’s more, <strong>BCEWithLogitsLoss</strong> includes the BCELoss and the sigmoid function.</p>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://github.com/torch/nn/issues/357" target="_blank" rel="noopener">https://github.com/torch/nn/issues/357</a></p>
+<p><a href="https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax</a></p>
+<p><a href="https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/" data-id="cjxlvrppv000i8cul026f0voh" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cnn/">cnn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cross-entropy/">cross-entropy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/softmax/">softmax</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-Pytorch-SGDR" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/Pytorch-SGDR/" class="article-date">
+  <time datetime="2019-07-02T13:55:31.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/Pytorch-SGDR/">Pytorch SGDR</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="SGDR-paper"><a href="#SGDR-paper" class="headerlink" title="SGDR paper"></a>SGDR paper</h2><p>学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色</p>
+<p>的方块线。</p>
+<p><img src="/images/assets/1557729884981.png" alt="1557729884981"></p>
+<p>这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍达到一个好的效果或者更好的效果。</p>
+<p>warm started run SGD T_i 次，其中i是run的index。重要的是，重启不是从头开始执行，而是通过提高学习速率ηt来模拟，而旧的xt值用作初始解决方案</p>
+<p>在第i次run，lr decay 是对每个batch用cosine annealing.</p>
+<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557730343579.png" alt="1557730343579"><br>$$<br>\eta_{min} 和 \eta_{max}是学习率的范围。 \<br>T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch增加，他可以是小数。 \<br>当t=0\ and\ T_{cur} = 0时，T_{cur}=T_{max} \<br>当T_{cur}=T_{max}时， cos 函数会输出-1.因此，\eta_t = \eta_{min}^i</p>
+<p>$$<br>图1的绿色线、黑色线和灰色线显示了lr的变化过程。分别固定了$T_i$为50，100，200.</p>
+<p>SGDR更进一步选了这么一方法，首先开始的时候$T_i$很小，然后在每次restart都通过乘上一个 $T_{mult}$的因此来提高。例如图一中的暗绿和粉色线。</p>
+<h2 id="SGDR-in-pytorch"><a href="#SGDR-in-pytorch" class="headerlink" title="SGDR in pytorch"></a>SGDR in pytorch</h2><p>pytorch只实现了CosineAnnealingLR，并没有实现restart部分。</p>
+<p><code>torch.optim.lr_scheduler.CosineAnnealingLR</code>(<em>optimizer</em>, <em>T_max</em>, <em>eta_min=0</em>, <em>last_epoch=-1</em>)</p>
+<p><img src="/images/assets/1557731465430.png" alt="1557731465430"></p>
+<p>它的用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br></pre></td></tr></table></figure>
+
+<p>实际上，可以通过下面的方式来实现SGDR</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'Reset scheduler'</span>)</span><br><span class="line">    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18" target="_blank" rel="noopener">https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18</a></p>
+<p><a href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR" target="_blank" rel="noopener">https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR</a></p>
+<p><a href="https://arxiv.org/pdf/1608.03983.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1608.03983.pdf</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/Pytorch-SGDR/" data-id="cjxlvrppn000b8culqu8y539l" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cnn/">cnn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-PIL-使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/PIL-使用/" class="article-date">
+  <time datetime="2019-07-02T13:53:55.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/编程/">编程</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/PIL-使用/">PIL 使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>Pillow 是PIL全称，是一个python图像处理库，由Fredrik Lundh and Contributors创建的。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><figcaption><span>basic</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install Pillow</span><br></pre></td></tr></table></figure>
+
+<p>基本上安装python和pip就可以安装pil。</p>
+<h2 id="入门教程"><a href="#入门教程" class="headerlink" title="入门教程"></a>入门教程</h2><h3 id="Image-class"><a href="#Image-class" class="headerlink" title="Image class"></a>Image class</h3><p>PIL中最重要的类是<strong>Image</strong>，定义在PIL 底下的Image中。可以通过以下方式来创建一个<strong>Image</strong>类对象：</p>
+<ul>
+<li>通过打开一个图片文件来创建</li>
+<li>通过处理其他的图片</li>
+<li>从头创建图片</li>
+</ul>
+<p>从图片文件中打开文件的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im = Image.open(<span class="string">'pic.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果成功，函数会返回一个Image对象。可以通过检查它的属性来查看它的内容：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(im.format, im.size, im.mode)</span><br></pre></td></tr></table></figure>
+
+<p>其中，</p>
+<ul>
+<li>im.format是该图片的来源，如果不是来自图像文件，则会使None</li>
+<li>im.size是图片的大小，是一个二维数组，单位是pixel</li>
+<li>im.mode 是图片的显示模式，定义了图片的色带个数和名字；或像素的类型和深度；常见的模式有“L”是灰度图，“RGB”是真彩图片，“CMYK”是预印图片。</li>
+</ul>
+<p>如果文件不能打开，则会返回一个<strong>IOError</strong>异常。</p>
+<p>图片的显示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im.show()</span><br></pre></td></tr></table></figure>
+
+<p>图片的保存：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im.save(<span class="string">"..."</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其他的图像打开方式：</p>
+<h5 id="从打开的文件中读取："><a href="#从打开的文件中读取：" class="headerlink" title="从打开的文件中读取："></a>从打开的文件中读取：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"hopper.ppm"</span>, <span class="string">"rb"</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    im = Image.open(fp)</span><br></pre></td></tr></table></figure>
+
+<h5 id="从string中读取："><a href="#从string中读取：" class="headerlink" title="从string中读取："></a>从string中读取：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> StringIO</span><br><span class="line"></span><br><span class="line">im = Image.open(StringIO.StringIO(buffer))</span><br></pre></td></tr></table></figure>
+
+<h5 id="从tar文件中读取"><a href="#从tar文件中读取" class="headerlink" title="从tar文件中读取"></a>从tar文件中读取</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, TarIO</span><br><span class="line"></span><br><span class="line">fp = TarIO.TarIO(<span class="string">"Tests/images/hopper.tar"</span>, <span class="string">"hopper.jpg"</span>)</span><br><span class="line">im = Image.open(fp)</span><br></pre></td></tr></table></figure>
+
+<h3 id="读写图片"><a href="#读写图片" class="headerlink" title="读写图片"></a>读写图片</h3><h4 id="将文件转换成JPEG"><a href="#将文件转换成JPEG" class="headerlink" title="将文件转换成JPEG"></a>将文件转换成JPEG</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">    f, e = os.path.splitext(infile)</span><br><span class="line">    outfile = f + <span class="string">".jpg"</span></span><br><span class="line">    <span class="keyword">if</span> infile != outfile:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            Image.open(infile).save(outfile)</span><br><span class="line">        <span class="keyword">except</span> IOError:</span><br><span class="line">            print(<span class="string">"cannot convert"</span>, infile)</span><br></pre></td></tr></table></figure>
+
+<p>思路是将文件打开，再保存到jpeg文件即可。需要注意，打开文件需要try except以防IOError</p>
+<h4 id="创建JPEG文件的缩略图"><a href="#创建JPEG文件的缩略图" class="headerlink" title="创建JPEG文件的缩略图"></a>创建JPEG文件的缩略图</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">size = (<span class="number">128</span>, <span class="number">128</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">    outfile = os.path.splitext(infile)[<span class="number">0</span>] + <span class="string">".thumbnail"</span></span><br><span class="line">    <span class="keyword">if</span> infile != outfile:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            im = Image.open(infile)</span><br><span class="line">            im.thumbnail(size)</span><br><span class="line">            im.save(outfile, <span class="string">"JPEG"</span>)</span><br><span class="line">        <span class="keyword">except</span> IOError:</span><br><span class="line">            print(<span class="string">"cannot create thumbnail for"</span>, infile)</span><br></pre></td></tr></table></figure>
+
+<p>思路是使用自带的thumbnai函数。</p>
+<h4 id="鉴定图片"><a href="#鉴定图片" class="headerlink" title="鉴定图片"></a>鉴定图片</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> Image.open(infile) <span class="keyword">as</span> im:</span><br><span class="line">            print(infile, im.format, <span class="string">"%dx%d"</span> % im.size, im.mode)</span><br><span class="line">    <span class="keyword">except</span> IOError:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="剪切合并图片"><a href="#剪切合并图片" class="headerlink" title="剪切合并图片"></a>剪切合并图片</h4><p><strong>Image</strong> class可以通过crop()函数来提取局部区域图片。</p>
+<h5 id="复制图像的一个长方形区域："><a href="#复制图像的一个长方形区域：" class="headerlink" title="复制图像的一个长方形区域："></a>复制图像的一个长方形区域：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box = (<span class="number">100</span>, <span class="number">100</span>, <span class="number">400</span>, <span class="number">400</span>)</span><br><span class="line">region = im.crop(box)</span><br></pre></td></tr></table></figure>
+
+<p>box是一个四维tuple，定义了（左，上，右，下）。该库的坐标系是将左上角定义为原点（0，0），同时所采用的距离是pixel。</p>
+<h5 id="处理长方形区域并paste回去"><a href="#处理长方形区域并paste回去" class="headerlink" title="处理长方形区域并paste回去"></a>处理长方形区域并paste回去</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">region = region.transpose(Image.ROTATE_180)</span><br><span class="line">im.paste(region, box)</span><br></pre></td></tr></table></figure>
+
+<p>paste函数要求region和box需要一致。</p>
+<h5 id="分离合并图像channel"><a href="#分离合并图像channel" class="headerlink" title="分离合并图像channel"></a>分离合并图像channel</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r, g, b = im.split()</span><br><span class="line">im = Image.merge(<span class="string">"RGB"</span>, (b, g, r))</span><br></pre></td></tr></table></figure>
+
+<h4 id="集合转换"><a href="#集合转换" class="headerlink" title="集合转换"></a>集合转换</h4><h5 id="图片resize和旋转"><a href="#图片resize和旋转" class="headerlink" title="图片resize和旋转"></a>图片resize和旋转</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">out = im.resize((<span class="number">128</span>, <span class="number">128</span>))</span><br><span class="line">out = im.rotate(<span class="number">45</span>) <span class="comment"># degrees counter-clockwise</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="图片翻转"><a href="#图片翻转" class="headerlink" title="图片翻转"></a>图片翻转</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">out = im.transpose(Image.FLIP_LEFT_RIGHT)</span><br><span class="line">out = im.transpose(Image.FLIP_TOP_BOTTOM)</span><br><span class="line">out = im.transpose(Image.ROTATE_90)</span><br><span class="line">out = im.transpose(Image.ROTATE_180)</span><br><span class="line">out = im.transpose(Image.ROTATE_270)</span><br></pre></td></tr></table></figure>
+
+<h4 id="颜色转换"><a href="#颜色转换" class="headerlink" title="颜色转换"></a>颜色转换</h4><h5 id="不同图像mode转换"><a href="#不同图像mode转换" class="headerlink" title="不同图像mode转换"></a>不同图像mode转换</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im = Image.open(<span class="string">"hopper.ppm"</span>).convert(<span class="string">"L"</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="图像增强"><a href="#图像增强" class="headerlink" title="图像增强"></a>图像增强</h4><h5 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageFilter</span><br><span class="line">out = im.filter(ImageFilter.DETAIL)</span><br></pre></td></tr></table></figure>
+
+<h5 id="点操作"><a href="#点操作" class="headerlink" title="点操作"></a>点操作</h5><p>用于操作图像的像素值。</p>
+<h5 id="应用点操作"><a href="#应用点操作" class="headerlink" title="应用点操作"></a>应用点操作</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># multiply each pixel by 1.2</span></span><br><span class="line">out = im.point(<span class="keyword">lambda</span> i: i * <span class="number">1.2</span>)</span><br></pre></td></tr></table></figure>
+
+<h5 id="处理单个通道"><a href="#处理单个通道" class="headerlink" title="处理单个通道"></a>处理单个通道</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># split the image into individual bands</span></span><br><span class="line">source = im.split()</span><br><span class="line"></span><br><span class="line">R, G, B = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># select regions where red is less than 100</span></span><br><span class="line">mask = source[R].point(<span class="keyword">lambda</span> i: i &lt; <span class="number">100</span> <span class="keyword">and</span> <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># process the green band</span></span><br><span class="line">out = source[G].point(<span class="keyword">lambda</span> i: i * <span class="number">0.7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># paste the processed band back, but only where red was &lt; 100</span></span><br><span class="line">source[G].paste(out, <span class="literal">None</span>, mask)</span><br><span class="line"></span><br><span class="line"><span class="comment"># build a new multiband image</span></span><br><span class="line">im = Image.merge(im.mode, source)</span><br></pre></td></tr></table></figure>
+
+<h5 id="增强图片"><a href="#增强图片" class="headerlink" title="增强图片"></a>增强图片</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageEnhance</span><br><span class="line"></span><br><span class="line">enh = ImageEnhance.Contrast(im)</span><br><span class="line">enh.enhance(<span class="number">1.3</span>).show(<span class="string">"30% more contrast"</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="图像序列"><a href="#图像序列" class="headerlink" title="图像序列"></a>图像序列</h3><p>PIL支持FLI、FLC、GIF等图像序列文件。</p>
+<p>当使用图像序列文件，PIL会自动地打开序列中的第一帧。可以使用seek和tell方法来移动帧。</p>
+<h4 id="读取序列"><a href="#读取序列" class="headerlink" title="读取序列"></a>读取序列</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">im = Image.open(<span class="string">"animation.gif"</span>)</span><br><span class="line">im.seek(<span class="number">1</span>) <span class="comment"># skip to the second frame</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        im.seek(im.tell()+<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># do something to im</span></span><br><span class="line"><span class="keyword">except</span> EOFError:</span><br><span class="line">    <span class="keyword">pass</span> <span class="comment"># end of sequence</span></span><br></pre></td></tr></table></figure>
+
+<p>在序列停止的时候，会返还一个EOFError。</p>
+<h4 id="使用ImageSequen-Iterator-class"><a href="#使用ImageSequen-Iterator-class" class="headerlink" title="使用ImageSequen Iterator class"></a>使用ImageSequen Iterator class</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageSequence</span><br><span class="line"><span class="keyword">for</span> frame <span class="keyword">in</span> ImageSequence.Iterator(im):</span><br><span class="line">    <span class="comment"># ...do something to frame...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Postscript-printing"><a href="#Postscript-printing" class="headerlink" title="Postscript printing"></a>Postscript printing</h3><p>用Postscript printers来打印图片文本和图像</p>
+<h4 id="Drawing-Postscript"><a href="#Drawing-Postscript" class="headerlink" title="Drawing Postscript"></a>Drawing Postscript</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> PSDraw</span><br><span class="line"></span><br><span class="line">im = Image.open(<span class="string">"hopper.ppm"</span>)</span><br><span class="line">title = <span class="string">"hopper"</span></span><br><span class="line">box = (<span class="number">1</span>*<span class="number">72</span>, <span class="number">2</span>*<span class="number">72</span>, <span class="number">7</span>*<span class="number">72</span>, <span class="number">10</span>*<span class="number">72</span>) <span class="comment"># in points</span></span><br><span class="line"></span><br><span class="line">ps = PSDraw.PSDraw() <span class="comment"># default is sys.stdout</span></span><br><span class="line">ps.begin_document(title)</span><br><span class="line"></span><br><span class="line"><span class="comment"># draw the image (75 dpi)</span></span><br><span class="line">ps.image(box, im, <span class="number">75</span>)</span><br><span class="line">ps.rectangle(box)</span><br><span class="line"></span><br><span class="line"><span class="comment"># draw title</span></span><br><span class="line">ps.setfont(<span class="string">"HelveticaNarrow-Bold"</span>, <span class="number">36</span>)</span><br><span class="line">ps.text((<span class="number">3</span>*<span class="number">72</span>, <span class="number">4</span>*<span class="number">72</span>), title)</span><br><span class="line"></span><br><span class="line">ps.end_document()</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/PIL-使用/" data-id="cjxlvrppd00078culb5nwixpe" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pillow/">Pillow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-Normalize中的mean和std" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/Normalize中的mean和std/" class="article-date">
+  <time datetime="2019-07-02T13:52:57.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/machine-learning/">machine learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/Normalize中的mean和std/">Normalize中的mean和std</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>实验过程遇到了一个问题，首先图像预处理步骤有一个normalize，需要用mean和std对图像进行normalize，我发现我自己算的mean和std有问题（这个问题早就知道，就是懒得去改，毕竟费时间）。刚开始不注意，但是现在模型陷入了一个瓶颈，我就想这两个参数是否对模型最后的表现有影响，就去google了下。得到了以下结论：</p>
+<h3 id="Pretrained-models"><a href="#Pretrained-models" class="headerlink" title="Pretrained models"></a>Pretrained models</h3><p>由于训练的过程中，自己从头开心训练一个模型还是太难了，因此transfer learning还是一个重要的提速手段。对于pytroch而言，torchvision中models主要都是在imagenet上的预训练，把最后一层的fc层或classifier层去掉换成需要Linear层就能够利用已有的权重。</p>
+<p>那么对于利用pretrained models的mean和std改怎么定这个是一个问题。谷歌后，发现了一个大佬对此做了解答，恍然大悟。</p>
+<blockquote>
+<p>It’s the same means and stds the model was trained with on ImageNet. For most of the models from torchvision, according to <a href="https://github.com/Cadene/pretrained-models.pytorch/blob/master/pretrainedmodels/models/torchvision_models.py#L61" target="_blank" rel="noopener">pretrained_models_pytorch</a>:</p>
+<p>means = [0.485, 0.456, 0.406]<br>stds = [0.229, 0.224, 0.225]</p>
+<p><a href="https://github.com/DeepVoltaire/AutoAugment/issues/4" target="_blank" rel="noopener">link</a></p>
+</blockquote>
+<p>如果我们使用的pretrained model，那么models是适用于imagenet的统计量（std和mean），如果想更好地利用pretrained model的权重，显然输入也要符合imagenet，因此此时应该选用imagenet的统计量，应该对tranferlearning有更好的帮助</p>
+<h2 id="models-from-scratch"><a href="#models-from-scratch" class="headerlink" title="models from scratch"></a>models from scratch</h2><p>如果是先自己从头训练一个model的话，我觉得还是应该要用当前任务的数据来自己算，当然大佬说这些值是任意的比较任意的：</p>
+<blockquote>
+<p>This only matters if you are using a pretrained model. Also, means and stds of the dataset are calculated from the raw images without data augmentation as far as I know. And the values can be chosen quite arbitrarily as you can see from inceptionv3.</p>
+</blockquote>
+<p>这里面还提到了means和std的计算方式，在不经过任何preprocessing的原图上计算的。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://github.com/DeepVoltaire/AutoAugment/issues/4" target="_blank" rel="noopener">https://github.com/DeepVoltaire/AutoAugment/issues/4</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/Normalize中的mean和std/" data-id="cjxlvrpp700058cul72v2cnki" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transfer-learning/">transfer learning</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-imaterialist-product-2019比赛总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/imaterialist-product-2019比赛总结/" class="article-date">
+  <time datetime="2019-07-02T13:48:01.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/imaterialist-product-2019比赛总结/">imaterialist-product-2019比赛总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>为了更好地学习pytorch，同时大佬榕也推荐了这个比赛，就拿这个比赛练手。经过2个月左右的奋斗（划水），比赛结束了，成绩是34/96。不是一个很好的成绩，但是也不是一个很差的成绩。这次主要是对这次的比赛做个总结，总结经验，为后面的比赛做一个预备吧。</p>
+<p>这次比赛是由三个人小队组成，我，大佬榕和小许。我是队长，写了所有的pytorch代码，负责模型的训练。大佬榕和小许负责了数据集的下载。数据的下载花费了几个星期，同时训练模型也花了一个多月时间。</p>
+<h2 id="比赛的内容"><a href="#比赛的内容" class="headerlink" title="比赛的内容"></a>比赛的内容</h2><p>首先讲下这个比赛的内容，是产品的细粒度的图像分类任务。什么是细粒度分类？细粒度图像分类任务中，有一些大类别，每个大类别底下还有小类别。小类别之间的差异比大类别之间的差异更加细微。在imaterialist-product-2019中，主要有4层类别，第一层共有5类，然后第二层有45类，第三层大约有百来类，最后一层则共有2019类。所有的类别的具体名字不知道，只有一个代名字，最后一层则有类别的标号。</p>
+<p>具体的类别信息在：</p>
+<p>​link <a href="https://storage.googleapis.com/kaggle-competitions-data/kaggle/13773/368464/product_tree.pdf?GoogleAccessId=web-data@kaggle-161607.iam.gserviceaccount.com&amp;Expires=1562147488&amp;Signature=QUPL60xTxNZW5c4whytfOWYuQfR5eEY0JFIpZE%2F5CE6RQXA6bPia6XpUjOtQRrkw1lhXr7HQiSdBEP1C3X23G4MkBV0CtDY2Uvyzfv3WSVQWUhEt4cbZCj68AoZKr8gtI6%2BFqddv%2FRF%2F%2FWXnbrydhKjjT6mUgg0gSVsSjAKFZJC0mO8SUwbaR9x9%2FJuGX4yxdXSv5Th5Hy%2BFskpXH24fmcbCsfQGRo5Y6hilx3UfaZAYTYZ1b2bIfmk9qvahTWuaYBtP%2F6Ta2Rhig4M3CSFx3dFR7Q79AFH0wBywd1viMRSIiNbprPcTL4spqDxy%2BS3%2FXv1Km93GlsydNBmtjMdfKQ%3D%3D" target="_blank" rel="noopener">https://storage.googleapis.com/kaggle-competitions-data/kaggle/13773/368464/product_tree.pdf?GoogleAccessId=web-data@kaggle-161607.iam.gserviceaccount.com&amp;Expires=1562147488&amp;Signature=QUPL60xTxNZW5c4whytfOWYuQfR5eEY0JFIpZE%2F5CE6RQXA6bPia6XpUjOtQRrkw1lhXr7HQiSdBEP1C3X23G4MkBV0CtDY2Uvyzfv3WSVQWUhEt4cbZCj68AoZKr8gtI6%2BFqddv%2FRF%2F%2FWXnbrydhKjjT6mUgg0gSVsSjAKFZJC0mO8SUwbaR9x9%2FJuGX4yxdXSv5Th5Hy%2BFskpXH24fmcbCsfQGRo5Y6hilx3UfaZAYTYZ1b2bIfmk9qvahTWuaYBtP%2F6Ta2Rhig4M3CSFx3dFR7Q79AFH0wBywd1viMRSIiNbprPcTL4spqDxy%2BS3%2FXv1Km93GlsydNBmtjMdfKQ%3D%3D</a></p>
+<h2 id="数据集的信息"><a href="#数据集的信息" class="headerlink" title="数据集的信息"></a>数据集的信息</h2><p>类别总共是2019类。</p>
+<p>训练样本总数是：1,004,360 </p>
+<p>验证集样本总数是：10,095</p>
+<p>测试集样本总数是：90,834 </p>
+<p>其中训练集的图片有缺失，验证集也有。测试集没有。</p>
+<p>训练集中，每个类样本数最多的有 1045 ；最少的有： 157 ；</p>
+<p>样本个数的分布图为：</p>
+<p><img src="/images/assets/1561895928822.png" alt="1561895928822"></p>
+<p>对于验证集合，所有的类别个数都为5个。样本个数分布图为：</p>
+<p><img src="/images/assets/1561896059345.png" alt="1561896059345"></p>
+<p>可以看出训练样本集中各个类的样本数量相差很大，多的上千个，而少的一百来个，样本不均衡这个问题是一个需要解决的问题。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>一台带titan Xp的windows 10 机子，pytorch1.0</p>
+<h2 id="分类模型"><a href="#分类模型" class="headerlink" title="分类模型"></a>分类模型</h2><p>采用的分类模型主要有：resnet（resnet50，resnet101，resnet161），densent(densenet161),其最好的性能列表如下:</p>
+<table>
+<thead>
+<tr>
+<th align="center">model</th>
+<th align="center">top-1</th>
+<th>top-5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">resnet50</td>
+<td align="center">59.7</td>
+<td>86.25</td>
+</tr>
+<tr>
+<td align="center">resnet101</td>
+<td align="center">61.4</td>
+<td>87.2</td>
+</tr>
+<tr>
+<td align="center">resnet161</td>
+<td align="center">59.5</td>
+<td>85.7</td>
+</tr>
+<tr>
+<td align="center">densenet161</td>
+<td align="center">-</td>
+<td>87.56</td>
+</tr>
+</tbody></table>
+<p>后来使用了model average的方法（其中使用了一些非最佳的模型），大概集成了8个model得到了一个最好的验证精度90.585938</p>
+<h2 id="训练过程的细节"><a href="#训练过程的细节" class="headerlink" title="训练过程的细节"></a>训练过程的细节</h2><h5 id="数据集预处理"><a href="#数据集预处理" class="headerlink" title="数据集预处理"></a>数据集预处理</h5><p>去除了下载中出现错误的图片</p>
+<h5 id="图像增强"><a href="#图像增强" class="headerlink" title="图像增强"></a>图像增强</h5><p>训练：</p>
+<p>resize(224)</p>
+<p>randomcrop(224,224)</p>
+<p>ColorJitter</p>
+<p>RandomHorizontalFlip</p>
+<p>RandomRotation</p>
+<p>normalize</p>
+<p>测试（验证）：</p>
+<p>resize（224）</p>
+<p>centorcrop（224）</p>
+<p>normalize</p>
+<h5 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a>数据读取</h5><p>用pytorch自带的dataloader，pin_memory=True, num_workers=4,batch_size 根据模型的不同，尽量取大的，并将所有的数据集放在SSD中，加快读取。</p>
+<p>没有pin_memory 和ssd大概要4个小时一个epoch（resnet50）。</p>
+<p>加了这两个设置，大概1.5个小时一个epoch，加速了很多。</p>
+<p>但是一般训练一个模型还是需要2天时间（20epoches）。毕竟xp的显存只有11GB，实际中用的最多只能用10GB。</p>
+<p>为了节省显存，采用更节约显存的sgd模型。Adam需要保存很多二阶和二阶的梯度信息，同时也没有比SGD好到那里去，因此采用SGD。</p>
+<h5 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h5><p>所有的模型都使用了pretrained model.</p>
+<p>所有的模型训练的epochs都小于20.</p>
+<p>优化器：SGD with momentum</p>
+<p>学习率调度：SGDR 和CyclicLR（由于采用了SGDR和CyclicLR，lr的一个调度的结果也被我用于集成。参考黄高的论文）</p>
+<p>学习率区间评估：lr_find+eye see</p>
+<h2 id="大佬的比赛方案"><a href="#大佬的比赛方案" class="headerlink" title="大佬的比赛方案"></a>大佬的比赛方案</h2><p>比赛结束了，kaggle上出现了大佬的方案，有以下我没有做到的：</p>
+<ol>
+<li>采用更好的分类模型SENET</li>
+<li>考虑使用autoAugment图像增强</li>
+<li>考虑类的不均衡问题</li>
+<li>数据集中去除小图片</li>
+<li>TTA</li>
+</ol>
+<p>值得一说的处理不均衡问题，我目前了解有三个方法：</p>
+<ol>
+<li>上采用和下采样；同时pytorch里面也有一个加权采样器；</li>
+<li>将训练集分成两个部分，第一部分是均衡的样本集合，每个类个数相同，该部分先用于训练模型；第二个部分是训练集剩下的部分，用于finetune上面的模型</li>
+<li>使用加权loss比如focal loss等。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/imaterialist-product-2019比赛总结/" data-id="cjxlvrpq9000q8cul16cyf6a0" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kaggle/">kaggle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-Extract-Feature-from-a-Pretrained-Pytorch-Model" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/" class="article-date">
+  <time datetime="2019-07-02T13:46:18.000Z" itemprop="datePublished">2019-07-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/deep-learning/">deep learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/">Extract Feature from a Pretrained Pytorch Model</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torchvision.models.vgg as models</span><br><span class="line">input = torch.rand(1, 3, 5, 5)</span><br><span class="line">vgg16 = models.vgg16(pretrained=True)</span><br><span class="line">output = vgg16.features\[:3\](input)</span><br><span class="line">print(output)</span><br></pre></td></tr></table></figure>
+
+<p>其中，vgg16.features[:3]的意思是只选取vgg16网络的前三层，然后input作为输入。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://discuss.pytorch.org/t/extracting-and-using-features-from-a-pretrained-model/20723/11" target="_blank" rel="noopener">https://discuss.pytorch.org/t/extracting-and-using-features-from-a-pretrained-model/20723/11</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/" data-id="cjxlvrpoe00008culei12o7r1" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cnn/">cnn</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pytorch/">pytorch</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-Snapshot-Ensembles" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/07/02/Snapshot-Ensembles/" class="article-date">
@@ -109,7 +720,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/Snapshot-Ensembles/" data-id="cjxlv3txn0000joulirzzvqax" class="article-share-link">分享</a>
+      <a data-url="http://yoursite.com/2019/07/02/Snapshot-Ensembles/" data-id="cjxlvrppq000f8cul2cuctmnw" class="article-share-link">分享</a>
       
       
       
@@ -265,7 +876,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/Git-Quick-Tutorial/" data-id="cjxluyjat0000boulbij5i8mp" class="article-share-link">分享</a>
+      <a data-url="http://yoursite.com/2019/07/02/Git-Quick-Tutorial/" data-id="cjxlvrpou00028cul6grgkjpk" class="article-share-link">分享</a>
       
       
       
@@ -279,60 +890,11 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/07/02/hello-world/" class="article-date">
-  <time datetime="2019-07-02T11:34:26.847Z" itemprop="datePublished">2019-07-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/02/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/hello-world/" data-id="cjxluyjbg0002boulwca6kafd" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
- 
 
 
-  
-
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页&raquo;</a>
+  </nav>
 </section>
            
     <aside id="sidebar">
@@ -360,7 +922,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title categories">分类</h3>
     <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/deep-learning/">deep learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/machine-learning/">machine learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程/">编程</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -370,7 +932,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/cnn/" style="font-size: 14px;">cnn</a> <a href="/tags/ensemble/" style="font-size: 14px;">ensemble</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/pytorch/" style="font-size: 14px;">pytorch</a>
+      <a href="/tags/L2-Norm/" style="font-size: 14px;">L2 Norm</a> <a href="/tags/Pillow/" style="font-size: 14px;">Pillow</a> <a href="/tags/cnn/" style="font-size: 19.5px;">cnn</a> <a href="/tags/cross-entropy/" style="font-size: 14px;">cross-entropy</a> <a href="/tags/ensemble/" style="font-size: 14px;">ensemble</a> <a href="/tags/github/" style="font-size: 14px;">github</a> <a href="/tags/kaggle/" style="font-size: 14px;">kaggle</a> <a href="/tags/normalize/" style="font-size: 14px;">normalize</a> <a href="/tags/pytorch/" style="font-size: 25px;">pytorch</a> <a href="/tags/softmax/" style="font-size: 14px;">softmax</a> <a href="/tags/transfer-learning/" style="font-size: 14px;">transfer learning</a> <a href="/tags/weight-decay/" style="font-size: 14px;">weight decay</a>
     </div>
   </div>
 
@@ -382,15 +944,23 @@
       <ul>
         
           <li>
-            <a href="/2019/07/02/Snapshot-Ensembles/">Snapshot Ensembles</a>
+            <a href="/2019/07/02/Normalize的作用/">Normalize的作用</a>
           </li>
         
           <li>
-            <a href="/2019/07/02/Git-Quick-Tutorial/">Git Quick Tutorial</a>
+            <a href="/2019/07/02/PyTorch-weight-decay（转）/">PyTorch weight decay（转）</a>
           </li>
         
           <li>
-            <a href="/2019/07/02/hello-world/">Hello World</a>
+            <a href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">Softmax and Logsoftmax in Pytorch</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/02/Pytorch-SGDR/">Pytorch SGDR</a>
+          </li>
+        
+          <li>
+            <a href="/2019/07/02/PIL-使用/">PIL 使用</a>
           </li>
         
       </ul>
@@ -402,7 +972,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -412,7 +982,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tags">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/cnn/">cnn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ensemble/">ensemble</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/L2-Norm/">L2 Norm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pillow/">Pillow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cnn/">cnn</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cross-entropy/">cross-entropy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ensemble/">ensemble</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kaggle/">kaggle</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/normalize/">normalize</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytorch/">pytorch</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/">softmax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/transfer-learning/">transfer learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weight-decay/">weight decay</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
