@@ -98,29 +98,29 @@
         
         <h2 id="paper-details"><a href="#paper-details" class="headerlink" title="paper details"></a>paper details</h2><p>深度学习中有一个常识是，学习率在训练的过程中需要逐渐减小。但是这篇文章却给出了一个让人惊讶的事实，就是训练过程中的学习率如果是多变（rise and fall）的是有益于训练的。因此作者建议学习率在一个范围内周期变化，而不是将其设置为固定值。</p>
 <p>Cyclical Learning Rates来源于这么一个观察：学习率的增加虽然会带来短期的副作用但是长期来看是有益的。因此这种观察引出了让学习率在一定范围内变化而不是采用逐步固定或指数递减值的想法。即设置一个最大和最小的边界，然后学习率在里面循环变化。如下图的 triangular learning rate policy：</p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557733855040.png" alt="1557733855040"></p>
+<p><img src="/images/assets/1557733855040.png" alt="1557733855040"></p>
 <p>CLR能够发挥作用的一个直观理解是：最小化loss的困难在于如何逃离saddle点而不是在于差的局部最小值。在saddle 点的附近，梯度都很小因此学习的过程缓慢，因此通过增加学习率可以更快地走出saddle点区域。经验上的理由为什么CLR能够work是这样的：最佳的学习率可能在min-max boundaries之间，在最佳的学习率附近会被用于进行训练。（其他会被用于脱离saddle点。。。）。</p>
 <p>除了上面显示的trangular learning rate policy,还有以下两种:</p>
 <ol>
 <li><p>triangular2, 和triangular差不多，差别在于每一个cycle之后lr会减半。</p>
 </li>
 <li><p>exp_range，boundary的值会以一个指数因子衰减。</p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557737380100.png" alt="1557737380100"></p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557737358780.png" alt="1557737358780"></p>
 </li>
 </ol>
+<p><img src="/images/assets/1557737380100.png" alt="1557737380100"></p>
+<p><img src="/images/assets/1557737358780.png" alt="1557737358780"></p>
 <p>里面还讲了如何去估计一个cycle len的方法：</p>
 <p>stepsize最好是2-10倍的每个epoch的迭代次数。对于CIFAR10来说，stepsize=8也就比stepsize=2效果好上一点点。</p>
 <p>此外还讲了如何估计一个合理的min和max boundary</p>
 <p>第一个方法就是：“LR range test”,模型先跑几个epoch，然后让lr从一个很小值增加到很大的值。然后画出accuracy versus learning rate.如下图：</p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557735295110.png" alt="1557735295110"></p>
+<p><img src="/images/assets/1557735295110.png" alt="1557735295110"></p>
 <p>注意图中的accuracy开始增加和accuracy开始变缓的时间段(或者accuracy开始下降)的地方。 这两个地方是bound是的一个好的选择。即base_lr是第一个值，而max_lr是第二个值。或者说可以用一个经验，将base_lr设置为1/3或1/4的max_lr. <strong>论文中作者选了base_lr = 0.001,而max_lr = 0.006</strong></p>
 <p>另外一个选择bound是的方法式画出loss versus learning rate的图，如下：</p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557735640796.png" alt="1557735640796"></p>
+<p><img src="/images/assets/1557735640796.png" alt="1557735640796"></p>
 <p>这张图中最适合的lr是哪里？不是在最低点，因为在最低点的lr已经有点大了。我们需要的是一个点更aggressive，所以我们能够train很快。即那个点loss下降是<strong>最快</strong>的</p>
 <h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><p>做kaggle比赛的时候，clr的base_lr和max_lr设置反了，特别是在开始的一个stepsize里面，速度非常快，很容易就达到了一个很好的acc ，但是过了这个stepsize，acc就不断下降。一开始举得clclr的问题，后来突然发现是我输入的参数错误。有鉴于它收敛非常快，我觉得还是要借鉴下，发现lr的变化是这样的：</p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557732898573.png" alt="1557732898573"></p>
-<p>和 clr差了一个stepsize。这个和SGDR很相似，准备 用这个试试。</p>
+<p><img src="/images/assets/1557732898573.png" alt="1557732898573"></p>
+<p>和clr差了一个stepsize。这个和SGDR很相似，准备用这个试试。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://arxiv.org/pdf/1506.01186.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1506.01186.pdf</a></p>
 <p><a href="https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html#how-do-you-find-a-good-learning-rate" target="_blank" rel="noopener">https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html#how-do-you-find-a-good-learning-rate</a></p>
 <p><a href="https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0" target="_blank" rel="noopener">https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0</a></p>
