@@ -1,1 +1,1 @@
-[{"title":"Hello World","date":"2019.07.02","uri":"2019/07/02/hello-world/","excerpt":""}]
+[{"title":"Git Quick Tutorial","date":"2019.07.02","uri":"2019/07/02/Git-Quick-Tutorial/","excerpt":""},{"title":"Hello World","date":"2019.07.02","uri":"2019/07/02/hello-world/","excerpt":""}]
