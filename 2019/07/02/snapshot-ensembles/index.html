@@ -5,21 +5,21 @@
   
   <title>Snapshot Ensembles | LZW</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SNAPSHOT ENSEMBLESEnsembles work best if the individual models  (1) have low test error and  (2) do not overlap in the set of examples they misclassify.   Snapshot Ensembling.Figure 2 depicts the trai">
+  <meta name="description" content="Ensembles work best if the individual models  (1) have low test error and  (2) do not overlap in the set of examples they misclassify.   Snapshot Ensembling.Figure 2 depicts the training process using">
 <meta name="keywords" content="cnn,pytorch,ensemble">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Snapshot Ensembles">
-<meta property="og:url" content="http://yoursite.com/2019/07/02/snapshot-ensembles/index.html">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/Snapshot-Ensembles/index.html">
 <meta property="og:site_name" content="LZW">
-<meta property="og:description" content="SNAPSHOT ENSEMBLESEnsembles work best if the individual models  (1) have low test error and  (2) do not overlap in the set of examples they misclassify.   Snapshot Ensembling.Figure 2 depicts the trai">
+<meta property="og:description" content="Ensembles work best if the individual models  (1) have low test error and  (2) do not overlap in the set of examples they misclassify.   Snapshot Ensembling.Figure 2 depicts the training process using">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/2019/07/02/snapshot-ensembles/%5Cimages%5Cassets%5C1558078009871.png">
-<meta property="og:image" content="http://yoursite.com/2019/07/02/snapshot-ensembles/%5Cimages%5Cassets%5C1558078640762.png">
-<meta property="og:updated_time" content="2019-07-02T13:37:23.319Z">
+<meta property="og:image" content="http://yoursite.com/images/assets/1558078009871.png">
+<meta property="og:image" content="http://yoursite.com/images/assets/1558078640762.png">
+<meta property="og:updated_time" content="2019-07-02T13:42:42.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Snapshot Ensembles">
-<meta name="twitter:description" content="SNAPSHOT ENSEMBLESEnsembles work best if the individual models  (1) have low test error and  (2) do not overlap in the set of examples they misclassify.   Snapshot Ensembling.Figure 2 depicts the trai">
-<meta name="twitter:image" content="http://yoursite.com/2019/07/02/snapshot-ensembles/%5Cimages%5Cassets%5C1558078009871.png">
+<meta name="twitter:description" content="Ensembles work best if the individual models  (1) have low test error and  (2) do not overlap in the set of examples they misclassify.   Snapshot Ensembling.Figure 2 depicts the training process using">
+<meta name="twitter:image" content="http://yoursite.com/images/assets/1558078009871.png">
   
     <link rel="alternate" href="/atom.xml" title="LZW" type="application/atom+xml">
   
@@ -74,9 +74,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-snapshot-ensembles" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Snapshot-Ensembles" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/07/02/snapshot-ensembles/" class="article-date">
+    <a href="/2019/07/02/Snapshot-Ensembles/" class="article-date">
   <time datetime="2019-07-02T13:35:51.000Z" itemprop="datePublished">2019-07-02</time>
 </a>
     
@@ -102,20 +102,20 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="SNAPSHOT-ENSEMBLES"><a href="#SNAPSHOT-ENSEMBLES" class="headerlink" title="SNAPSHOT ENSEMBLES"></a>SNAPSHOT ENSEMBLES</h1><p>Ensembles work best if the individual models</p>
+        <p>Ensembles work best if the individual models</p>
 <p> (1) have low test error and </p>
 <p>(2) do not overlap in the set of examples they misclassify. </p>
-<p><img src="%5Cimages%5Cassets%5C1558078009871.png" alt="1558078009871"></p>
+<p><img src="/images/assets/1558078009871.png" alt="1558078009871"></p>
 <h3 id="Snapshot-Ensembling"><a href="#Snapshot-Ensembling" class="headerlink" title="Snapshot Ensembling."></a>Snapshot Ensembling.</h3><p>Figure 2 depicts the training process using cyclic and traditional learning rate schedules. At the end of each training cycle, it is apparent that the <strong>model reaches a local minimum with respect to the training loss</strong>. Thus, before raising the learning rate, we take a “snapshot” of the model weights (indicated as vertical dashed black lines). After training M cycles, we have M model snapshots,$ f_1$ . . .$ f_M$ , each of which will be used in the final ensemble.</p>
 <h3 id="Ensembling-at-Test-Time"><a href="#Ensembling-at-Test-Time" class="headerlink" title="Ensembling at Test Time."></a>Ensembling at Test Time.</h3><p>The ensemble prediction at test time is the average of the last m (m ≤ M) model’s softmax outputs. Let x be a test sample and let $ h_i (x)$ be the softmax score of snapshot i. The output of the ensemble is a simple average of the last m models:<br>$$<br>h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)<br>$$<br>.We always ensemble the last m models, as these models tend to have the lowest test error.</p>
 <h3 id="Ensemble-Size"><a href="#Ensemble-Size" class="headerlink" title="Ensemble Size."></a>Ensemble Size.</h3><p>In some applications, it may be beneficial to vary the size of the ensemble dynamically at test time depending on available resources. Figure 3 displays the performance of DenseNet-40 on the CIFAR-100 dataset as the effective ensemble size, m, is varied. Each ensemble consists of snapshots from later cycles, as these snapshots have received the most training and therefore have likely converged to better minima. Although ensembling more models generally gives better performance, <strong>we observe significant drops in error when the second and third models are added to the ensemble</strong>. In most cases, an ensemble of two models outperforms the baseline model.</p>
 <h3 id="Restart-Learning-Rate"><a href="#Restart-Learning-Rate" class="headerlink" title="Restart Learning Rate."></a>Restart Learning Rate.</h3><p>The effect of the restart learning rate can be observed in Figure 3. The left two plots show performance when using a restart learning rate of α0 = 0.1 at the beginning of each cycle, and the right two plots show α0 = 0.2. <strong>In most cases, ensembles with the larger restart learning rate perform better, presumably because the strong perturbation in between cycles increases the diversity of local minima.</strong></p>
-<p><img src="%5Cimages%5Cassets%5C1558078640762.png" alt="1558078640762"></p>
+<p><img src="/images/assets/1558078640762.png" alt="1558078640762"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/snapshot-ensembles/" data-id="cjxluyjbz0008boul5prkczmn" class="article-share-link">分享</a>
+      <a data-url="http://yoursite.com/2019/07/02/Snapshot-Ensembles/" data-id="cjxlv3txn0000joulirzzvqax" class="article-share-link">分享</a>
       
       
       
@@ -169,15 +169,6 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/07/02/snapshot-ensembles-1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          snapshot ensembles
-        
-      </div>
-    </a>
-  
   
     <a href="/2019/07/02/Git-Quick-Tutorial/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
@@ -217,7 +208,7 @@
       
         <strong class="toc-title">文章目录</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SNAPSHOT-ENSEMBLES"><span class="toc-number">1.</span> <span class="toc-text">SNAPSHOT ENSEMBLES</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Snapshot-Ensembling"><span class="toc-number">1.0.1.</span> <span class="toc-text">Snapshot Ensembling.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ensembling-at-Test-Time"><span class="toc-number">1.0.2.</span> <span class="toc-text">Ensembling at Test Time.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ensemble-Size"><span class="toc-number">1.0.3.</span> <span class="toc-text">Ensemble Size.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Restart-Learning-Rate"><span class="toc-number">1.0.4.</span> <span class="toc-text">Restart Learning Rate.</span></a></li></ol></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Snapshot-Ensembling"><span class="toc-number">1.</span> <span class="toc-text">Snapshot Ensembling.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ensembling-at-Test-Time"><span class="toc-number">2.</span> <span class="toc-text">Ensembling at Test Time.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ensemble-Size"><span class="toc-number">3.</span> <span class="toc-text">Ensemble Size.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Restart-Learning-Rate"><span class="toc-number">4.</span> <span class="toc-text">Restart Learning Rate.</span></a></li></ol>
           </div>
       </div>
     </div>

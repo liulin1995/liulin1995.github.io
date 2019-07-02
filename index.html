@@ -68,49 +68,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-snapshot-ensembles-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Snapshot-Ensembles" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/07/02/snapshot-ensembles-1/" class="article-date">
-  <time datetime="2019-07-02T13:37:30.000Z" itemprop="datePublished">2019-07-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/02/snapshot-ensembles-1/">snapshot ensembles</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/snapshot-ensembles-1/" data-id="cjxluyjbu0006boul5zdwfe9j" class="article-share-link">分享</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-snapshot-ensembles" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/07/02/snapshot-ensembles/" class="article-date">
+    <a href="/2019/07/02/Snapshot-Ensembles/" class="article-date">
   <time datetime="2019-07-02T13:35:51.000Z" itemprop="datePublished">2019-07-02</time>
 </a>
     
@@ -126,7 +86,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/02/snapshot-ensembles/">Snapshot Ensembles</a>
+      <a class="article-title" href="/2019/07/02/Snapshot-Ensembles/">Snapshot Ensembles</a>
     </h1>
   
 
@@ -136,20 +96,20 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="SNAPSHOT-ENSEMBLES"><a href="#SNAPSHOT-ENSEMBLES" class="headerlink" title="SNAPSHOT ENSEMBLES"></a>SNAPSHOT ENSEMBLES</h1><p>Ensembles work best if the individual models</p>
+        <p>Ensembles work best if the individual models</p>
 <p> (1) have low test error and </p>
 <p>(2) do not overlap in the set of examples they misclassify. </p>
-<p><img src="%5Cimages%5Cassets%5C1558078009871.png" alt="1558078009871"></p>
+<p><img src="/images/assets/1558078009871.png" alt="1558078009871"></p>
 <h3 id="Snapshot-Ensembling"><a href="#Snapshot-Ensembling" class="headerlink" title="Snapshot Ensembling."></a>Snapshot Ensembling.</h3><p>Figure 2 depicts the training process using cyclic and traditional learning rate schedules. At the end of each training cycle, it is apparent that the <strong>model reaches a local minimum with respect to the training loss</strong>. Thus, before raising the learning rate, we take a “snapshot” of the model weights (indicated as vertical dashed black lines). After training M cycles, we have M model snapshots,$ f_1$ . . .$ f_M$ , each of which will be used in the final ensemble.</p>
 <h3 id="Ensembling-at-Test-Time"><a href="#Ensembling-at-Test-Time" class="headerlink" title="Ensembling at Test Time."></a>Ensembling at Test Time.</h3><p>The ensemble prediction at test time is the average of the last m (m ≤ M) model’s softmax outputs. Let x be a test sample and let $ h_i (x)$ be the softmax score of snapshot i. The output of the ensemble is a simple average of the last m models:<br>$$<br>h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)<br>$$<br>.We always ensemble the last m models, as these models tend to have the lowest test error.</p>
 <h3 id="Ensemble-Size"><a href="#Ensemble-Size" class="headerlink" title="Ensemble Size."></a>Ensemble Size.</h3><p>In some applications, it may be beneficial to vary the size of the ensemble dynamically at test time depending on available resources. Figure 3 displays the performance of DenseNet-40 on the CIFAR-100 dataset as the effective ensemble size, m, is varied. Each ensemble consists of snapshots from later cycles, as these snapshots have received the most training and therefore have likely converged to better minima. Although ensembling more models generally gives better performance, <strong>we observe significant drops in error when the second and third models are added to the ensemble</strong>. In most cases, an ensemble of two models outperforms the baseline model.</p>
 <h3 id="Restart-Learning-Rate"><a href="#Restart-Learning-Rate" class="headerlink" title="Restart Learning Rate."></a>Restart Learning Rate.</h3><p>The effect of the restart learning rate can be observed in Figure 3. The left two plots show performance when using a restart learning rate of α0 = 0.1 at the beginning of each cycle, and the right two plots show α0 = 0.2. <strong>In most cases, ensembles with the larger restart learning rate perform better, presumably because the strong perturbation in between cycles increases the diversity of local minima.</strong></p>
-<p><img src="%5Cimages%5Cassets%5C1558078640762.png" alt="1558078640762"></p>
+<p><img src="/images/assets/1558078640762.png" alt="1558078640762"></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/07/02/snapshot-ensembles/" data-id="cjxluyjbz0008boul5prkczmn" class="article-share-link">分享</a>
+      <a data-url="http://yoursite.com/2019/07/02/Snapshot-Ensembles/" data-id="cjxlv3txn0000joulirzzvqax" class="article-share-link">分享</a>
       
       
       
@@ -191,7 +151,7 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="Git-Quick-Tutorial"><a href="#Git-Quick-Tutorial" class="headerlink" title="Git Quick Tutorial"></a>Git Quick Tutorial</h1><p>I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only.</p>
+        <p>I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only.</p>
 <h2 id="install-and-setup"><a href="#install-and-setup" class="headerlink" title="install and setup"></a>install and setup</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git-all</span><br></pre></td></tr></table></figure>
 
 <h2 id="basic-setup"><a href="#basic-setup" class="headerlink" title="basic setup"></a>basic setup</h2><p>save your git username and email so that you won’t have to enter them in again for future git commands</p>
@@ -422,11 +382,7 @@
       <ul>
         
           <li>
-            <a href="/2019/07/02/snapshot-ensembles-1/">snapshot ensembles</a>
-          </li>
-        
-          <li>
-            <a href="/2019/07/02/snapshot-ensembles/">Snapshot Ensembles</a>
+            <a href="/2019/07/02/Snapshot-Ensembles/">Snapshot Ensembles</a>
           </li>
         
           <li>
@@ -446,7 +402,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">归档</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
