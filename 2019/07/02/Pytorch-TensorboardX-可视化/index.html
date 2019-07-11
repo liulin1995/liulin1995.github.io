@@ -90,13 +90,13 @@
 
 
 
-  <meta name="description" content="安装tensorboard12pip install tensorboardXpip install tensorflow  使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&amp;apos;./runs/dogcat1&amp;apos;)  //log_dir is ./run/do">
+  <meta name="description" content="安装tensorboard12pip install tensorboardXpip install tensorflow 使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&amp;apos;./runs/dogcat1&amp;apos;)  //log_dir is ./run/dog">
 <meta name="keywords" content="pytorch,cnn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch TensorboardX 可视化">
 <meta property="og:url" content="http://yoursite.com/2019/07/02/Pytorch-TensorboardX-可视化/index.html">
 <meta property="og:site_name" content="LZW&#39; Blog">
-<meta property="og:description" content="安装tensorboard12pip install tensorboardXpip install tensorflow  使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&amp;apos;./runs/dogcat1&amp;apos;)  //log_dir is ./run/do">
+<meta property="og:description" content="安装tensorboard12pip install tensorboardXpip install tensorflow 使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&amp;apos;./runs/dogcat1&amp;apos;)  //log_dir is ./run/dog">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/images/assets/1555679643005.png">
 <meta property="og:image" content="http://yoursite.com/images/assets/1555681461022.png">
@@ -105,7 +105,7 @@
 <meta property="og:updated_time" content="2019-07-02T14:05:08.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pytorch TensorboardX 可视化">
-<meta name="twitter:description" content="安装tensorboard12pip install tensorboardXpip install tensorflow  使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&amp;apos;./runs/dogcat1&amp;apos;)  //log_dir is ./run/do">
+<meta name="twitter:description" content="安装tensorboard12pip install tensorboardXpip install tensorflow 使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&amp;apos;./runs/dogcat1&amp;apos;)  //log_dir is ./run/dog">
 <meta name="twitter:image" content="http://yoursite.com/images/assets/1555679643005.png">
 
 
@@ -386,37 +386,29 @@
 
       
         <h2 id="安装tensorboard"><a href="#安装tensorboard" class="headerlink" title="安装tensorboard"></a>安装tensorboard</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorboardX</span><br><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure>
-
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h4 id="引入并创建一个SummaryWriter"><a href="#引入并创建一个SummaryWriter" class="headerlink" title="引入并创建一个SummaryWriter"></a>引入并创建一个SummaryWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from tensorboardX import SummaryWriter</span><br><span class="line">writer = SummaryWriter(&apos;./runs/dogcat1&apos;)  //log_dir is ./run/dogcat</span><br><span class="line">//need close</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
-
 <p>logdir参数要是不指定的话，会自动在生成run文件夹。另外还有一个comment参数，用于指定文件名称。</p>
 <h4 id="画loss曲线："><a href="#画loss曲线：" class="headerlink" title="画loss曲线："></a>画loss曲线：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_scalar(&apos;loss&apos;,loss, epoch)</span><br></pre></td></tr></table></figure>
-
 <p>第一个参数为保存参数的名称，第二个参数为Y轴的值，第三个参数为X轴的值</p>
 <p>运行该代码后，在log_dir下运行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir log_dir  //log_dir 为具体的文件夹</span><br></pre></td></tr></table></figure>
-
 <p>具体为：</p>
 <p><img src="/images/assets/1555679643005.png" alt="1555679643005"></p>
 <p>结果为：</p>
 <p><img src="/images/assets/1555681461022.png" alt="1555681461022"></p>
 <h4 id="画激活情况"><a href="#画激活情况" class="headerlink" title="画激活情况"></a>画激活情况</h4><p>用于检查深层网络里面的层激活和权值分布情况，避免梯度消失等。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for name, param in net.named_parameters():</span><br><span class="line">	writer.add_histogram(</span><br><span class="line">		name, param.cpu().clone().data.numpy(), epoch_index)</span><br></pre></td></tr></table></figure>
-
 <p>需要注意的是，如果tensor在gpu需要将其转换到cpu中。</p>
 <p>结果为：</p>
 <p><img src="/images/assets/1555682223014.png" alt="1555682223014"></p>
 <h4 id="画网络结构图"><a href="#画网络结构图" class="headerlink" title="画网络结构图"></a>画网络结构图</h4><p>首先先对某个model进行实例化，如net。然后定义一个输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input = torch.rand(dim1,dim2,dim3,dim4)</span><br><span class="line"></span><br><span class="line">net = LeNet()</span><br><span class="line">writer.add_graph(net, input)</span><br></pre></td></tr></table></figure>
-
 <p>同样的，需要注意net要在cpu中。</p>
 <p>效果如下：</p>
 <p><img src="/images/assets/1555682403877.png" alt="1555682403877"></p>
 <h4 id="显示图片"><a href="#显示图片" class="headerlink" title="显示图片"></a>显示图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_image(&apos;name&apos;,image_object)</span><br></pre></td></tr></table></figure>
-
 <h4 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h4><p>使用PCA，T-SNE等方法将高位向量投影到三维坐标系。默认使用PCA，也可以选择T-SNE</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_embedding(mat, metadata=None, label_img=None, global_step=None, tag=&apos;default&apos;, metadata_header=None）</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>mat</strong> (<a href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" target="_blank" rel="noopener"><em>torch.Tensor</em></a> <em>or</em> <em>numpy.array</em>) – A matrix which each row is the feature vector of the data point</li>
 <li><strong>metadata</strong> (<a href="https://docs.python.org/3/library/stdtypes.html#list" target="_blank" rel="noopener"><em>list</em></a>) – A list of labels, each element will be convert to string</li>

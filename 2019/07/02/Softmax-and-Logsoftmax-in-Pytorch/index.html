@@ -388,9 +388,23 @@
 </ol>
 <p>It should be noted that <strong>CrossEntropyLoss includes a softmax operation.</strong></p>
 <p>softmax with log-likelihood cost can be more fast compared with softmax with MSELoss.</p>
-<p>The <strong>log-likelihood loss</strong> is<br>$$<br>C = - \Sigma_k y_klog(a_k)<br>$$<br>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
-<p>The <strong>cross-entropy loss</strong> is<br>$$<br>C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)<br>$$<br>And what’s the logsoftmax?<br>$$<br>Applies \ the \ <code>\log(\text{Softmax}(x))</code> function \  to \ an \ n-dimensional<br>    \ input \ Tensor. \ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\</p>
-<pre><code>\text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</code></pre><p>$$<br>what’s more, it’s actually realized in nn.functional<br>$$<br>While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\ This \  function \<br>    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \  and  \ gradient  \ correctly.<br>$$<br>The <strong>NLLoss</strong> is:<br>$$<br>Loss \ = - w_nx_{n,y_n}<br>$$<br>where $w_n$ default is 1.</p>
+<p>The <strong>log-likelihood loss</strong> is</p>
+<script type="math/tex; mode=display">
+C = - \Sigma_k y_klog(a_k)</script><p>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
+<p>The <strong>cross-entropy loss</strong> is </p>
+<script type="math/tex; mode=display">
+C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)</script><p>And what’s the logsoftmax?</p>
+<script type="math/tex; mode=display">
+Applies \ the \ `\log(\text{Softmax}(x))` function \  to \ an \ n-dimensional 
+    \ input \ Tensor. \\ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\\
+
+
+        \text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</script><p>what’s more, it’s actually realized in nn.functional</p>
+<script type="math/tex; mode=display">
+While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \\   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\\ This \  function \ 
+    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \\  and  \ gradient  \ correctly.</script><p>The <strong>NLLoss</strong> is:</p>
+<script type="math/tex; mode=display">
+Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
 <p>The <strong>BCELoss</strong> is a CrossEntropyLoss designed for binary classification. And it need a sigmoid function before useing the BCELoss. What’s more, <strong>BCEWithLogitsLoss</strong> includes the BCELoss and the sigmoid function.</p>
 <h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://github.com/torch/nn/issues/357" target="_blank" rel="noopener">https://github.com/torch/nn/issues/357</a></p>
 <p><a href="https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax</a></p>

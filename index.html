@@ -319,7 +319,7 @@
                 
               
 
-              <time title="Erstellt: 2019-07-11 15:04:13 / Geändert am: 15:07:25" itemprop="dateCreated datePublished" datetime="2019-07-11T15:04:13+08:00">2019-07-11</time>
+              <time title="Erstellt: 2019-07-11 15:04:13 / Geändert am: 15:53:24" itemprop="dateCreated datePublished" datetime="2019-07-11T15:04:13+08:00">2019-07-11</time>
             </span>
           
 
@@ -380,11 +380,26 @@
       
         
           
-            <h3 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h3><p>首先回顾熵的定义：<br>$$<br>H(x)=E_{x \sim  p}[I(x)]<br>$$<br>其中$I[x]$是时间x=x的自信息：<br>$$<br>I[x]=-log \ p(x)<br>$$<br>自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。</p>
-<p>如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。<br>$$<br>D_{KL}(P||Q)= E_{x \sim  p}[log \frac{P(x)}{Q(x)}]=E_{x \sim  p}[log \ P(x) - log \ Q(x)]<br>$$<br>需要注意的是$D_{KL}(P||Q)$不等于$D_{KL}(Q||P)$，KL散度并不是一个距离，因此他们有对称性。</p>
-<p>KL散度的离散情况为：<br>$$<br>D_{KL}(P||Q)= \Sigma_x\ P(x) [log\frac{P(x)}{Q(x)}] \<br>= \Sigma_x\ P(x) [log\ P(x)-log \ Q(x)] \<br>= \Sigma_x\ P(x) \ log\ P(x) - \Sigma_x\ P(x)\ log \ Q(x) \<br>$$<br>可以看的出来，KL散度表达的是一种编码在另一种编码表示下，所需要增加的熵的信息。</p>
-<h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>交叉熵的定义为：<br>$$<br>CE(P,Q)=-E_{x \sim  p}[log \ Q(x)]<br>$$<br>离散情况为：<br>$$<br>CE(P,Q) = \Sigma_x\ P(x)logQ(x)<br>$$<br>它和KL散度很相似，二者只相差了左边的一项：</p>
-<p>$$<br>CE(P,Q) = H(P) + D_{KL}(P||Q)<br>$$<br>需要注意的是，在机器学习中CE常被用作分类任务的loss函数。此时，由于样本的标签是固定的，则$ H(P)$的值是固定的，那么最小化CE就等价于最小化KL散度。这里的一个思想是吧样本的标签看作一个分布，样本的预测标签看成另一个分布。</p>
+            <h3 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h3><p>首先回顾熵的定义：</p>
+<script type="math/tex; mode=display">
+H(x)=E_{x \sim  p}[I(x)]</script><p>其中$I[x]$是时间x=x的自信息：</p>
+<script type="math/tex; mode=display">
+I[x]=-log \ p(x)</script><p>自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。</p>
+<p>如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。</p>
+<script type="math/tex; mode=display">
+D_{KL}(P||Q)= E_{x \sim  p}[log \frac{P(x)}{Q(x)}]=E_{x \sim  p}[log \ P(x) - log \ Q(x)]</script><p>需要注意的是$D_{KL}(P||Q)$不等于$D_{KL}(Q||P)$，KL散度并不是一个距离，因此他们有对称性。</p>
+<p>KL散度的离散情况为：</p>
+<script type="math/tex; mode=display">
+D_{KL}(P||Q)= \Sigma_x\ P(x) [log\frac{P(x)}{Q(x)}] \\
+= \Sigma_x\ P(x) [log\ P(x)-log \ Q(x)] \\
+= \Sigma_x\ P(x) \ log\ P(x) - \Sigma_x\ P(x)\ log \ Q(x) \\</script><p>可以看的出来，KL散度表达的是一种编码在另一种编码表示下，所需要增加的熵的信息。</p>
+<h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>交叉熵的定义为：</p>
+<script type="math/tex; mode=display">
+CE(P,Q)=-E_{x \sim  p}[log \ Q(x)]</script><p>离散情况为：</p>
+<script type="math/tex; mode=display">
+CE(P,Q) = \Sigma_x\ P(x)logQ(x)</script><p>它和KL散度很相似，二者只相差了左边的一项：</p>
+<script type="math/tex; mode=display">
+CE(P,Q) = H(P) + D_{KL}(P||Q)</script><p>需要注意的是，在机器学习中CE常被用作分类任务的loss函数。此时，由于样本的标签是固定的，则$ H(P)$的值是固定的，那么最小化CE就等价于最小化KL散度。这里的一个思想是吧样本的标签看作一个分布，样本的预测标签看成另一个分布。</p>
 
           
         
@@ -744,14 +759,12 @@
           
             <p>transforms主要是图像transform, 它们可以通过使用Compose来链接起来。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">transforms.Compose([</span><br><span class="line">  transforms.CenterCrop(<span class="number">10</span>),</span><br><span class="line">  transforms.ToTensor()</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
 <h2 id="Transforms-on-PIL-Image"><a href="#Transforms-on-PIL-Image" class="headerlink" title="Transforms on PIL Image"></a>Transforms on PIL Image</h2><h4 id="torchvision-transforms-CenterCrop-size"><a href="#torchvision-transforms-CenterCrop-size" class="headerlink" title="torchvision.transforms.CenterCrop(size):"></a><code>torchvision.transforms.CenterCrop</code>(<em>size</em>):</h4><p>对给定的PIL image在中心处裁剪。</p>
 <p>参数为：<strong>size</strong>, int or sequence. 如果是一个sequence，比如（h,w）会裁剪一个h*w大小的图片。</p>
 <p>如果是int，那么会裁剪大小为（size，size）的图像</p>
 <h4 id="torchvision-transforms-FiveCrop-size"><a href="#torchvision-transforms-FiveCrop-size" class="headerlink" title="torchvision.transforms.FiveCrop(size)"></a><code>torchvision.transforms.FiveCrop</code>(<em>size</em>)</h4><p>对给定的PIL image的四个角和中心进行裁剪</p>
 <p>其他同上。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>transform = Compose([</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>   FiveCrop(size), <span class="comment"># this is a list of PIL Images</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>   Lambda(<span class="keyword">lambda</span> crops: torch.stack([ToTensor()(crop) <span class="keyword">for</span> crop <span class="keyword">in</span> crops])) <span class="comment"># returns a 4D tensor</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>])</span><br></pre></td></tr></table></figure>
-
 <h4 id="torchvision-transforms-Pad-padding-fill-0-padding-mode-’constant’"><a href="#torchvision-transforms-Pad-padding-fill-0-padding-mode-’constant’" class="headerlink" title="torchvision.transforms.Pad(padding, fill=0, padding_mode=’constant’)"></a><code>torchvision.transforms.Pad</code>(<em>padding</em>, <em>fill=0</em>, <em>padding_mode=’constant’</em>)</h4><p>用给定的pad值对图像的4个sides进行填充</p>
 <p>参数：padding: 用于确定每个border填充的数量. </p>
 <p>​    如果只有一个int，对所有的边进行一样的填充数量</p>
@@ -770,7 +783,9 @@
 <h4 id="torchvision-transforms-Resize-size-interpolation-2"><a href="#torchvision-transforms-Resize-size-interpolation-2" class="headerlink" title="torchvision.transforms.Resize(size, interpolation=2)"></a><code>torchvision.transforms.Resize</code>(<em>size</em>, <em>interpolation=2</em>)</h4><p>将输入的PILimage的大小resize到给定的大小</p>
 <p>参数：<strong>size</strong> (<em>sequence</em> <em>or</em> int)期望的输出。如果size是int，那么短的边会匹配到这个数字。ie，如果height&gt;height, 那么image会被缩放为(size*height/width, size). 如果size为sequence，那么大小会被匹配到给定的（h,w）。</p>
 <p><strong>interpolation</strong>: 插值的方法，默认为PIL.Image.BILINEAR</p>
-<h2 id="Transforms-on-torch-Tensor"><a href="#Transforms-on-torch-Tensor" class="headerlink" title="Transforms on torch.*Tensor"></a>Transforms on torch.*Tensor</h2><h4 id="torchvision-transforms-Normalize-mean-std-inplace-False"><a href="#torchvision-transforms-Normalize-mean-std-inplace-False" class="headerlink" title="torchvision.transforms.Normalize(mean, std, inplace=False)"></a><code>torchvision.transforms.</code>Normalize(<em>mean</em>, <em>std</em>, <em>inplace=False</em>)</h4><p>归一化给定的mean，std来归一化一张tensor image。对于每一个channel进行<br>$$<br>\frac{（input[channel - mean[channel]）}{std[channel]}<br>$$<br>参数：mean：每个channel的均值</p>
+<h2 id="Transforms-on-torch-Tensor"><a href="#Transforms-on-torch-Tensor" class="headerlink" title="Transforms on torch.*Tensor"></a>Transforms on torch.*Tensor</h2><h4 id="torchvision-transforms-Normalize-mean-std-inplace-False"><a href="#torchvision-transforms-Normalize-mean-std-inplace-False" class="headerlink" title="torchvision.transforms.Normalize(mean, std, inplace=False)"></a><code>torchvision.transforms.</code>Normalize(<em>mean</em>, <em>std</em>, <em>inplace=False</em>)</h4><p>归一化给定的mean，std来归一化一张tensor image。对于每一个channel进行</p>
+<script type="math/tex; mode=display">
+\frac{（input[channel - mean[channel]）}{std[channel]}</script><p>参数：mean：每个channel的均值</p>
 <p>std: 每个channel的std值</p>
 <p>返回：normalized Tensor image</p>
 <p>返回类型：Tensor</p>
@@ -787,7 +802,6 @@
 <p>其他的，tensors不会进行缩放</p>
 <h4 id="FiveCrop和TenCrop"><a href="#FiveCrop和TenCrop" class="headerlink" title="FiveCrop和TenCrop"></a>FiveCrop和TenCrop</h4><p>这两种操作之后,一张图变成五张,一张图变成十张,那么在训练或者测试的时候怎么避免和标签混淆呢<br>思路是,这多个图拥有相同的标签,假如是分类任务,就可以使用交叉熵进行,然后求10张图的平均</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">transform = Compose([</span><br><span class="line">    TenCrop(size), <span class="comment"># this is a list of PIL Images</span></span><br><span class="line">    Lambda(<span class="keyword">lambda</span> crops: torch.stack([ToTensor()(crop) <span class="keyword">for</span> crop <span class="keyword">in</span> crops])) <span class="comment"># returns a 4D tensor</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">#In your test loop you can do the following:</span></span><br><span class="line">input, target = batch <span class="comment"># input is a 5d tensor, target is 2d</span></span><br><span class="line">bs, ncrops, c, h, w = input.size()</span><br><span class="line">result = model(input.view(<span class="number">-1</span>, c, h, w)) <span class="comment"># fuse batch size and ncrops</span></span><br><span class="line"></span><br><span class="line">result_avg = result.view(bs, ncrops, <span class="number">-1</span>).mean(<span class="number">1</span>) <span class="comment"># avg over crops</span></span><br></pre></td></tr></table></figure>
-
 
           
         
@@ -1132,28 +1146,21 @@
 <p>一个state_dict简单来说就是一个字典object，可以把每一层映射到他的参数上去。可学习参数以及register buffer(bn)已经优化器都有state_dict。因为state_dict是python字典对象，因此很简单就可以保存，修改。</p>
 <p>下面是读取模型state_dict的例子：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> param_tensor <span class="keyword">in</span> model.state_dict():</span><br><span class="line">    print(param_tensor, <span class="string">"\t"</span>, model.state_dict()[param_tensor].size())</span><br></pre></td></tr></table></figure>
-
 <h2 id="两种方法"><a href="#两种方法" class="headerlink" title="两种方法"></a>两种方法</h2><p>回到正题，有两种方法可以保存和读取模型。</p>
 <p>第一种是通过模型的state_dict来进行读取和保存。特别是读取的时候，首先得新建一个模型object，然后加载参数。</p>
 <p><strong>Save:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
-
 <p><strong>Load:</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH))</span><br><span class="line">model.eval()</span><br></pre></td></tr></table></figure>
-
 <p>第二种方法之别保存和加载整个模型：</p>
 <p><strong>Save:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model, PATH)</span><br></pre></td></tr></table></figure>
-
 <p><strong>Load:</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Model class must be defined somewhere</span></span><br><span class="line">model = torch.load(PATH)</span><br><span class="line">model.eval()</span><br></pre></td></tr></table></figure>
-
 <p>这种方法的缺点是序列化数据绑定到特定类以及保存模型时使用的确切目录结构。这是因为pickle不保存模型类本身。相反，它会保存包含类的文件的路径，该文件在加载时使用。因此，当您在其他项目中或在重构之后使用时，您的代码可能会以各种方式中断。</p>
 <h2 id="保存checkpoint"><a href="#保存checkpoint" class="headerlink" title="保存checkpoint"></a>保存checkpoint</h2><p>可以保存checkpoint用于后续的推理和重新训练。和单独保存模型的参数不同，优化器的参数也会被保存，以便于后续的训练。</p>
 <h3 id="Save"><a href="#Save" class="headerlink" title="Save:"></a>Save:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line">            &apos;epoch&apos;: epoch,</span><br><span class="line">            &apos;model_state_dict&apos;: model.state_dict(),</span><br><span class="line">            &apos;optimizer_state_dict&apos;: optimizer.state_dict(),</span><br><span class="line">            &apos;loss&apos;: loss,</span><br><span class="line">            ...</span><br><span class="line">            &#125;, PATH)</span><br></pre></td></tr></table></figure>
-
 <h3 id="Load"><a href="#Load" class="headerlink" title="Load:"></a>Load:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">optimizer = TheOptimizerClass(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">checkpoint = torch.load(PATH)</span><br><span class="line">model.load_state_dict(checkpoint[<span class="string">'model_state_dict'</span>])</span><br><span class="line">optimizer.load_state_dict(checkpoint[<span class="string">'optimizer_state_dict'</span>])</span><br><span class="line">epoch = checkpoint[<span class="string">'epoch'</span>]</span><br><span class="line">loss = checkpoint[<span class="string">'loss'</span>]</span><br><span class="line"></span><br><span class="line">model.eval()</span><br><span class="line"><span class="comment"># - or -</span></span><br><span class="line">model.train()</span><br></pre></td></tr></table></figure>
-
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://pytorch.org/tutorials/beginner/saving_loading_models.html" target="_blank" rel="noopener">https://pytorch.org/tutorials/beginner/saving_loading_models.html</a></p>
 
           
@@ -1320,37 +1327,29 @@
         
           
             <h2 id="安装tensorboard"><a href="#安装tensorboard" class="headerlink" title="安装tensorboard"></a>安装tensorboard</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorboardX</span><br><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure>
-
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h4 id="引入并创建一个SummaryWriter"><a href="#引入并创建一个SummaryWriter" class="headerlink" title="引入并创建一个SummaryWriter"></a>引入并创建一个SummaryWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from tensorboardX import SummaryWriter</span><br><span class="line">writer = SummaryWriter(&apos;./runs/dogcat1&apos;)  //log_dir is ./run/dogcat</span><br><span class="line">//need close</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
-
 <p>logdir参数要是不指定的话，会自动在生成run文件夹。另外还有一个comment参数，用于指定文件名称。</p>
 <h4 id="画loss曲线："><a href="#画loss曲线：" class="headerlink" title="画loss曲线："></a>画loss曲线：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_scalar(&apos;loss&apos;,loss, epoch)</span><br></pre></td></tr></table></figure>
-
 <p>第一个参数为保存参数的名称，第二个参数为Y轴的值，第三个参数为X轴的值</p>
 <p>运行该代码后，在log_dir下运行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir log_dir  //log_dir 为具体的文件夹</span><br></pre></td></tr></table></figure>
-
 <p>具体为：</p>
 <p><img src="/images/assets/1555679643005.png" alt="1555679643005"></p>
 <p>结果为：</p>
 <p><img src="/images/assets/1555681461022.png" alt="1555681461022"></p>
 <h4 id="画激活情况"><a href="#画激活情况" class="headerlink" title="画激活情况"></a>画激活情况</h4><p>用于检查深层网络里面的层激活和权值分布情况，避免梯度消失等。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for name, param in net.named_parameters():</span><br><span class="line">	writer.add_histogram(</span><br><span class="line">		name, param.cpu().clone().data.numpy(), epoch_index)</span><br></pre></td></tr></table></figure>
-
 <p>需要注意的是，如果tensor在gpu需要将其转换到cpu中。</p>
 <p>结果为：</p>
 <p><img src="/images/assets/1555682223014.png" alt="1555682223014"></p>
 <h4 id="画网络结构图"><a href="#画网络结构图" class="headerlink" title="画网络结构图"></a>画网络结构图</h4><p>首先先对某个model进行实例化，如net。然后定义一个输入：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input = torch.rand(dim1,dim2,dim3,dim4)</span><br><span class="line"></span><br><span class="line">net = LeNet()</span><br><span class="line">writer.add_graph(net, input)</span><br></pre></td></tr></table></figure>
-
 <p>同样的，需要注意net要在cpu中。</p>
 <p>效果如下：</p>
 <p><img src="/images/assets/1555682403877.png" alt="1555682403877"></p>
 <h4 id="显示图片"><a href="#显示图片" class="headerlink" title="显示图片"></a>显示图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_image(&apos;name&apos;,image_object)</span><br></pre></td></tr></table></figure>
-
 <h4 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h4><p>使用PCA，T-SNE等方法将高位向量投影到三维坐标系。默认使用PCA，也可以选择T-SNE</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_embedding(mat, metadata=None, label_img=None, global_step=None, tag=&apos;default&apos;, metadata_header=None）</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>mat</strong> (<a href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" target="_blank" rel="noopener"><em>torch.Tensor</em></a> <em>or</em> <em>numpy.array</em>) – A matrix which each row is the feature vector of the data point</li>
 <li><strong>metadata</strong> (<a href="https://docs.python.org/3/library/stdtypes.html#list" target="_blank" rel="noopener"><em>list</em></a>) – A list of labels, each element will be convert to string</li>
@@ -1528,21 +1527,23 @@
             <p>normalize的最主要的一个作用是将数据中的不同的特征缩放到同一个量纲上（或者可以说无量纲化）。比如果说有一个特征值的范围是[0,1]另一个特征的范围是[0,1000],那么优化算法（尤其是基于梯度的优化方法）在更新的时候尤其会重视特征值大的特征，而忽视特征值小的特征。为了避免这个问题就需要normalization了，把所有的特征放在一个量纲上。</p>
 <p><img src="/images/assets/743682-20151108152327539-2039269197.png" alt="img"></p>
 <h2 id="常用的normalization的方法"><a href="#常用的normalization的方法" class="headerlink" title="常用的normalization的方法"></a>常用的normalization的方法</h2><p>主要有两种方法，min-max normalization 和 Z-score normalization。</p>
-<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><p>$$<br>x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}<br>$$</p>
-<p>主要有两个缺陷:</p>
+<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><script type="math/tex; mode=display">
+x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}</script><p>主要有两个缺陷:</p>
 <ol>
 <li>新加入的数据会导致$x_{max}$和$x_{min}$ 会发生变化，需要重新定义</li>
 <li>异常值会极大地影响minmax的表现</li>
 <li>minmax不适用于长尾分布</li>
 </ol>
 <p>比较适合于min和max固定的任务，比如图像像素归一化。</p>
-<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><p>$$<br>x_{zscore} = \frac{x - min(x)}{stdev(x)}<br>$$</p>
-<p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
+<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><script type="math/tex; mode=display">
+x_{zscore} = \frac{x - min(x)}{stdev(x)}</script><p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
 <blockquote>
-<p>Caveat:* it is a common misconception that <em>standardized scores</em> such as <em>z-scores</em> alter the shape of a distribution; in particular, be aware that a <em>z</em>-scores cannot magically make a non-normal variable normal.</p>
+<p>Caveat:<em> it is a common misconception that </em>standardized scores<em> such as </em>z-scores<em> alter the shape of a distribution; in particular, be aware that a </em>z*-scores cannot magically make a non-normal variable normal.</p>
 </blockquote>
 <p>其他的还有logistic，lognormal，TanH等，见</p>
-<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即<br>$$<br>x = \frac{x}{norm(x)}<br>$$<br>不同的norm会有不同的结果，常见的是L2 norm</p>
+<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即</p>
+<script type="math/tex; mode=display">
+x = \frac{x}{norm(x)}</script><p>不同的norm会有不同的结果，常见的是L2 norm</p>
 
           
         
@@ -1709,13 +1710,10 @@
           
             <p>torch.optim 中实现了很多优化器，只需要指定优化器的权重衰减即可：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = optim.SGD(model.parameters(), lr = <span class="number">0.01</span>, momentum=<span class="number">0.9</span>,weight_decay=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
-
 <p>优化器同时还支持per-parameter options操作，就是对每一个参数进行特定的制定，以满足更为细致的要求。此时，传入优化器的是可迭代的字典，字典中必须有params的key，用于指定特定优化变量，而其他key需要匹配优化器本身的设置。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">optim.SGD([</span><br><span class="line">                &#123;&apos;params&apos;: model.base.parameters()&#125;,</span><br><span class="line">                &#123;&apos;params&apos;: model.classifier.parameters(), &apos;lr&apos;: 1e-3&#125;</span><br><span class="line">            ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
-
 <p>可以灵活给每个子模块设置不同的学习率，权值衰减和momentum。也可以给权值设定权值衰减，而不作用于偏置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">weight_p, bias_p = [],[]</span><br><span class="line">for name, p in model.named_parameters():</span><br><span class="line">  if &apos;bias&apos; in name:</span><br><span class="line">     bias_p += [p]</span><br><span class="line">   else:</span><br><span class="line">     weight_p += [p]</span><br><span class="line"># 这里的model中每个参数的名字都是系统自动命名的，只要是权值都是带有weight，偏置都带有bias，</span><br><span class="line"></span><br><span class="line">optim.SGD([</span><br><span class="line">          &#123;&apos;params&apos;: weight_p, &apos;weight_decay&apos;:1e-5&#125;,</span><br><span class="line">          &#123;&apos;params&apos;: bias_p, &apos;weight_decay&apos;:0&#125;</span><br><span class="line">          ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
-
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.csdn.net/LoseInVain/article/details/81708474" target="_blank" rel="noopener">https://blog.csdn.net/LoseInVain/article/details/81708474</a> </p>
 
           
@@ -1889,9 +1887,23 @@
 </ol>
 <p>It should be noted that <strong>CrossEntropyLoss includes a softmax operation.</strong></p>
 <p>softmax with log-likelihood cost can be more fast compared with softmax with MSELoss.</p>
-<p>The <strong>log-likelihood loss</strong> is<br>$$<br>C = - \Sigma_k y_klog(a_k)<br>$$<br>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
-<p>The <strong>cross-entropy loss</strong> is<br>$$<br>C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)<br>$$<br>And what’s the logsoftmax?<br>$$<br>Applies \ the \ <code>\log(\text{Softmax}(x))</code> function \  to \ an \ n-dimensional<br>    \ input \ Tensor. \ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\</p>
-<pre><code>\text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</code></pre><p>$$<br>what’s more, it’s actually realized in nn.functional<br>$$<br>While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\ This \  function \<br>    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \  and  \ gradient  \ correctly.<br>$$<br>The <strong>NLLoss</strong> is:<br>$$<br>Loss \ = - w_nx_{n,y_n}<br>$$<br>where $w_n$ default is 1.</p>
+<p>The <strong>log-likelihood loss</strong> is</p>
+<script type="math/tex; mode=display">
+C = - \Sigma_k y_klog(a_k)</script><p>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
+<p>The <strong>cross-entropy loss</strong> is </p>
+<script type="math/tex; mode=display">
+C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)</script><p>And what’s the logsoftmax?</p>
+<script type="math/tex; mode=display">
+Applies \ the \ `\log(\text{Softmax}(x))` function \  to \ an \ n-dimensional 
+    \ input \ Tensor. \\ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\\
+
+
+        \text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</script><p>what’s more, it’s actually realized in nn.functional</p>
+<script type="math/tex; mode=display">
+While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \\   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\\ This \  function \ 
+    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \\  and  \ gradient  \ correctly.</script><p>The <strong>NLLoss</strong> is:</p>
+<script type="math/tex; mode=display">
+Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
 <p>The <strong>BCELoss</strong> is a CrossEntropyLoss designed for binary classification. And it need a sigmoid function before useing the BCELoss. What’s more, <strong>BCEWithLogitsLoss</strong> includes the BCELoss and the sigmoid function.</p>
 <h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://github.com/torch/nn/issues/357" target="_blank" rel="noopener">https://github.com/torch/nn/issues/357</a></p>
 <p><a href="https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax</a></p>
@@ -2066,18 +2078,20 @@
 <p>这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍达到一个好的效果或者更好的效果。</p>
 <p>warm started run SGD T_i 次，其中i是run的index。重要的是，重启不是从头开始执行，而是通过提高学习速率ηt来模拟，而旧的xt值用作初始解决方案</p>
 <p>在第i次run，lr decay 是对每个batch用cosine annealing.</p>
-<p><img src="E:%5C%E5%88%98%E5%BF%97%E4%BC%9F%E7%9A%84%E6%96%87%E4%BB%B6%5C%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0%5Cpytorch%5Cassets%5C1557730343579.png" alt="1557730343579"><br>$$<br>\eta_{min} 和 \eta_{max}是学习率的范围。 \<br>T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch增加，他可以是小数。 \<br>当t=0\ and\ T_{cur} = 0时，T_{cur}=T_{max} \<br>当T_{cur}=T_{max}时， cos 函数会输出-1.因此，\eta_t = \eta_{min}^i</p>
-<p>$$<br>图1的绿色线、黑色线和灰色线显示了lr的变化过程。分别固定了$T_i$为50，100，200.</p>
+<p><img src="E:\刘志伟的文件\论文笔记\pytorch\assets\1557730343579.png" alt="1557730343579"></p>
+<script type="math/tex; mode=display">
+\eta_{min} 和 \eta_{max}是学习率的范围。 \\
+T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch增加，他可以是小数。 \\
+当t=0\ and\ T_{cur} = 0时，T_{cur}=T_{max} \\
+当T_{cur}=T_{max}时， cos 函数会输出-1.因此，\eta_t = \eta_{min}^i</script><p>图1的绿色线、黑色线和灰色线显示了lr的变化过程。分别固定了$T_i$为50，100，200.</p>
 <p>SGDR更进一步选了这么一方法，首先开始的时候$T_i$很小，然后在每次restart都通过乘上一个 $T_{mult}$的因此来提高。例如图一中的暗绿和粉色线。</p>
 <h2 id="SGDR-in-pytorch"><a href="#SGDR-in-pytorch" class="headerlink" title="SGDR in pytorch"></a>SGDR in pytorch</h2><p>pytorch只实现了CosineAnnealingLR，并没有实现restart部分。</p>
 <p><code>torch.optim.lr_scheduler.CosineAnnealingLR</code>(<em>optimizer</em>, <em>T_max</em>, <em>eta_min=0</em>, <em>last_epoch=-1</em>)</p>
 <p><img src="/images/assets/1557731465430.png" alt="1557731465430"></p>
 <p>它的用法如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br></pre></td></tr></table></figure>
-
 <p>实际上，可以通过下面的方式来实现SGDR</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'Reset scheduler'</span>)</span><br><span class="line">    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br></pre></td></tr></table></figure>
-
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18" target="_blank" rel="noopener">https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18</a></p>
 <p><a href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR" target="_blank" rel="noopener">https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR</a></p>
 <p><a href="https://arxiv.org/pdf/1608.03983.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1608.03983.pdf</a></p>
@@ -2422,6 +2436,8 @@
   
     
       
+        
+      
     
       
     
@@ -2443,6 +2459,46 @@
     
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

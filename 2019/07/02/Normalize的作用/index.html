@@ -385,21 +385,23 @@
         <p>normalize的最主要的一个作用是将数据中的不同的特征缩放到同一个量纲上（或者可以说无量纲化）。比如果说有一个特征值的范围是[0,1]另一个特征的范围是[0,1000],那么优化算法（尤其是基于梯度的优化方法）在更新的时候尤其会重视特征值大的特征，而忽视特征值小的特征。为了避免这个问题就需要normalization了，把所有的特征放在一个量纲上。</p>
 <p><img src="/images/assets/743682-20151108152327539-2039269197.png" alt="img"></p>
 <h2 id="常用的normalization的方法"><a href="#常用的normalization的方法" class="headerlink" title="常用的normalization的方法"></a>常用的normalization的方法</h2><p>主要有两种方法，min-max normalization 和 Z-score normalization。</p>
-<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><p>$$<br>x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}<br>$$</p>
-<p>主要有两个缺陷:</p>
+<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><script type="math/tex; mode=display">
+x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}</script><p>主要有两个缺陷:</p>
 <ol>
 <li>新加入的数据会导致$x_{max}$和$x_{min}$ 会发生变化，需要重新定义</li>
 <li>异常值会极大地影响minmax的表现</li>
 <li>minmax不适用于长尾分布</li>
 </ol>
 <p>比较适合于min和max固定的任务，比如图像像素归一化。</p>
-<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><p>$$<br>x_{zscore} = \frac{x - min(x)}{stdev(x)}<br>$$</p>
-<p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
+<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><script type="math/tex; mode=display">
+x_{zscore} = \frac{x - min(x)}{stdev(x)}</script><p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
 <blockquote>
-<p>Caveat:* it is a common misconception that <em>standardized scores</em> such as <em>z-scores</em> alter the shape of a distribution; in particular, be aware that a <em>z</em>-scores cannot magically make a non-normal variable normal.</p>
+<p>Caveat:<em> it is a common misconception that </em>standardized scores<em> such as </em>z-scores<em> alter the shape of a distribution; in particular, be aware that a </em>z*-scores cannot magically make a non-normal variable normal.</p>
 </blockquote>
 <p>其他的还有logistic，lognormal，TanH等，见</p>
-<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即<br>$$<br>x = \frac{x}{norm(x)}<br>$$<br>不同的norm会有不同的结果，常见的是L2 norm</p>
+<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即</p>
+<script type="math/tex; mode=display">
+x = \frac{x}{norm(x)}</script><p>不同的norm会有不同的结果，常见的是L2 norm</p>
 
       
     </div>

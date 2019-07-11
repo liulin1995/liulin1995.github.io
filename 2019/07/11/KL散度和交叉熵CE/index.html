@@ -90,18 +90,18 @@
 
 
 
-  <meta name="description" content="KL散度首先回顾熵的定义：$$H(x)=E_{x \sim  p}[I(x)]$$其中$I[x]$是时间x=x的自信息：$$I[x]=-log \ p(x)$$自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。 如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。$$D_{KL}(P||Q)= E_{x \sim  p">
+  <meta name="description" content="KL散度首先回顾熵的定义：  H(x)=E_{x \sim  p}[I(x)]其中$I[x]$是时间x=x的自信息：  I[x]=-log \ p(x)自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。 如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。  D_{KL}(P||Q)= E_{x \sim  p}[lo">
 <meta name="keywords" content="KL散度,交叉熵">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KL散度和交叉熵CE">
 <meta property="og:url" content="http://yoursite.com/2019/07/11/KL散度和交叉熵CE/index.html">
 <meta property="og:site_name" content="LZW&#39; Blog">
-<meta property="og:description" content="KL散度首先回顾熵的定义：$$H(x)=E_{x \sim  p}[I(x)]$$其中$I[x]$是时间x=x的自信息：$$I[x]=-log \ p(x)$$自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。 如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。$$D_{KL}(P||Q)= E_{x \sim  p">
+<meta property="og:description" content="KL散度首先回顾熵的定义：  H(x)=E_{x \sim  p}[I(x)]其中$I[x]$是时间x=x的自信息：  I[x]=-log \ p(x)自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。 如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。  D_{KL}(P||Q)= E_{x \sim  p}[lo">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-11T07:07:25.764Z">
+<meta property="og:updated_time" content="2019-07-11T07:53:24.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KL散度和交叉熵CE">
-<meta name="twitter:description" content="KL散度首先回顾熵的定义：$$H(x)=E_{x \sim  p}[I(x)]$$其中$I[x]$是时间x=x的自信息：$$I[x]=-log \ p(x)$$自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。 如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。$$D_{KL}(P||Q)= E_{x \sim  p">
+<meta name="twitter:description" content="KL散度首先回顾熵的定义：  H(x)=E_{x \sim  p}[I(x)]其中$I[x]$是时间x=x的自信息：  I[x]=-log \ p(x)自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。 如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。  D_{KL}(P||Q)= E_{x \sim  p}[lo">
 
 
 
@@ -321,7 +321,7 @@
                 
               
 
-              <time title="Erstellt: 2019-07-11 15:04:13 / Geändert am: 15:07:25" itemprop="dateCreated datePublished" datetime="2019-07-11T15:04:13+08:00">2019-07-11</time>
+              <time title="Erstellt: 2019-07-11 15:04:13 / Geändert am: 15:53:24" itemprop="dateCreated datePublished" datetime="2019-07-11T15:04:13+08:00">2019-07-11</time>
             </span>
           
 
@@ -380,11 +380,26 @@
       
 
       
-        <h3 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h3><p>首先回顾熵的定义：<br>$$<br>H(x)=E_{x \sim  p}[I(x)]<br>$$<br>其中$I[x]$是时间x=x的自信息：<br>$$<br>I[x]=-log \ p(x)<br>$$<br>自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。</p>
-<p>如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。<br>$$<br>D_{KL}(P||Q)= E_{x \sim  p}[log \frac{P(x)}{Q(x)}]=E_{x \sim  p}[log \ P(x) - log \ Q(x)]<br>$$<br>需要注意的是$D_{KL}(P||Q)$不等于$D_{KL}(Q||P)$，KL散度并不是一个距离，因此他们有对称性。</p>
-<p>KL散度的离散情况为：<br>$$<br>D_{KL}(P||Q)= \Sigma_x\ P(x) [log\frac{P(x)}{Q(x)}] \<br>= \Sigma_x\ P(x) [log\ P(x)-log \ Q(x)] \<br>= \Sigma_x\ P(x) \ log\ P(x) - \Sigma_x\ P(x)\ log \ Q(x) \<br>$$<br>可以看的出来，KL散度表达的是一种编码在另一种编码表示下，所需要增加的熵的信息。</p>
-<h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>交叉熵的定义为：<br>$$<br>CE(P,Q)=-E_{x \sim  p}[log \ Q(x)]<br>$$<br>离散情况为：<br>$$<br>CE(P,Q) = \Sigma_x\ P(x)logQ(x)<br>$$<br>它和KL散度很相似，二者只相差了左边的一项：</p>
-<p>$$<br>CE(P,Q) = H(P) + D_{KL}(P||Q)<br>$$<br>需要注意的是，在机器学习中CE常被用作分类任务的loss函数。此时，由于样本的标签是固定的，则$ H(P)$的值是固定的，那么最小化CE就等价于最小化KL散度。这里的一个思想是吧样本的标签看作一个分布，样本的预测标签看成另一个分布。</p>
+        <h3 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h3><p>首先回顾熵的定义：</p>
+<script type="math/tex; mode=display">
+H(x)=E_{x \sim  p}[I(x)]</script><p>其中$I[x]$是时间x=x的自信息：</p>
+<script type="math/tex; mode=display">
+I[x]=-log \ p(x)</script><p>自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。</p>
+<p>如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。</p>
+<script type="math/tex; mode=display">
+D_{KL}(P||Q)= E_{x \sim  p}[log \frac{P(x)}{Q(x)}]=E_{x \sim  p}[log \ P(x) - log \ Q(x)]</script><p>需要注意的是$D_{KL}(P||Q)$不等于$D_{KL}(Q||P)$，KL散度并不是一个距离，因此他们有对称性。</p>
+<p>KL散度的离散情况为：</p>
+<script type="math/tex; mode=display">
+D_{KL}(P||Q)= \Sigma_x\ P(x) [log\frac{P(x)}{Q(x)}] \\
+= \Sigma_x\ P(x) [log\ P(x)-log \ Q(x)] \\
+= \Sigma_x\ P(x) \ log\ P(x) - \Sigma_x\ P(x)\ log \ Q(x) \\</script><p>可以看的出来，KL散度表达的是一种编码在另一种编码表示下，所需要增加的熵的信息。</p>
+<h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>交叉熵的定义为：</p>
+<script type="math/tex; mode=display">
+CE(P,Q)=-E_{x \sim  p}[log \ Q(x)]</script><p>离散情况为：</p>
+<script type="math/tex; mode=display">
+CE(P,Q) = \Sigma_x\ P(x)logQ(x)</script><p>它和KL散度很相似，二者只相差了左边的一项：</p>
+<script type="math/tex; mode=display">
+CE(P,Q) = H(P) + D_{KL}(P||Q)</script><p>需要注意的是，在机器学习中CE常被用作分类任务的loss函数。此时，由于样本的标签是固定的，则$ H(P)$的值是固定的，那么最小化CE就等价于最小化KL散度。这里的一个思想是吧样本的标签看作一个分布，样本的预测标签看成另一个分布。</p>
 
       
     </div>
@@ -781,6 +796,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 

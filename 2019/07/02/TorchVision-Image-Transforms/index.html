@@ -90,18 +90,18 @@
 
 
 
-  <meta name="description" content="transforms主要是图像transform, 它们可以通过使用Compose来链接起来。 1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()])  Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL im">
+  <meta name="description" content="transforms主要是图像transform, 它们可以通过使用Compose来链接起来。 1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()]) Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL ima">
 <meta name="keywords" content="pytorch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TorchVison Image Transforms">
 <meta property="og:url" content="http://yoursite.com/2019/07/02/TorchVision-Image-Transforms/index.html">
 <meta property="og:site_name" content="LZW&#39; Blog">
-<meta property="og:description" content="transforms主要是图像transform, 它们可以通过使用Compose来链接起来。 1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()])  Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL im">
+<meta property="og:description" content="transforms主要是图像transform, 它们可以通过使用Compose来链接起来。 1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()]) Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL ima">
 <meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-07-02T14:10:49.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TorchVison Image Transforms">
-<meta name="twitter:description" content="transforms主要是图像transform, 它们可以通过使用Compose来链接起来。 1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()])  Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL im">
+<meta name="twitter:description" content="transforms主要是图像transform, 它们可以通过使用Compose来链接起来。 1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()]) Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL ima">
 
 
 
@@ -382,14 +382,12 @@
       
         <p>transforms主要是图像transform, 它们可以通过使用Compose来链接起来。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">transforms.Compose([</span><br><span class="line">  transforms.CenterCrop(<span class="number">10</span>),</span><br><span class="line">  transforms.ToTensor()</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
-
 <h2 id="Transforms-on-PIL-Image"><a href="#Transforms-on-PIL-Image" class="headerlink" title="Transforms on PIL Image"></a>Transforms on PIL Image</h2><h4 id="torchvision-transforms-CenterCrop-size"><a href="#torchvision-transforms-CenterCrop-size" class="headerlink" title="torchvision.transforms.CenterCrop(size):"></a><code>torchvision.transforms.CenterCrop</code>(<em>size</em>):</h4><p>对给定的PIL image在中心处裁剪。</p>
 <p>参数为：<strong>size</strong>, int or sequence. 如果是一个sequence，比如（h,w）会裁剪一个h*w大小的图片。</p>
 <p>如果是int，那么会裁剪大小为（size，size）的图像</p>
 <h4 id="torchvision-transforms-FiveCrop-size"><a href="#torchvision-transforms-FiveCrop-size" class="headerlink" title="torchvision.transforms.FiveCrop(size)"></a><code>torchvision.transforms.FiveCrop</code>(<em>size</em>)</h4><p>对给定的PIL image的四个角和中心进行裁剪</p>
 <p>其他同上。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>transform = Compose([</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>   FiveCrop(size), <span class="comment"># this is a list of PIL Images</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>   Lambda(<span class="keyword">lambda</span> crops: torch.stack([ToTensor()(crop) <span class="keyword">for</span> crop <span class="keyword">in</span> crops])) <span class="comment"># returns a 4D tensor</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>])</span><br></pre></td></tr></table></figure>
-
 <h4 id="torchvision-transforms-Pad-padding-fill-0-padding-mode-’constant’"><a href="#torchvision-transforms-Pad-padding-fill-0-padding-mode-’constant’" class="headerlink" title="torchvision.transforms.Pad(padding, fill=0, padding_mode=’constant’)"></a><code>torchvision.transforms.Pad</code>(<em>padding</em>, <em>fill=0</em>, <em>padding_mode=’constant’</em>)</h4><p>用给定的pad值对图像的4个sides进行填充</p>
 <p>参数：padding: 用于确定每个border填充的数量. </p>
 <p>​    如果只有一个int，对所有的边进行一样的填充数量</p>
@@ -408,7 +406,9 @@
 <h4 id="torchvision-transforms-Resize-size-interpolation-2"><a href="#torchvision-transforms-Resize-size-interpolation-2" class="headerlink" title="torchvision.transforms.Resize(size, interpolation=2)"></a><code>torchvision.transforms.Resize</code>(<em>size</em>, <em>interpolation=2</em>)</h4><p>将输入的PILimage的大小resize到给定的大小</p>
 <p>参数：<strong>size</strong> (<em>sequence</em> <em>or</em> int)期望的输出。如果size是int，那么短的边会匹配到这个数字。ie，如果height&gt;height, 那么image会被缩放为(size*height/width, size). 如果size为sequence，那么大小会被匹配到给定的（h,w）。</p>
 <p><strong>interpolation</strong>: 插值的方法，默认为PIL.Image.BILINEAR</p>
-<h2 id="Transforms-on-torch-Tensor"><a href="#Transforms-on-torch-Tensor" class="headerlink" title="Transforms on torch.*Tensor"></a>Transforms on torch.*Tensor</h2><h4 id="torchvision-transforms-Normalize-mean-std-inplace-False"><a href="#torchvision-transforms-Normalize-mean-std-inplace-False" class="headerlink" title="torchvision.transforms.Normalize(mean, std, inplace=False)"></a><code>torchvision.transforms.</code>Normalize(<em>mean</em>, <em>std</em>, <em>inplace=False</em>)</h4><p>归一化给定的mean，std来归一化一张tensor image。对于每一个channel进行<br>$$<br>\frac{（input[channel - mean[channel]）}{std[channel]}<br>$$<br>参数：mean：每个channel的均值</p>
+<h2 id="Transforms-on-torch-Tensor"><a href="#Transforms-on-torch-Tensor" class="headerlink" title="Transforms on torch.*Tensor"></a>Transforms on torch.*Tensor</h2><h4 id="torchvision-transforms-Normalize-mean-std-inplace-False"><a href="#torchvision-transforms-Normalize-mean-std-inplace-False" class="headerlink" title="torchvision.transforms.Normalize(mean, std, inplace=False)"></a><code>torchvision.transforms.</code>Normalize(<em>mean</em>, <em>std</em>, <em>inplace=False</em>)</h4><p>归一化给定的mean，std来归一化一张tensor image。对于每一个channel进行</p>
+<script type="math/tex; mode=display">
+\frac{（input[channel - mean[channel]）}{std[channel]}</script><p>参数：mean：每个channel的均值</p>
 <p>std: 每个channel的std值</p>
 <p>返回：normalized Tensor image</p>
 <p>返回类型：Tensor</p>
@@ -425,7 +425,6 @@
 <p>其他的，tensors不会进行缩放</p>
 <h4 id="FiveCrop和TenCrop"><a href="#FiveCrop和TenCrop" class="headerlink" title="FiveCrop和TenCrop"></a>FiveCrop和TenCrop</h4><p>这两种操作之后,一张图变成五张,一张图变成十张,那么在训练或者测试的时候怎么避免和标签混淆呢<br>思路是,这多个图拥有相同的标签,假如是分类任务,就可以使用交叉熵进行,然后求10张图的平均</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">transform = Compose([</span><br><span class="line">    TenCrop(size), <span class="comment"># this is a list of PIL Images</span></span><br><span class="line">    Lambda(<span class="keyword">lambda</span> crops: torch.stack([ToTensor()(crop) <span class="keyword">for</span> crop <span class="keyword">in</span> crops])) <span class="comment"># returns a 4D tensor</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">#In your test loop you can do the following:</span></span><br><span class="line">input, target = batch <span class="comment"># input is a 5d tensor, target is 2d</span></span><br><span class="line">bs, ncrops, c, h, w = input.size()</span><br><span class="line">result = model(input.view(<span class="number">-1</span>, c, h, w)) <span class="comment"># fuse batch size and ncrops</span></span><br><span class="line"></span><br><span class="line">result_avg = result.view(bs, ncrops, <span class="number">-1</span>).mean(<span class="number">1</span>) <span class="comment"># avg over crops</span></span><br></pre></td></tr></table></figure>
-
 
       
     </div>
