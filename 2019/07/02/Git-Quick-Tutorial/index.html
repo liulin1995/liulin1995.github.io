@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only. install and setup1sudo apt">
+<meta name="keywords" content="github">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Quick Tutorial">
+<meta property="og:url" content="http://yoursite.com/2019/07/02/Git-Quick-Tutorial/index.html">
+<meta property="og:site_name" content="LZW&#39; Blog">
+<meta property="og:description" content="I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only. install and setup1sudo apt">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://yoursite.com/images/assets/1562033018197.png">
+<meta property="og:image" content="http://yoursite.com/images/assets/1562034120363.png">
+<meta property="og:updated_time" content="2019-07-02T13:41:55.292Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Quick Tutorial">
+<meta name="twitter:description" content="I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only. install and setup1sudo apt">
+<meta name="twitter:image" content="http://yoursite.com/images/assets/1562033018197.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/02/Git-Quick-Tutorial/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Git Quick Tutorial | LZW' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LZW' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/Git-Quick-Tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git Quick Tutorial
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 21:11:38 / Geändert am: 21:41:55" itemprop="dateCreated datePublished" datetime="2019-07-02T21:11:38+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only.</p>
+<h2 id="install-and-setup"><a href="#install-and-setup" class="headerlink" title="install and setup"></a>install and setup</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git-all</span><br></pre></td></tr></table></figure>
+
+<h2 id="basic-setup"><a href="#basic-setup" class="headerlink" title="basic setup"></a>basic setup</h2><p>save your git username and email so that you won’t have to enter them in again for future git commands</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;user name&quot;</span><br><span class="line">git config --global user.email &quot;email&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="colours"><a href="#colours" class="headerlink" title="colours"></a>colours</h2><p>enable some extra colouring to git, so that you can read the output of the commands easier</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global coler.ui true</span><br></pre></td></tr></table></figure>
+
+<h2 id="create-a-new-repository"><a href="#create-a-new-repository" class="headerlink" title="create a new repository"></a>create a new repository</h2><p>using the starndard ‘cd’ command to navigate the directory you want to setup version. Now you can initialize a git repository like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>this create a new subdirectory name .git that contained all of your necessary repository files - a Git repository skeleton. At this point, nothing in you project in tracked yet.</p>
+<h2 id="checkout-a-repository"><a href="#checkout-a-repository" class="headerlink" title="checkout a repository"></a>checkout a repository</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone /path/to/repository</span><br></pre></td></tr></table></figure>
+
+<p>when using a remote server, your command will be</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone username@hose:/path/to/repository</span><br></pre></td></tr></table></figure>
+
+<h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><p><strong>local  repository</strong> consists of three “trees” maintained by git. the fist one is your <strong>Working Directory</strong> which holds the actual files. the second one is the <strong>Index</strong> which acts as a staging area (充当临时区域) and finally the <strong>HEAD</strong> which points to the last commit you’ve made.</p>
+<p><img src="/images/assets/1562033018197.png" alt="1562033018197"></p>
+<h2 id="add-amp-commit"><a href="#add-amp-commit" class="headerlink" title="add &amp; commit"></a>add &amp; commit</h2><p>To start version-controlling existing files you should start by tracking those files and do an initial commit. To accomplish that, you start by adding the files to git that you would like to be attached to you git project.</p>
+<p>you can popose changes (add it to the Index) using </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add *</span><br></pre></td></tr></table></figure>
+
+<p>This is the first step in the basic git workflow. To actually commit these change use</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commmit -m &quot;commit message&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Now the file is committed to the HEAD,  but no in your remote repository yet.</p>
+<h2 id="remote-backup"><a href="#remote-backup" class="headerlink" title="remote backup"></a>remote backup</h2><p>if you want to save and backup your project remotely, you’ll need to create a remote repository on GitHub. So first head on over github.com and create a repository. Then, use the link of the repository to add it as the origin of your local git project i.e. where that code wil be stored</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin \</span><br><span class="line">https://github.com/user/repo.git</span><br></pre></td></tr></table></figure>
+
+<p>then you can go ahead and push you code to github… you’ve backed up your code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
+<h2 id="pushing-changes"><a href="#pushing-changes" class="headerlink" title="pushing changes"></a>pushing changes</h2><p>your changes are now in the HEAD of your local working copy. To send those changes to your remote repository, execute</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
+<p>change <em>master</em> to whatever branch you want to push your changes to</p>
+<p>If you have not cloned an existing repository and want to connect your repository to a remote server, you need to add it with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;server&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Now you are able to push your changes to the selected remote server.</p>
+<h2 id="status-checking"><a href="#status-checking" class="headerlink" title="status checking"></a>status checking</h2><p>git status can used to determine which files are in which state. </p>
+<p>It allows you to see which of your files have already been committed and which haven’t. If you run this command when all files have already been committed and pushed, you should see something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line"># On branch master</span><br><span class="line">nothing to commit (working directory clean)</span><br></pre></td></tr></table></figure>
+
+<p>If you add a new file to your project, and the file didn’t exist before, when you run git status you should see your untracked file like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"># On branch master</span><br><span class="line"># Untracked files:</span><br><span class="line">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">#</span><br><span class="line">#   README</span><br><span class="line">nothing added to commit but untracked files present (use &quot;git add&quot; to track)</span><br></pre></td></tr></table></figure>
+
+<p>This make git status really useful for a quick check of what you have backed up already and what you only have locally.</p>
+<h2 id="advanced-file-adding"><a href="#advanced-file-adding" class="headerlink" title="advanced file adding"></a>advanced file adding</h2><p>Instead of trying to look for all the files that have changed and adding them one-by-one, we can do the following:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">### Adding files one by one</span><br><span class="line">git add filename</span><br><span class="line"></span><br><span class="line">### Adding all files in the current directory</span><br><span class="line">git add -A</span><br><span class="line"></span><br><span class="line">### Adding all files changes in the current directory</span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line">### Choosing what changes to add (this will got through all your  ### changes and you can &apos;Y&apos; or &apos;N&apos; the changes)</span><br><span class="line">git add -p</span><br></pre></td></tr></table></figure>
+
+<h2 id="advanced-commits"><a href="#advanced-commits" class="headerlink" title="advanced commits"></a>advanced commits</h2><p>if you want to do something more elaborate you’ll need a bit more:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">### Commit staged file(s) </span><br><span class="line">### This is typically used for shorter commit messages</span><br><span class="line">git commit -m &apos;commit message&apos;</span><br><span class="line"></span><br><span class="line">### Add file and commit in one shot</span><br><span class="line">git commit filename -m &apos;commit message&apos;</span><br><span class="line"></span><br><span class="line">### Add file and commit staged file</span><br><span class="line">git commit -am &apos;insert commit message&apos;</span><br><span class="line"></span><br><span class="line">### Changing your most recent commit message</span><br><span class="line">git commit --amend &apos;new commit message&apos; </span><br><span class="line"></span><br><span class="line"># Combine a sequence of commits together into a single one </span><br><span class="line">### You might use this to organise a messy commit history</span><br><span class="line">git rebase -i</span><br><span class="line">### This will give you an interface on your core editor:</span><br><span class="line"># Commands:</span><br><span class="line">#  p, pick = use commit</span><br><span class="line">#  r, reword = use commit, but edit the commit message</span><br><span class="line">#  e, edit = use commit, but stop for amending</span><br><span class="line">#  s, squash = use commit, but meld into previous commit</span><br><span class="line">#  f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message</span><br><span class="line">#  x, exec = run command (the rest of the line) using shell</span><br></pre></td></tr></table></figure>
+
+<h1 id="Branching-and-merging"><a href="#Branching-and-merging" class="headerlink" title="Branching and merging"></a>Branching and merging</h1><p>The <strong>master</strong> branch of your GitHub repository should always contain <strong>working and stable code</strong>. However, you may want to also back up some code that you are currently working on, but isn’t entirely stable. Maybe you’re adding a new feature, you’re experimenting and breaking the code a lot, but you still want to keep a back up to save your progress!</p>
+<p>Branching allows you to work on a <em>separate</em> copy of your code without affecting the master branch. When you first create a branch, a complete clone of your master branch is created under a new name. You can then modify the code in this new branch independently, including committing files and such. Once you’re new feature has been fully integrated and the code is stable, you <em>merge</em> it into the master branch!</p>
+<h2 id="branching"><a href="#branching" class="headerlink" title="branching"></a>branching</h2><p>branches are used to develop features isolated from each other. The master branch is the “default” branch when you create a repository. Use other branches for devolopment and merge then back  to the master branch upon compleiton.</p>
+<p><img src="/images/assets/1562034120363.png" alt="1562034120363"></p>
+<p>create a new branch named ‘feature_x” and switch to it using </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b feature_x</span><br></pre></td></tr></table></figure>
+
+<p>switch back to master</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
+
+<p>and delete the branch again</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d feature_x</span><br></pre></td></tr></table></figure>
+
+<p>a branch  is not available to others unless you push the branch to you remote repository</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Here’s all of the things you need to create and work on a branch:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">### Create a local branch to work on</span><br><span class="line">git checkout -b branchname</span><br><span class="line"></span><br><span class="line">### Switching between 2 branches </span><br><span class="line">git checkout branch_1</span><br><span class="line">git checkout branch_2</span><br><span class="line">### Pushing your new local branch to remote as backup</span><br><span class="line">git push -u origin branch_2</span><br><span class="line"></span><br><span class="line">### Deleting a local branch - this won&apos;t let you delete a branch  ### that hasn&apos;t been merged yet</span><br><span class="line">git branch -d branch_2</span><br><span class="line"></span><br><span class="line">### Deleting a local branch - this WILL delete a branch even if it ### hasn&apos;t been merged yet!</span><br><span class="line">git branch -D branch_2</span><br><span class="line"></span><br><span class="line">### Viewing all current branches for the repository, including both ### local and remote branches. Great to see if you already have a ### branch for a particular feature addition, especially on bigger ### projects</span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line">### Viewing all branches that have been merged into your current  ### branch, including local and remote. Great for seeing where all ### your code has come from!</span><br><span class="line">git branch -a --merged</span><br><span class="line"></span><br><span class="line">### Viewing all branches that haven&apos;t been merged into your current ### branch, including local and remote</span><br><span class="line">git branch -a --no-merged</span><br><span class="line"></span><br><span class="line">### Viewing all local branches</span><br><span class="line">git branch</span><br><span class="line"></span><br><span class="line">### Viewing all remote branches</span><br><span class="line">git branch -r</span><br><span class="line"></span><br><span class="line"># Rebase master branch into local branch</span><br><span class="line">$ git rebase origin/master</span><br><span class="line"></span><br><span class="line"># Pushing local branch after rebasing master into local branch</span><br><span class="line">$ git push origin +branchname</span><br></pre></td></tr></table></figure>
+
+<h2 id="update-amp-merge"><a href="#update-amp-merge" class="headerlink" title="update &amp; merge"></a>update &amp; merge</h2><p>to update your local repository to newest commit, execute</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<p>in your working directory to fetch and merge remote changes.</p>
+<p>to merge another branch into your active branch (e.g. master), use</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge &lt;branch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>in both cases git tries to auto-merge changes. unfortunately, this is not always possible and results in conflicts, you are responsible to merge those conflicts manually by editing the files shown by git. After changing, you need to mark them as merged with</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>before merging changes, you can also preview them by using </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff &lt;source_branch&gt; &lt;target_branch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Once you’re done adding the new feature to your branch, you’ll want to merge it back into the master branch, so that your master has all of the latest code features.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">### First make sure you&apos;re looking at master branch</span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line">### Now merge your branch to master</span><br><span class="line">git merge branch_2</span><br></pre></td></tr></table></figure>
+
+<h2 id="tagging"><a href="#tagging" class="headerlink" title="tagging"></a>tagging</h2><p>it’s recommended to create tags for software releases, this is a known concept, which also exists in SVN. you can  create a new tag named 1.0.0 by executing </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag 1.0.0 1b2e1d63ff</span><br></pre></td></tr></table></figure>
+
+<p>1b2e1d63ff stands for the first 10 characters of the commit id you want to reference with your tag. you can get the commit id by looking ant the …</p>
+<h2 id="replace-local-changes"><a href="#replace-local-changes" class="headerlink" title="replace local changes"></a>replace local changes</h2><p>In case you did something wrong, which for sure never happends :), you can replace local changes using the command</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --&lt;filename&gt;</span><br></pre></td></tr></table></figure>
+
+<p>this replace the changes in your working tree with the last content int HEAD. Changes already added to the index, as well as new files, will be kept.</p>
+<p>if you instead want to drop all your local changes and commits, fetch the latest history  form the server and point your local master branch at it like this</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin</span><br><span class="line">git reset --hard origin/master</span><br></pre></td></tr></table></figure>
+
+<h1 id="Fixing-mistakes-and-backtracking"><a href="#Fixing-mistakes-and-backtracking" class="headerlink" title="Fixing mistakes and backtracking"></a>Fixing mistakes and backtracking</h1><p>Mistakes happen …. and they happen frequently with coding! The important thing is that we’re able to fix them.</p>
+<p>Have no fear here! Git has everything you need in case you make a mistake with the code you push, overwrote something, or just want to make a correction to something you pushed.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">### Switch to the version of the code of the most recent commit</span><br><span class="line">git reset HEAD </span><br><span class="line">git reset HEAD -- filename # for a specific file</span><br><span class="line">### Switch to the version of the code before the most recent commit</span><br><span class="line">git reset HEAD^ -- filename</span><br><span class="line">git reset HEAD^ -- filename # for a specific file</span><br><span class="line">### Switch back 3 or 5 commits</span><br><span class="line">git reset HEAD~3 -- filename</span><br><span class="line">git reset HEAD~3 -- filename # for a specific file</span><br><span class="line">git reset HEAD~5 -- filename</span><br><span class="line">git reset HEAD~5 -- filename # for a specific file</span><br><span class="line">### Switch back to a specific commit</span><br><span class="line">### Where the &apos;0766c053&apos; is the commit ID</span><br><span class="line">git reset 0766c053 -- filename</span><br><span class="line">git reset 0766c053 -- filename # for a specific file</span><br><span class="line">### The previous commands were what&apos;s known as &quot;soft&quot; resets. Your ### code is reset, but git will still keep a copy of the other code ### handy in case you need it. On the other hand, the --hard flag ### tells Git to overwrite all changes in the working directory.</span><br><span class="line">git reset --hard 0766c053</span><br></pre></td></tr></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://rogerdudler.github.io/git-guide/" target="_blank" rel="noopener">https://rogerdudler.github.io/git-guide/</a></p>
+<p><a href="https://medium.com/@george.seif94/a-full-tutorial-on-how-to-use-github-88466bac7d42" target="_blank" rel="noopener">https://medium.com/@george.seif94/a-full-tutorial-on-how-to-use-github-88466bac7d42</a></p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/github/" rel="tag"># github</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/02/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/02/Snapshot-Ensembles/" rel="prev" title="Snapshot Ensembles">
+                Snapshot Ensembles <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-and-setup"><span class="nav-number">1.</span> <span class="nav-text">install and setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basic-setup"><span class="nav-number">2.</span> <span class="nav-text">basic setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#colours"><span class="nav-number">3.</span> <span class="nav-text">colours</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#create-a-new-repository"><span class="nav-number">4.</span> <span class="nav-text">create a new repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkout-a-repository"><span class="nav-number">5.</span> <span class="nav-text">checkout a repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">6.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-amp-commit"><span class="nav-number">7.</span> <span class="nav-text">add &amp; commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#remote-backup"><span class="nav-number">8.</span> <span class="nav-text">remote backup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pushing-changes"><span class="nav-number">9.</span> <span class="nav-text">pushing changes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#status-checking"><span class="nav-number">10.</span> <span class="nav-text">status checking</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#advanced-file-adding"><span class="nav-number">11.</span> <span class="nav-text">advanced file adding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#advanced-commits"><span class="nav-number">12.</span> <span class="nav-text">advanced commits</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Branching-and-merging"><span class="nav-number"></span> <span class="nav-text">Branching and merging</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#branching"><span class="nav-number">1.</span> <span class="nav-text">branching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#update-amp-merge"><span class="nav-number">2.</span> <span class="nav-text">update &amp; merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tagging"><span class="nav-number">3.</span> <span class="nav-text">tagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#replace-local-changes"><span class="nav-number">4.</span> <span class="nav-text">replace local changes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fixing-mistakes-and-backtracking"><span class="nav-number"></span> <span class="nav-text">Fixing mistakes and backtracking</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
