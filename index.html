@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite.com/">
+
+    <!-- Bootstrap Core CSS -->
+
+   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
+
+    
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+
+    <link rel="stylesheet" href="/css/donate.css">
+	<link rel="stylesheet" href="/css/w3.css">
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+    }
+   .post-heading{
+    padding:20px;
+    }
+  .person {
+    border: 10px solid transparent;
+    margin-bottom: 25px;
+    width: 80%;
+    height: 80%;
+    opacity: 0.7;
+  }
+  .person:hover {
+    border-color: #f1f1f1;
+  }
+
+</style>
+
+<header id="headerid" class="w3-indigo intro-header" style="position:relative;">
+    <!-- Signature -->
+	
+        <div class="container">
+            <div class=" row" >
+			
+			<canvas id="particles-js-canvas" style="position:absolute;z-index:1;top:0px;left:0px;" width="100%" height="50%"></canvas>
+			
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="z-index:2;">
+                
+				
+                    <div class="site-heading"  style="padding:40px">
+                        <h1>LZW&#39; Blog</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading"></span>
+                    </div>
+                
+                
+                </div>
+            </div>
+        </div>
+  
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">LZW&#39; Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a  href="/">Homepage</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/11/KL散度和交叉熵CE/">
+        <h2 class="post-title">
+            KL散度和交叉熵CE
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            KL散度首先回顾熵的定义：$$H(x)=E_{x \sim  p}[I(x)]$$其中$I[x]$是时间x=x的自信息：$$I[x]=-log \ p(x)$$自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。
+如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。$$D_{KL}(P||Q)= E_{x \sim......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-11
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/Cyclical-Learning-Rates-for-Training-Neural-Networks/">
+        <h2 class="post-title">
+            Cyclical Learning Rates for Training Neural Networks
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            paper details深度学习中有一个常识是，学习率在训练的过程中需要逐渐减小。但是这篇文章却给出了一个让人惊讶的事实，就是训练过程中的学习率如果是多变（rise and fall）的是有益于训练的。因此作者建议学习率在一个范围内周期变化，而不是将其设置为固定值。
+Cyclical Learning Rates来源于这么一个观察：学习率的增加虽然会带来短期的副作用但是长期来看是有益的。因......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/TorchVision-Image-Transforms/">
+        <h2 class="post-title">
+            TorchVison Image Transforms
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            transforms主要是图像transform, 它们可以通过使用Compose来链接起来。
+1234transforms.Compose([  transforms.CenterCrop(10),  transforms.ToTensor()])
+
+Transforms on PIL Imagetorchvision.transforms.CenterCrop(size):对给定的PIL......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/长尾分布特征的处理/">
+        <h2 class="post-title">
+            长尾分布特征的处理
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            对特征进行log处理
+
+log后
+
+在kaggle比赛中，不仅可以对特征进行这样的log矫正的，对目标值也可以进行这样的矫正。
+...
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/Pytorch加载和读取模型/">
+        <h2 class="post-title">
+            Pytorch加载和读取模型
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            首先看下有关的函数：
+
+torch.save: 将一个文件保存到硬盘上，内部是用了pickle库
+troch.load：用的pickle的unpicking方法将存储在硬盘上的object读取到内存中
+torch.nn.Module.load_state_dict：从一个state_dict中加载一个模型的参数
+
+什么是state_dict:
+pytorch中的每个module的可学习的参数......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/Pytorch-TensorboardX-可视化/">
+        <h2 class="post-title">
+            Pytorch TensorboardX 可视化
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            安装tensorboard12pip install tensorboardXpip install tensorflow
+
+使用引入并创建一个SummaryWriter1234from tensorboardX import SummaryWriterwriter = SummaryWriter(&apos;./runs/dogcat1&apos;)  //log_dir is ./run......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/Normalize的作用/">
+        <h2 class="post-title">
+            Normalize的作用
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            normalize的最主要的一个作用是将数据中的不同的特征缩放到同一个量纲上（或者可以说无量纲化）。比如果说有一个特征值的范围是[0,1]另一个特征的范围是[0,1000],那么优化算法（尤其是基于梯度的优化方法）在更新的时候尤其会重视特征值大的特征，而忽视特征值小的特征。为了避免这个问题就需要normalization了，把所有的特征放在一个量纲上。
+
+常用的normalization的方......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/PyTorch-weight-decay（转）/">
+        <h2 class="post-title">
+            PyTorch weight decay（转）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            torch.optim 中实现了很多优化器，只需要指定优化器的权重衰减即可：
+1optimizer = optim.SGD(model.parameters(), lr = 0.01, momentum=0.9,weight_decay=1e-5)
+
+优化器同时还支持per-parameter options操作，就是对每一个参数进行特定的制定，以满足更为细致的要求。此时，传入优化器的是可迭......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">
+        <h2 class="post-title">
+            Softmax and Logsoftmax in Pytorch
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Output layer and criterion options (all are equivalent, 1 is most popular) :
+
+Linear + LogSoftMax + ClassNLLCriterion
+Linear + SoftMax + Log + ClassNLLCriterion
+Linear + CrossEntropyCriterion
+
+It s......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+<div class="post-preview">
+
+    <a href="/2019/07/02/Pytorch-SGDR/">
+        <h2 class="post-title">
+            Pytorch SGDR
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            SGDR paper学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色
+的方块线。
+
+这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2......
+        </div>
+    </a>
+    
+        <p class="post-meta">
+            Posted by John Doe on
+            2019-07-02
+        </p>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    
+        <li class="next">
+            <a href="/page/2/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/tags/">Tags</a></h5>
+    <div class="tags">
+        
+            
+            <a href="/tags/#Cyclical LR" title="Cyclical LR" rel="1">Cyclical LR</a>
+            
+        
+            
+            <a href="/tags/#pytorch" title="pytorch" rel="10">pytorch</a>
+            
+        
+            
+            <a href="/tags/#cnn" title="cnn" rel="5">cnn</a>
+            
+        
+            
+            <a href="/tags/#github" title="github" rel="1">github</a>
+            
+        
+            
+            <a href="/tags/#KL散度" title="KL散度" rel="1">KL散度</a>
+            
+        
+            
+            <a href="/tags/#交叉熵" title="交叉熵" rel="1">交叉熵</a>
+            
+        
+            
+            <a href="/tags/#transfer learning" title="transfer learning" rel="1">transfer learning</a>
+            
+        
+            
+            <a href="/tags/#normalize" title="normalize" rel="1">normalize</a>
+            
+        
+            
+            <a href="/tags/#Pillow" title="Pillow" rel="1">Pillow</a>
+            
+        
+            
+            <a href="/tags/#weight decay" title="weight decay" rel="1">weight decay</a>
+            
+        
+            
+            <a href="/tags/#L2 Norm" title="L2 Norm" rel="1">L2 Norm</a>
+            
+        
+            
+            <a href="/tags/#ensemble" title="ensemble" rel="1">ensemble</a>
+            
+        
+            
+            <a href="/tags/#softmax" title="softmax" rel="1">softmax</a>
+            
+        
+            
+            <a href="/tags/#cross-entropy" title="cross-entropy" rel="1">cross-entropy</a>
+            
+        
+            
+            <a href="/tags/#kaggle" title="kaggle" rel="2">kaggle</a>
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/about/">About me</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/img/avatar/logo.png" />
+        
+
+        
+            <p>INNOVATION IS KING!</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+
+            
+
+            
+
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/kinggozhang">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+        </ul>
+    </div>
+</section>
+
+        <hr>
+    
+        
+  <h5>Recent posts</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/2019/07/11/KL散度和交叉熵CE/">KL散度和交叉熵CE</a>
+        </li>
+      
+        <li>
+          <a href="/2019/07/02/Cyclical-Learning-Rates-for-Training-Neural-Networks/">Cyclical Learning Rates for Training Neural Networks</a>
+        </li>
+      
+        <li>
+          <a href="/2019/07/02/TorchVision-Image-Transforms/">TorchVison Image Transforms</a>
+        </li>
+      
+        <li>
+          <a href="/2019/07/02/长尾分布特征的处理/">长尾分布特征的处理</a>
+        </li>
+      
+        <li>
+          <a href="/2019/07/02/Pytorch加载和读取模型/">Pytorch加载和读取模型</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        <hr>
+    
+        
+    <h5>Achives</h5>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a><span class="archive-list-count">17</span></li></ul>
+    </div>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+
+<h5>Friends</h5>
+<ul class="list-inline">
+
+    
+        <li><a href="http://www.sumoon.com" target="_blank">ACE theme</a></li>
+    
+</ul>
+
+
+        <hr>
+    
+</div>
+
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/kinggozhang">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; John Doe 2019 
+                    <br>
+                    Powered by <a href="http://www.hexo.io">Hexo</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Theme by <a href="https://github.com/kinggozhang/hexo-theme-ace">ACE</a> 
+					
+					
+					<i class="fa fa-eye" id="leancounter"></i>
+					
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+
+   <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+
+
+
+<!-- Bootstrap Core JavaScript -->
+
+   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+	<script src="/js/particles.js"></script>
+	<script src="/js/particles_config.js"></script>
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite.com/index.html/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = 'xxx';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite.com/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
