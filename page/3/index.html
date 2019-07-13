@@ -274,6 +274,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Normalize中的mean和std/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Normalize中的mean和std/" class="post-title-link" itemprop="url">Normalize中的mean和std</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 21:52:57 / Geändert am: 21:53:28" itemprop="dateCreated datePublished" datetime="2019-07-02T21:52:57+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>实验过程遇到了一个问题，首先图像预处理步骤有一个normalize，需要用mean和std对图像进行normalize，我发现我自己算的mean和std有问题（这个问题早就知道，就是懒得去改，毕竟费时间）。刚开始不注意，但是现在模型陷入了一个瓶颈，我就想这两个参数是否对模型最后的表现有影响，就去google了下。得到了以下结论：</p>
+<h3 id="Pretrained-models"><a href="#Pretrained-models" class="headerlink" title="Pretrained models"></a>Pretrained models</h3><p>由于训练的过程中，自己从头开心训练一个模型还是太难了，因此transfer learning还是一个重要的提速手段。对于pytroch而言，torchvision中models主要都是在imagenet上的预训练，把最后一层的fc层或classifier层去掉换成需要Linear层就能够利用已有的权重。</p>
+<p>那么对于利用pretrained models的mean和std改怎么定这个是一个问题。谷歌后，发现了一个大佬对此做了解答，恍然大悟。</p>
+<blockquote>
+<p>It’s the same means and stds the model was trained with on ImageNet. For most of the models from torchvision, according to <a href="https://github.com/Cadene/pretrained-models.pytorch/blob/master/pretrainedmodels/models/torchvision_models.py#L61" target="_blank" rel="noopener">pretrained_models_pytorch</a>:</p>
+<p>means = [0.485, 0.456, 0.406]<br>stds = [0.229, 0.224, 0.225]</p>
+<p><a href="https://github.com/DeepVoltaire/AutoAugment/issues/4" target="_blank" rel="noopener">link</a></p>
+</blockquote>
+<p>如果我们使用的pretrained model，那么models是适用于imagenet的统计量（std和mean），如果想更好地利用pretrained model的权重，显然输入也要符合imagenet，因此此时应该选用imagenet的统计量，应该对tranferlearning有更好的帮助</p>
+<h2 id="models-from-scratch"><a href="#models-from-scratch" class="headerlink" title="models from scratch"></a>models from scratch</h2><p>如果是先自己从头训练一个model的话，我觉得还是应该要用当前任务的数据来自己算，当然大佬说这些值是任意的比较任意的：</p>
+<blockquote>
+<p>This only matters if you are using a pretrained model. Also, means and stds of the dataset are calculated from the raw images without data augmentation as far as I know. And the values can be chosen quite arbitrarily as you can see from inceptionv3.</p>
+</blockquote>
+<p>这里面还提到了means和std的计算方式，在不经过任何preprocessing的原图上计算的。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://github.com/DeepVoltaire/AutoAugment/issues/4" target="_blank" rel="noopener">https://github.com/DeepVoltaire/AutoAugment/issues/4</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/imaterialist-product-2019比赛总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1298,7 +1477,7 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
@@ -1390,7 +1569,11 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">schlagwörter</span>
                   </a>
                 </div>
@@ -1583,6 +1766,8 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
 
   
   
+    
+      
     
       
     

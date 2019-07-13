@@ -274,6 +274,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Cyclical-Learning-Rates-for-Training-Neural-Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Cyclical-Learning-Rates-for-Training-Neural-Networks/" class="post-title-link" itemprop="url">Cyclical Learning Rates for Training Neural Networks</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 22:12:09 / Geändert am: 22:15:53" itemprop="dateCreated datePublished" datetime="2019-07-02T22:12:09+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="paper-details"><a href="#paper-details" class="headerlink" title="paper details"></a>paper details</h2><p>深度学习中有一个常识是，学习率在训练的过程中需要逐渐减小。但是这篇文章却给出了一个让人惊讶的事实，就是训练过程中的学习率如果是多变（rise and fall）的是有益于训练的。因此作者建议学习率在一个范围内周期变化，而不是将其设置为固定值。</p>
+<p>Cyclical Learning Rates来源于这么一个观察：学习率的增加虽然会带来短期的副作用但是长期来看是有益的。因此这种观察引出了让学习率在一定范围内变化而不是采用逐步固定或指数递减值的想法。即设置一个最大和最小的边界，然后学习率在里面循环变化。如下图的 triangular learning rate policy：</p>
+<p><img src="/images/assets/1557733855040.png" alt="1557733855040"></p>
+<p>CLR能够发挥作用的一个直观理解是：最小化loss的困难在于如何逃离saddle点而不是在于差的局部最小值。在saddle 点的附近，梯度都很小因此学习的过程缓慢，因此通过增加学习率可以更快地走出saddle点区域。经验上的理由为什么CLR能够work是这样的：最佳的学习率可能在min-max boundaries之间，在最佳的学习率附近会被用于进行训练。（其他会被用于脱离saddle点。。。）。</p>
+<p>除了上面显示的trangular learning rate policy,还有以下两种:</p>
+<ol>
+<li><p>triangular2, 和triangular差不多，差别在于每一个cycle之后lr会减半。</p>
+</li>
+<li><p>exp_range，boundary的值会以一个指数因子衰减。</p>
+</li>
+</ol>
+<p><img src="/images/assets/1557737380100.png" alt="1557737380100"></p>
+<p><img src="/images/assets/1557737358780.png" alt="1557737358780"></p>
+<p>里面还讲了如何去估计一个cycle len的方法：</p>
+<p>stepsize最好是2-10倍的每个epoch的迭代次数。对于CIFAR10来说，stepsize=8也就比stepsize=2效果好上一点点。</p>
+<p>此外还讲了如何估计一个合理的min和max boundary</p>
+<p>第一个方法就是：“LR range test”,模型先跑几个epoch，然后让lr从一个很小值增加到很大的值。然后画出accuracy versus learning rate.如下图：</p>
+<p><img src="/images/assets/1557735295110.png" alt="1557735295110"></p>
+<p>注意图中的accuracy开始增加和accuracy开始变缓的时间段(或者accuracy开始下降)的地方。 这两个地方是bound是的一个好的选择。即base_lr是第一个值，而max_lr是第二个值。或者说可以用一个经验，将base_lr设置为1/3或1/4的max_lr. <strong>论文中作者选了base_lr = 0.001,而max_lr = 0.006</strong></p>
+<p>另外一个选择bound是的方法式画出loss versus learning rate的图，如下：</p>
+<p><img src="/images/assets/1557735640796.png" alt="1557735640796"></p>
+<p>这张图中最适合的lr是哪里？不是在最低点，因为在最低点的lr已经有点大了。我们需要的是一个点更aggressive，所以我们能够train很快。即那个点loss下降是<strong>最快</strong>的</p>
+<h2 id="实验过程"><a href="#实验过程" class="headerlink" title="实验过程"></a>实验过程</h2><p>做kaggle比赛的时候，clr的base_lr和max_lr设置反了，特别是在开始的一个stepsize里面，速度非常快，很容易就达到了一个很好的acc ，但是过了这个stepsize，acc就不断下降。一开始举得clclr的问题，后来突然发现是我输入的参数错误。有鉴于它收敛非常快，我觉得还是要借鉴下，发现lr的变化是这样的：</p>
+<p><img src="/images/assets/1557732898573.png" alt="1557732898573"></p>
+<p>和clr差了一个stepsize。这个和SGDR很相似，准备用这个试试。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://arxiv.org/pdf/1506.01186.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1506.01186.pdf</a></p>
+<p><a href="https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html#how-do-you-find-a-good-learning-rate" target="_blank" rel="noopener">https://sgugger.github.io/how-do-you-find-a-good-learning-rate.html#how-do-you-find-a-good-learning-rate</a></p>
+<p><a href="https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0" target="_blank" rel="noopener">https://towardsdatascience.com/estimating-optimal-learning-rate-for-a-deep-neural-network-ce32f2556ce0</a></p>
+<p><a href="https://www.paperweekly.site/papers/notes/598" target="_blank" rel="noopener">https://www.paperweekly.site/papers/notes/598</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/TorchVision-Image-Transforms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1988,185 +2181,6 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Normalize中的mean和std/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Normalize中的mean和std/" class="post-title-link" itemprop="url">Normalize中的mean和std</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:52:57 / Geändert am: 21:53:28" itemprop="dateCreated datePublished" datetime="2019-07-02T21:52:57+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>实验过程遇到了一个问题，首先图像预处理步骤有一个normalize，需要用mean和std对图像进行normalize，我发现我自己算的mean和std有问题（这个问题早就知道，就是懒得去改，毕竟费时间）。刚开始不注意，但是现在模型陷入了一个瓶颈，我就想这两个参数是否对模型最后的表现有影响，就去google了下。得到了以下结论：</p>
-<h3 id="Pretrained-models"><a href="#Pretrained-models" class="headerlink" title="Pretrained models"></a>Pretrained models</h3><p>由于训练的过程中，自己从头开心训练一个模型还是太难了，因此transfer learning还是一个重要的提速手段。对于pytroch而言，torchvision中models主要都是在imagenet上的预训练，把最后一层的fc层或classifier层去掉换成需要Linear层就能够利用已有的权重。</p>
-<p>那么对于利用pretrained models的mean和std改怎么定这个是一个问题。谷歌后，发现了一个大佬对此做了解答，恍然大悟。</p>
-<blockquote>
-<p>It’s the same means and stds the model was trained with on ImageNet. For most of the models from torchvision, according to <a href="https://github.com/Cadene/pretrained-models.pytorch/blob/master/pretrainedmodels/models/torchvision_models.py#L61" target="_blank" rel="noopener">pretrained_models_pytorch</a>:</p>
-<p>means = [0.485, 0.456, 0.406]<br>stds = [0.229, 0.224, 0.225]</p>
-<p><a href="https://github.com/DeepVoltaire/AutoAugment/issues/4" target="_blank" rel="noopener">link</a></p>
-</blockquote>
-<p>如果我们使用的pretrained model，那么models是适用于imagenet的统计量（std和mean），如果想更好地利用pretrained model的权重，显然输入也要符合imagenet，因此此时应该选用imagenet的统计量，应该对tranferlearning有更好的帮助</p>
-<h2 id="models-from-scratch"><a href="#models-from-scratch" class="headerlink" title="models from scratch"></a>models from scratch</h2><p>如果是先自己从头训练一个model的话，我觉得还是应该要用当前任务的数据来自己算，当然大佬说这些值是任意的比较任意的：</p>
-<blockquote>
-<p>This only matters if you are using a pretrained model. Also, means and stds of the dataset are calculated from the raw images without data augmentation as far as I know. And the values can be chosen quite arbitrarily as you can see from inceptionv3.</p>
-</blockquote>
-<p>这里面还提到了means和std的计算方式，在不经过任何preprocessing的原图上计算的。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://github.com/DeepVoltaire/AutoAugment/issues/4" target="_blank" rel="noopener">https://github.com/DeepVoltaire/AutoAugment/issues/4</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2215,7 +2229,7 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">26</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
@@ -2307,7 +2321,11 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                     
                       
                     
-                    <span class="site-state-item-count">26</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">28</span>
                     <span class="site-state-item-name">schlagwörter</span>
                   </a>
                 </div>
