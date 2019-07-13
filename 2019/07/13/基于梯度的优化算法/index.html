@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="Batch gradient descent使用整个训练集来优化权重，意思是用训练集中的所有样本的loss来更新模型的权重。此时，权重的梯度为：  \partial W = \frac{1}{N} \partial\Sigma_i^N \ L(f(x^{i}),y^{i}) \\  =  \frac{1}{N} \Sigma_i^N \partial\ L(f(x^{i}),y^{i})可以看出权">
+<meta name="keywords" content="优化算法,梯度下降">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于梯度的优化算法">
+<meta property="og:url" content="liulin1995@github.io/2019/07/13/基于梯度的优化算法/index.html">
+<meta property="og:site_name" content="LZW&#39; Blog">
+<meta property="og:description" content="Batch gradient descent使用整个训练集来优化权重，意思是用训练集中的所有样本的loss来更新模型的权重。此时，权重的梯度为：  \partial W = \frac{1}{N} \partial\Sigma_i^N \ L(f(x^{i}),y^{i}) \\  =  \frac{1}{N} \Sigma_i^N \partial\ L(f(x^{i}),y^{i})可以看出权">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="e:/刘志伟的文件/论文笔记/机器学习/assets/1562846876860.png">
+<meta property="og:updated_time" content="2019-07-13T06:52:41.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于梯度的优化算法">
+<meta name="twitter:description" content="Batch gradient descent使用整个训练集来优化权重，意思是用训练集中的所有样本的loss来更新模型的权重。此时，权重的梯度为：  \partial W = \frac{1}{N} \partial\Sigma_i^N \ L(f(x^{i}),y^{i}) \\  =  \frac{1}{N} \Sigma_i^N \partial\ L(f(x^{i}),y^{i})可以看出权">
+<meta name="twitter:image" content="e:/刘志伟的文件/论文笔记/机器学习/assets/1562846876860.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="liulin1995@github.io/2019/07/13/基于梯度的优化算法/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>基于梯度的优化算法 | LZW' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LZW' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/基于梯度的优化算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于梯度的优化算法
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:51:43 / Geändert am: 14:52:41" itemprop="dateCreated datePublished" datetime="2019-07-13T14:51:43+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="Batch-gradient-descent"><a href="#Batch-gradient-descent" class="headerlink" title="Batch gradient descent"></a>Batch gradient descent</h4><p>使用整个训练集来优化权重，意思是用训练集中的所有样本的loss来更新模型的权重。此时，权重的梯度为：</p>
+<script type="math/tex; mode=display">
+\partial W = \frac{1}{N} \partial\Sigma_i^N \ L(f(x^{i}),y^{i}) \\
+ =  \frac{1}{N} \Sigma_i^N \partial\ L(f(x^{i}),y^{i})</script><p>可以看出权重的梯度是每个每个样本的梯度的期望。</p>
+<p>此时的更新过程为：</p>
+<script type="math/tex; mode=display">
+W := W -\eta \frac{1}{N} \Sigma_i^N \partial \ L(f(x^{i}),y^{i})</script><p>如果样本的个数的是10000， 100000个的时候，需要先遍历所有的样本在对权重$W$更新，这个是非常耗时的。因此有人提出了SGD</p>
+<h4 id="Stochastic-gradient-descent"><a href="#Stochastic-gradient-descent" class="headerlink" title="Stochastic gradient descent"></a>Stochastic gradient descent</h4><p>相比与batch gradient descent方法， SGD不适用全部的样本来估计权重的梯度，而是使用的一小部分的样本。主要的原因是一小部分的样本的梯度均值可以近似真实的梯度，而这部分样本的数量越多，估计的梯度越近似真实的梯度。另一方面，用小部分样本来估计的梯度是带有噪声的，在一定程度也起到了正则化的作用。</p>
+<p>此时的梯度为：</p>
+<script type="math/tex; mode=display">
+\partial W = \frac{1}{N} \partial\Sigma_i^m \ L(f(x^{i}),y^{i})</script><p>此时的更新过程为：</p>
+<script type="math/tex; mode=display">
+W := W -\eta \frac{1}{N} \Sigma_i^m \partial \ L(f(x^{i}),y^{i})</script><p>实际过程中，每次选取一部分的样本来估计梯度，并进行更新，这部分被叫做一个迭代；如果一整个的训练集都使用一次，就叫经过了一个 epoch。注意，每个epoch，样本都要被打散。</p>
+<h4 id="SGD-Momentum"><a href="#SGD-Momentum" class="headerlink" title="SGD+Momentum"></a>SGD+Momentum</h4><p>SGD方法存在这一个“震荡”的问题，如下图：</p>
+<p><img src="E:\刘志伟的文件\论文笔记\机器学习\assets\1562846876860.png" alt="1562846876860"></p>
+<p>可以看到在更新的过程中，梯度下降的迭方向会偏离实际中真正的下降方向。momentum就是为了克服</p>
+<p>这个震荡的问题。</p>
+<script type="math/tex; mode=display">
+v_{t} = \eta v_{t-1} + (1-\eta)\partial W_t \\
+W_t \ := W_{t-1}-\eta v_{t}</script><p>动量可以看作是迭代过程中下降方向，震荡的方向被消除了，使得权重更新的方向变得一致。</p>
+<h4 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h4><p>梯度下降中存在一个问题，如果使用相同的学习率，对于权重W中每一个元素$W_i$,如果他们的梯度值有较大的差别的时候，会导致权重在梯度值较小的维度上迭代过慢。Adagrad方法根据权重在每个维度上梯度值的大小来调整各个维度上的学习率，来避免统一学习率难以适应所有维度的问题。</p>
+<script type="math/tex; mode=display">
+s_t = s_{t-1} + \partial W_t \odot \partial W_t \\
+W_t \ := W_{t-1}-\frac{\eta}{\sqrt{s_t}}\partial W_t</script><p>Adagrad存在一个问题，有与$s_t$一致累加着梯度按元素平方的和，因此如果权重的某个元素的偏导数一直较大，会使得学习率下降较快；反之，如果某个元素的偏导数一直较小，学习率则会下降较慢。所以Adagrad在后期的时候，比较难找到一个合适的解。</p>
+<h4 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h4><p>由于Adagrad存在后期学习率低的问题，RMSprop对其做了一点小小的改动：</p>
+<script type="math/tex; mode=display">
+s_t =  \gamma s_{t-1} + (1-\gamma) \ \partial W_t \odot \partial W_t \\
+W_t \ := W_{t-1}-\frac{\eta}{\sqrt{s_t}}\partial W_t</script><p>RMSprop对这些梯度的平方做指数加权移动平均，使得每个权重的学习率不会一直降低或者不变。</p>
+<p>可以消除梯度下降过程中的摆动，包括mini-batch，允许使用更大的$\alpha$,加快算法学习速度</p>
+<h4 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h4><p>Adadelta也针对Adagrad做了改进，同样的，Adadelta也是了梯度平方的加权移动平均。但是它与RMSprop不同的是Adadelta还维护了一个额外的状态变量$\Delta W_t$ 来计算自变量的变化值：</p>
+<script type="math/tex; mode=display">
+W_t^/ = \sqrt{\frac{\Delta W_{t-1} + \epsilon}{s_t + \epsilon}} \odot W_t</script><p>然后更新权重：</p>
+<script type="math/tex; mode=display">
+W_t = W_{t-1} -W_t^/</script><p>最后使用$\Delta W_t$来记录权重变化量的指数加权移动平均：</p>
+<script type="math/tex; mode=display">
+\Delta W_t = \rho\Delta W_{t-1} + (1-\rho)W_t^/  \odot W_t^/</script><h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>Adam算法是将momentum和RMSprop结合起来</p>
+<script type="math/tex; mode=display">
+v_{t} = \beta_1 v_{t-1} + (1-\beta_1)\partial W_t \\
+s_{t} = \beta_2 s_{t-1} +(1-\beta_2)\partial W_t \\
+\hat{v}_{t} = \frac{v_{t}}{1-\beta_1^t}\\
+\hat{s}_{t} = \frac{S_{t}}{1-\beta_2^t} \\
+W_t:= W_{t-1}- \frac{\alpha \hat{v}_{t}}{\sqrt{\hat{s}_{t}+\epsilon}}</script><p>$\beta_1$常用为0.9，$\beta_2$常用为0.999，而$\epsilon$为10^-8。Adam还对动量项和 梯度平方项做了偏差修正，然后使用修正后的变量对权重进行更新。</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/优化算法/" rel="tag"># 优化算法</a>
+          
+            <a href="/tags/梯度下降/" rel="tag"># 梯度下降</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/11/KL散度和交叉熵CE/" rel="next" title="KL散度和交叉熵CE">
+                <i class="fa fa-chevron-left"></i> KL散度和交叉熵CE
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/13/拉格朗日对偶性/" rel="prev" title="拉格朗日对偶性">
+                拉格朗日对偶性 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhiwei Liu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Batch-gradient-descent"><span class="nav-number">1.</span> <span class="nav-text">Batch gradient descent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stochastic-gradient-descent"><span class="nav-number">2.</span> <span class="nav-text">Stochastic gradient descent</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SGD-Momentum"><span class="nav-number">3.</span> <span class="nav-text">SGD+Momentum</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adagrad"><span class="nav-number">4.</span> <span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RMSprop"><span class="nav-number">5.</span> <span class="nav-text">RMSprop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adadelta"><span class="nav-number">6.</span> <span class="nav-text">Adadelta</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Adam"><span class="nav-number">7.</span> <span class="nav-text">Adam</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiwei Liu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

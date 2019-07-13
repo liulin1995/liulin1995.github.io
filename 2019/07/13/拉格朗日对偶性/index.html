@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="拉格朗日对偶是约束最优化问题中最常见的一种方法，将带约束的问题转化为不带约束的问题，并进行求解。除此之外，拉格朗日对偶性有这非常好的性质，例如：  对偶问题可以给出原问题的一个下界 无论原问题是否是凸的，对偶问题都是凸的 当满足一定的条件的时候，原始问题和对偶问题完全等价。  原始问题首先我们先提到原始问题。考虑这么一个带约束的问题：  min_{x} f(x)\\ s.t \ \ c_i(x)">
+<meta name="keywords" content="优化算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="拉格朗日对偶性">
+<meta property="og:url" content="liulin1995@github.io/2019/07/13/拉格朗日对偶性/index.html">
+<meta property="og:site_name" content="LZW&#39; Blog">
+<meta property="og:description" content="拉格朗日对偶是约束最优化问题中最常见的一种方法，将带约束的问题转化为不带约束的问题，并进行求解。除此之外，拉格朗日对偶性有这非常好的性质，例如：  对偶问题可以给出原问题的一个下界 无论原问题是否是凸的，对偶问题都是凸的 当满足一定的条件的时候，原始问题和对偶问题完全等价。  原始问题首先我们先提到原始问题。考虑这么一个带约束的问题：  min_{x} f(x)\\ s.t \ \ c_i(x)">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-13T06:53:55.866Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拉格朗日对偶性">
+<meta name="twitter:description" content="拉格朗日对偶是约束最优化问题中最常见的一种方法，将带约束的问题转化为不带约束的问题，并进行求解。除此之外，拉格朗日对偶性有这非常好的性质，例如：  对偶问题可以给出原问题的一个下界 无论原问题是否是凸的，对偶问题都是凸的 当满足一定的条件的时候，原始问题和对偶问题完全等价。  原始问题首先我们先提到原始问题。考虑这么一个带约束的问题：  min_{x} f(x)\\ s.t \ \ c_i(x)">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="liulin1995@github.io/2019/07/13/拉格朗日对偶性/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>拉格朗日对偶性 | LZW' Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LZW' Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/拉格朗日对偶性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">拉格朗日对偶性
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:53:25 / Geändert am: 14:53:55" itemprop="dateCreated datePublished" datetime="2019-07-13T14:53:25+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>拉格朗日对偶是约束最优化问题中最常见的一种方法，将带约束的问题转化为不带约束的问题，并进行求解。除此之外，拉格朗日对偶性有这非常好的性质，例如：</p>
+<ul>
+<li>对偶问题可以给出原问题的一个下界</li>
+<li>无论原问题是否是凸的，对偶问题都是凸的</li>
+<li>当满足一定的条件的时候，原始问题和对偶问题完全等价。</li>
+</ul>
+<h3 id="原始问题"><a href="#原始问题" class="headerlink" title="原始问题"></a>原始问题</h3><p>首先我们先提到原始问题。考虑这么一个带约束的问题：</p>
+<script type="math/tex; mode=display">
+min_{x} f(x)\\
+s.t \ \ c_i(x) \le 0,\ i=1,2,...,k \\
+\ \ \ \  h_j(x) = 0, \ j=1,2,...,m</script><p>同时引入广义拉格朗日函数 ：</p>
+<script type="math/tex; mode=display">
+L(x,\alpha,\beta) = f(x)+ \sum_{i=1}^k{\alpha_i c_i(x)} + \sum_{j=1}^m{\beta_j h_j(x)}</script><p>其中$\alpha_i$,$\beta_i$是拉格朗日乘子，$\alpha_i\ge0$。那么考虑以下的函数：</p>
+<script type="math/tex; mode=display">
+\theta_p(x) = max_{\alpha,\beta;\alpha\ge0}L(x,\alpha,\beta)</script><p>假设存在一个$x$,$x$会是以下四种情况之一：</p>
+<ol>
+<li>$x$满足约束$c_i(x)\le0,h_j(x)=0$</li>
+<li>$x$不满足约束$c_i(x) \le 0 $</li>
+<li>$x$不满足约束$h_j(x)=0$</li>
+<li>$x$不满足约束$h_j(x)=0$和$h_j(x)=0$</li>
+</ol>
+<p>考虑第一种情况，此时$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\alpha_i = 0$,且$\beta_i$值任意，此时$\theta_p(x)$等价于$f(x)$.即此时$\theta_p(x)$等价于原问题。</p>
+<p>考虑第二种情况，此时$c_i(x) &gt; 0$.$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\alpha_i \rightarrow +\infty$,且$\beta_i$值任意，此时$\theta_p(x) \rightarrow +\infty$。</p>
+<p>考虑第三种情况，此时$h_j(x) \ne 0$,$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\beta_i \rightarrow +\infty或-\infty$,且$\alpha_i$值为0.此时，$\theta_p(x) \rightarrow +\infty$。</p>
+<p>考虑第四种情况，此时$h_j(x) \ne 0$，$c_i(x) &gt; 0$,$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\beta_i \rightarrow +\infty或-\infty$,且$\alpha_i \rightarrow +\infty$，$\theta_p(x) \rightarrow +\infty$。</p>
+<p>因此可以看出$\theta_p(x)$的性质，</p>
+<script type="math/tex; mode=display">
+\theta _p=\begin{cases}
+    f\left( x \right)\\
+    +\infty\\
+\end{cases}</script><p>如果考虑问题</p>
+<script type="math/tex; mode=display">
+min_x  \theta_p(x)</script><p>该问题和原问题是等价的，即它们有等价的解或者同样无解。这样子就得到了广义拉格朗日函数的极小极大问题。定义原问题的最优解为：</p>
+<script type="math/tex; mode=display">
+p^* = min_x  \theta_p(x)</script><h3 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h3><p>定义问题：</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha,\beta)=min_x L(x,\alpha,\beta)</script><p>再考虑极大化$\theta_D(\alpha,\beta)=min_x=L(x,\alpha,\beta)$,即</p>
+<script type="math/tex; mode=display">
+max_{\alpha_i,\beta_j;\alpha_i\ge 0} \theta_D(\alpha,\beta) = max_{\alpha_i,\beta_j;\alpha_i\ge 0} min_x L(x,\alpha,\beta)</script><p>该问题被称为广义拉格朗日函数的极大极小问题。该问题表达为带约束的优化问题</p>
+<script type="math/tex; mode=display">
+max_{\alpha_i,\beta_j} min_x L(x,\alpha,\beta) \\
+s.t \ \ \alpha_i\ge 0, \ \ i=1,2,...,k</script><p>该带约束的问题被称为原始问题的对偶问题。同时定义该对偶问题的最优解为：</p>
+<script type="math/tex; mode=display">
+d^* = max_{\alpha_i,\beta_j} \theta_D(\alpha,\beta)</script><h3 id="对偶问题和原始问题的关系"><a href="#对偶问题和原始问题的关系" class="headerlink" title="对偶问题和原始问题的关系"></a>对偶问题和原始问题的关系</h3><h4 id="弱对偶性和强对偶性"><a href="#弱对偶性和强对偶性" class="headerlink" title="弱对偶性和强对偶性"></a>弱对偶性和强对偶性</h4><p>对偶问题和原始问题的最优解满足以下关系：</p>
+<script type="math/tex; mode=display">
+d^* \le p^*</script><p>证明很简单，即：</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha,\beta)=min_x L(x,\alpha,\beta) \le L(x,\alpha,\beta) \le max_{\alpha,\beta;\alpha\ge0}L(x,\alpha,\beta)=\theta_p(x)</script><p>即</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha,\beta) \le \theta_p(x)</script><p>则有</p>
+<script type="math/tex; mode=display">
+max_{\alpha,\beta} \  \theta_D(\alpha,\beta) \le min_x \ \theta_p(x) \\
+d^* \le p^*</script><p>这个性质也被称为<strong>弱对偶性</strong>，对所有的优化问题成立，即使原始问题非凸。相对于弱对偶性，也有<strong>强对偶性</strong>：</p>
+<script type="math/tex; mode=display">
+d^* = p^*</script><h4 id="Slater条件"><a href="#Slater条件" class="headerlink" title="Slater条件"></a>Slater条件</h4><p>考虑原始问题和对偶问题。假设函数$f(x) , c_i(x)$是凸函数，并且$h_j(x)$是仿射函数，并且不等式$c_i(x)$是严格可行的,即存在x,对于所有的i有$c_i(x) &lt; 0$则存在$x^<em>,\alpha^</em>,\beta^<em>$,使得$x^</em>$是原问题的最优解，$\alpha^<em>,\beta^</em>$是对偶问题的最优解，同时有：</p>
+<script type="math/tex; mode=display">
+d^* = p^* = L(x^*,\alpha^*,\beta^*)</script><p><strong>Note</strong>, 该slater条件对应SVM即要求数据集是线性可分的；如果数据是线性不可分的，那么此时使用SVM寻找分隔超平面也失去了意义。</p>
+<h4 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h4><p>对于原始问题和对偶问题，假设假设函数$f(x) , c_i(x)$是凸函数，并且$h_j(x)$是仿射函数，并且不等式$c_i(x)$是严格可行的，则$x^<em>$是原问题的最优解，$\alpha^</em>,\beta^<em>$是对偶问题的最优解的充分必要条件是$x^</em>$$\alpha^<em>,\beta^</em>$满足以下的KKT条件：</p>
+<script type="math/tex; mode=display">
+\begin{cases} \Delta_x L(x^*,\alpha^*,\beta^*) =0
+    \\ \Delta_\alpha L(x^*,\alpha^*,\beta^*) =0
+    \\ \Delta_\beta L(x^*,\alpha^*,\beta^*) =0
+     \\ \alpha_i^*c_i(x)=0, i=1,2,...,k 
+     \\ c_i(x^*) \le 0 , i=1,2,...,k 
+     \\ \alpha_i \ge 0 , i=1,2,...,k 
+     \\ h_j(x^*)=0, j=1,2,...,m
+\end{cases}</script><p>其中，$\alpha_i^<em>c_i(x)=0, i=1,2,…,k $被称为是KKT条件的对偶互补条件。由此条件可知：若$\alpha_i^</em> &gt;0$,则$c_i(x^*)=0$.</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>当原始问题为凸优化问题的时候，其对偶问题的强对偶性与KKT条件是互为充要的。</p>
+<p>当原始问题不为凸优化问题是，利用其对偶问题也可以得到原问题最优解的下界。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://blog.csdn.net/qq_32742009/article/details/81413068" target="_blank" rel="noopener">https://blog.csdn.net/qq_32742009/article/details/81413068</a></p>
+<p>统计学习方法附录C</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/优化算法/" rel="tag"># 优化算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/13/基于梯度的优化算法/" rel="next" title="基于梯度的优化算法">
+                <i class="fa fa-chevron-left"></i> 基于梯度的优化算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/13/GBDT提升树/" rel="prev" title="GBDT提升树">
+                GBDT提升树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zhiwei Liu</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">schlagwörter</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#原始问题"><span class="nav-number">1.</span> <span class="nav-text">原始问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶问题"><span class="nav-number">2.</span> <span class="nav-text">对偶问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对偶问题和原始问题的关系"><span class="nav-number">3.</span> <span class="nav-text">对偶问题和原始问题的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#弱对偶性和强对偶性"><span class="nav-number">3.1.</span> <span class="nav-text">弱对偶性和强对偶性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Slater条件"><span class="nav-number">3.2.</span> <span class="nav-text">Slater条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KKT条件"><span class="nav-number">3.3.</span> <span class="nav-text">KKT条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他"><span class="nav-number">3.4.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhiwei Liu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

@@ -274,6 +274,1452 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/梯度下降法、牛顿法和拟牛顿法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/梯度下降法、牛顿法和拟牛顿法/" class="post-title-link" itemprop="url">梯度下降法、牛顿法和拟牛顿法</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 15:00:24 / Geändert am: 15:01:09" itemprop="dateCreated datePublished" datetime="2019-07-13T15:00:24+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h4><p>梯度下降法是机器学习里面最常用的优化方法，简单直接效果还好，因此被广泛应用。今天就来回顾下梯度下降法。</p>
+<p>梯度下降法有一个很trivial的想法，比如你在山上，你想要最快的下山，那么你就要走最陡的路下山，即坡度最大的路下山。反映在数学里面，山高为一个目标函数$f(x)$, 你当前的位置是$x_0 $, 当前坡度最大的路对应于当前位置$x$梯度最大的方向，但是由于我们是要下山，我们要反着方向走，即方向为</p>
+<script type="math/tex; mode=display">
+- \frac{\partial f}{\partial x}</script><p>确定了方向之后，我们需要确定要走的步长$\alpha$, 由于梯度是在$x_0 $处得到的，它只能够表示$f(x)$在点$x_0$出的陡峭程度，如果我们走的步伐太大，脱离的点$x_0$的邻域，那么这个梯度并不会是一个很好的下山方向。因此我们要保证这个步长$\alpha$足够小，此时，我们迈出了下山的第一步：</p>
+<script type="math/tex; mode=display">
+x_1 = x_0 - \alpha\frac{\partial f}{\partial x}</script><p>一次类推，只要我们一小步一小步的走陡峭的路，很快就能下山：</p>
+<script type="math/tex; mode=display">
+x_{k+1} = x_k - \alpha\frac{\partial f}{\partial x}</script><p>下面用稍微严谨一点的数学说明下为什么要走负梯度的方向。假设我们在$f(x)$的$x_0 $处走一小步$\Delta x$，</p>
+<script type="math/tex; mode=display">
+f(x_0 + \Delta x)</script><p>我们的目标是走了这一步后的$f(x_0 + \Delta x)$相比$f(x_0)$下降的最多。首先，我们先在$x_0$处对$f(x)$进行一阶泰勒展开：</p>
+<script type="math/tex; mode=display">
+f(x)=f(x_0) + f'(x_0)\Delta x + o(f)</script><p>让$f(x)$下降的最多的点即为$x_1$,让要想让近似后的$f(x)$ 最小的话，就要让$f’(x_0)\Delta x$的值最小，考虑到两个向量的内积最小的问题，便要求$\Delta x$ 和梯度是反向的。实际上，只要$\Delta x$和梯度的夹角是大于90度的时候，上面的$argmin \ f(x)$就可以比$f(x_0)$小，当$\Delta x$和梯度的夹角是90度或者$\Delta x$是0的时候，$argmin  \ f(x)$和$f(x_0)$相等。此时令$f(x)$最小的$x$即为$x_{1}$,同时有$x_1 = x_0 + \Delta x$.</p>
+<p>更一般的，考虑在$x_k$处对函数$f(x)$进行一阶泰勒展开，则能到的迭代更新公式为：</p>
+<script type="math/tex; mode=display">
+x_{k+1} = x_k-f'(x_k)</script><h4 id="牛顿法"><a href="#牛顿法" class="headerlink" title="牛顿法"></a>牛顿法</h4><p>梯度下降法只是用到了一阶的导数信息，而牛顿法可以用到二阶的导数信息。</p>
+<p>首先，我们先在$x_k$处对$f(x)$进行二阶泰勒展开,$\Delta x = x - x_k$：</p>
+<script type="math/tex; mode=display">
+f(x)=f(x_k) + f'(x_k)\Delta x + \frac{1}{2} f''(x_k)\Delta^2 x+ o(f)</script><p>让$f(x)$下降的最多的点即为$x_{k+1}$，即要$f(x)$取$f’(x)=0$的点，即让：</p>
+<script type="math/tex; mode=display">
+f'( x)=0</script><script type="math/tex; mode=display">
+and \ \ f'( x) = f''(x_k)\Delta x + f'(x_k)</script><p>可得：</p>
+<script type="math/tex; mode=display">
+\Delta x = -f'(x_k)/f''(x_k) \\
+so \\
+x_{k+1} = x_k -f'(x_k)/f''(x_k)</script><p>假设$f’(x_k) = g, f’’(x_k)=H$为一个hessian矩阵，那么$\Delta x$的矩阵形式为：</p>
+<script type="math/tex; mode=display">
+\Delta x =-H^{-1}_k*g_k</script><p>此时$x$的更新公式为：</p>
+<script type="math/tex; mode=display">
+x_{k+1} = x_k - H^{-1}_{x_k}*g_{x_k}</script><h4 id="拟牛顿法"><a href="#拟牛顿法" class="headerlink" title="拟牛顿法"></a>拟牛顿法</h4><p>牛顿法的迭代中，需要计算hessian矩阵的逆，这个计算很耗时。而拟牛顿法考虑使用一个矩阵$G$来近似hessian矩阵$H_{x_k}^{-1}$ 。考虑何种的矩阵能够近似hessian矩阵。</p>
+<p>按上面的等式(9)。取$x=x_{k+1}$,有：</p>
+<script type="math/tex; mode=display">
+g_{k+1}=H_k\Delta x + g_k</script><p>即</p>
+<script type="math/tex; mode=display">
+g_{k+1} - g_k =H_k\Delta x</script><script type="math/tex; mode=display">
+ H_k^{-1}(g_{k+1}-g_k)=\Delta x</script><p>这个是hessian矩阵满足的条件，被称为拟牛顿条件。</p>
+<p>如果$H_k$矩阵是正定的，那么可以保证牛顿法搜索是下降的，这个是因为根据（11）有</p>
+<script type="math/tex; mode=display">
+f(x) = f(x_k) - g_k^TH^{-1}_kg_k + \frac{1}{2}g_k^TH^{-1}_k HH^{-1}_kg_k \\
+f(x) = f(x_k) - \frac{1}{2}g_k^TH^{-1}_kg_k</script><p>因为$H_k$矩阵是正定的，$H^{-1}_k$也会是正定的，那么有$g_k^TH^{-1}_kg_k$大于0，总有$f(x)&lt;f(x_k)$，即牛顿法是下降的。</p>
+<p>拟牛顿法是牛顿法的近似，选择$G_{k}$作为$H^{-1}_k$的近似，要求矩阵$G_k$满足同样的条件。首先$G_k$是正定的，其次，$G_k$满足上面的拟牛顿条件，即</p>
+<script type="math/tex; mode=display">
+G_k(g_{k+1} - g_k )=\Delta x</script><p>这样子的方法被统称为拟牛顿法。同时可以使用下面的方式来更新$G_{k+1}$:</p>
+<script type="math/tex; mode=display">
+G_{k+1}= G_k + \Delta G</script><p>下面介绍BFP算法</p>
+<p>假设每一步中的$G_{k+1}$是由$G_{k}$加上两个附加项构成的：</p>
+<script type="math/tex; mode=display">
+G_{k+1}=G_k + P_k + Q_k</script><p>要求：</p>
+<script type="math/tex; mode=display">
+G_{k+1}(g_{k+1} - g_k )=\Delta x \\
+(G_k + P_k + Q_k)(g_{k+1} - g_k )=\Delta x</script><p>可以让$P_k (g_{k+1} - g_k )=\Delta x$且$Q_k(g_{k+1} - g_k )=-G_k(g_{k+1} - g_k )$ 使得更新后$G_{k+1}$满足拟牛顿条件。</p>
+<p>事实上，这样子的满足条件的$P_k$和$Q_k$并不难找。例如取：</p>
+<script type="math/tex; mode=display">
+P_k=\frac{\Delta x^T\Delta x }{\Delta x ^T( g_{k+1} - g_k )}</script><script type="math/tex; mode=display">
+Q_k = -\frac{G_k( g_{k+1} - g_k )( g_{k+1} - g_k )^TG_k}{( g_{k+1} - g_k )^TG_k( g_{k+1} - g_k )}</script><p>那么可以得到</p>
+<script type="math/tex; mode=display">
+G_{k+1}= G_k +　\frac{\Delta x^T\Delta x }{\Delta x ^T( g_{k+1} - g_k )}　-\frac{G_k( g_{k+1} - g_k )( g_{k+1} - g_k )^TG_k}{( g_{k+1} - g_k )^TG_k( g_{k+1} - g_k )}</script><p>BFGS算法是一个很常见的算法，用的是用一个正定矩阵$B_k$ 来近似$H_k$ ,同样需要满足上面说的拟牛顿条件。类似BFP算法，也有</p>
+<script type="math/tex; mode=display">
+B_{k+1}=B_k + P_k + Q_k</script><p>考虑使$P_k,Q_k$满足：</p>
+<script type="math/tex; mode=display">
+P_k\Delta x = (y_{k+1} - y_{k}) \\
+Q_k \Delta x = -B_k\Delta x</script><p>找到满足条件的$P_k,Q_k$，得到BFGS的算法矩阵$B_{k+1}$ 的迭代公式：</p>
+<script type="math/tex; mode=display">
+B_{K+1}=B_k + \frac{( g_{k+1} - g_k )( g_{k+1} - g_k )^T}{( g_{k+1} - g_k )^T\Delta x} - \frac{B_k\Delta x \Delta x^T B_k}{\Delta^TB_k\Delta x}</script><p>实际的BFGS的算法中，有一个确定步长的步骤，即首先确定更新的方向$-B_k^{-1} g_k$, 然后求一个步长$\alpha $,求法如下：</p>
+<script type="math/tex; mode=display">
+f(x_k + \alpha_k (-B_k^{-1} g_k)) = min f(x_k + \alpha (-B_k^{-1} g_k)) \\
+x_{k+1} = x_k+\alpha_k(-B_k^{-1} g_k)</script>
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/operator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/operator/" class="post-title-link" itemprop="url">soft-thresholding operator</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:58:42 / Geändert am: 14:59:17" itemprop="dateCreated datePublished" datetime="2019-07-13T14:58:42+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>让$f(x) = \lambda |x|_1$ ， 那么$f$的近似投影被定义为：</p>
+<script type="math/tex; mode=display">
+prox_f(x) = argmin_x\{\frac{1}{2}|x-z|_2^2 + \lambda|z|_1\}</script><p>该问题的最优性条件为：</p>
+<script type="math/tex; mode=display">
+0 \ \in \Delta(\frac{1}{2}|x-z|_2^2)+\partial (\lambda|z|_1)</script><p>由于$l1 \ norm$是可以分离的，因此我们可以单独考虑x中的每一个成分。</p>
+<p>首先考虑$z_i \neq 0$的情况，此时有$\partial (\lambda|z|_1)=sign(z_i)$并且最优的$z_i^*$为：</p>
+<script type="math/tex; mode=display">
+0 = z_i - x_i + \lambda sign(z_i) \leftrightarrow 0 \in z - x + \lambda|x|_1</script><p>需要指出是，如果$z_i^<em> &lt;0$那么$x_i &lt;-\lambda$。同时如果$z_i^</em> &gt;0$那么$x_i &gt;\lambda$。因此，$|x_i| &gt;\lambda$ 和$sign(z_i^*) = sign(x_i)$.代入道先前的等式得到：</p>
+<script type="math/tex; mode=display">
+z_i^* = x_i - \lambda sign(x_i)</script><p>然后考虑$z_i = 0$的情况。此时$l_1 \ norm$的次微分为区间$[-1,1]$，并且最优性条件为：</p>
+<script type="math/tex; mode=display">
+0 = - x_i + \lambda [-1,1] \leftrightarrow x_i \in [-\lambda,\lambda] \leftrightarrow |x|_1 \le \lambda</script><p>将两个情况放在一起得到了：</p>
+<script type="math/tex; mode=display">
+[porx_f(x)]_i = z_i^* = \begin{cases}
+    0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if |x_i| \le \lambda\\
+    x_i - \lambda sign(x_i) \ \ \  if |x_i| >\lambda\\
+\end{cases}</script><p>等式(6)同样可以写为：</p>
+<script type="math/tex; mode=display">
+[porx_f(x)]_i = sign(x_i)max(|x_i|-\lambda,0) \\
+\ \ \ \ \ \ \ \ \ \ = sign(x_i)(|x_i| - \lambda)_+</script>
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/Thresholding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/Thresholding/" class="post-title-link" itemprop="url">Singular Value Thresholding</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:57:40 / Geändert am: 14:59:44" itemprop="dateCreated datePublished" datetime="2019-07-13T14:57:40+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>SVT（奇异值阈值）奇异值收缩（singular value shrinkage)</p>
+<p>考虑一个秩为r的矩阵$X\in R^{n1*n2}$的奇异值分解如下：</p>
+<script type="math/tex; mode=display">
+X= U \Sigma V^*，\Sigma = diag(\{\sigma_i\}_{1 \le i \le r})</script><p>其中$U,V$分别是$n1<em>r，n2</em>r$的正交矩阵，奇异值$\sigma_i$非负。</p>
+<p>对于每一个$\tau \ge 0$，有软阈值操作$D_\tau$：</p>
+<script type="math/tex; mode=display">
+D_\tau(X) ：= UD_\tau(\Sigma)V^*, \ \ \ D_\tau(\Sigma)= diag(\{(\sigma_i - \tau)_+\}_{1 \le i \le r})</script><p>可以看出，这个软阈值操作是作用在奇异值上的，使他们趋于0，这也是这个被叫做奇异值收缩的原因。</p>
+<p>对于奇异值收缩$D_\tau$ 有一个重要的结论：</p>
+<script type="math/tex; mode=display">
+D_\tau（Y)= arg\ min_X \frac{1}{2} |X-Y|_F^2 + \tau|X|_*</script>
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/Softmax求导/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/Softmax求导/" class="post-title-link" itemprop="url">Softmax求导</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:56:31 / Geändert am: 14:57:08" itemprop="dateCreated datePublished" datetime="2019-07-13T14:56:31+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>softmax 可以看作是logistic “one versus all”的多分类版本，和普通的“one versus all”不同的是，softmax是通过选择最大的输出概率值来做最后的决策任务，因此不存在”混淆区域“</p>
+<p>softmax的公式为：</p>
+<script type="math/tex; mode=display">
+p(Y=k|x)=\frac{exp(w_k * x)}{1+\Sigma_i^{K-1}{exp(w_i * x)}}  \\
+p(Y=K|x)=\frac{1}{1+\Sigma_i^{K-1}{exp(w_i * x)}}</script><p>为什么$p(Y=K|x)=\frac{1}{1+\Sigma_i^{K-1}{exp(w_i <em> x)}}$？是因为，softmax是存在参数冗余的，即一开始所有的类别k都有一个$w_k$的，但是，如果对上面下面都除以一个$exp(w_K</em>x)$的话，就得到上面的公式：</p>
+<script type="math/tex; mode=display">
+p(Y=k|x)=\frac{exp(w_k * x)}{\Sigma_i^{K}{exp(w_i * x)}}  \\
+上下都除以exp(w_K*x)得到： \\
+p(Y=k|x)_{k\ne K}= \frac{exp((w_k-w_K)*x)}{\Sigma_i^{K}{exp((w_i-w_K) * x)}}=\frac{exp((w_k-w_K)*x)}{1+\Sigma_i^{K-1}{exp((w_i-w_K) * x)}}\\
+p(Y=k|x)_{k = K}= \frac{exp((w_K-w_K)*x)}{\Sigma_i^{K}{(w_i-w_K) * x}}=\frac{1}{1+\Sigma_i^{K-1}{exp((w_i-w_K) * x)}}</script><p>令新的到的$w_i- w_K$为新的$w_i$即得到公式(1)。</p>
+<p>得到softmax的参数的过程是通过<strong>最大似然函数</strong>得到的。</p>
+<script type="math/tex; mode=display">
+likelihood = \Pi_i^N\Pi_k^K1\{y_i=k\}p(Y=k|x)</script><p>其中$1\{y_i=k\}在$$\{\}$内表达式为真的时候取1。由于有多个连乘，做法是对其log，得到它的对数似然函数：</p>
+<script type="math/tex; mode=display">
+loglikelihood = \Sigma_i^N\Sigma_k^K \ log \ 1\{y_i=k\} \ p(Y=k|x)\\
+=\Sigma_i^N\Sigma_k^K log \ \frac{1\{y_i=k\}*exp(w_k * x_i)}{1+\Sigma_j^{K-1}{exp(w_j * x_i)}}\\
+=\Sigma_i^N\Sigma_k^K\{\{1\{y_i=k\}*w_k*x_i -log\{1+\Sigma_j^{K-1}{exp(w_j * x)}\}\}\}</script><p>此外，$log\{1+\Sigma_i^{K-1}{exp(w_i * x)}\}<script type="math/tex">对于</script>w_k$求导有：</p>
+<script type="math/tex; mode=display">
+\frac{\partial log\{1+\Sigma_j^{K-1}{exp(w_i * x_i)}}{\partial w_k}=\frac{1}{1+\Sigma_j^{K-1}{exp(w_j * x_i)}}*\frac{\partial (1+\Sigma_j^{K-1}{exp(w_j * x_i)})}{\partial w_k} \\
+= \frac{1}{1+\Sigma_j^{K-1}{exp(w_j * x_i)}}*exp(w_k*x_i)*x=p(Y=k|x_i)*x_i</script><p>因此对对数似然函数求导为：</p>
+<script type="math/tex; mode=display">
+\frac{\partial loglikellihood}{\partial w_j}=\Sigma_i^N\Sigma_k^K\{1\{y_i=k\}w_k*x_i -log\{1+\Sigma_j^{K-1}{exp(w_j * x)}\}\} \\
+= \Sigma_i^N \{1\{y_i=j\}x_i -x_i*p(Y=j|x_i)\}\}\\
+=\Sigma_i^N x_i*(1\{y_i=j\} - p(Y=j|x_i))\}</script><p>可知，样本是否属于j类，样本i对于$w_j$的梯度贡献不同(这里假设是最小化log likelihood,需要对梯度取反）：</p>
+<script type="math/tex; mode=display">
+if \ x_i \in class_j \\
+the \ contribution \ of \ x_i \ to \ \partial_{w_j} \ is: \ -x_i(1-p(y=j|x_i)) \\
+else:\\
+the \ contribution \ of \ x_i \ to \ \partial_{w_j} \ is: \ x_i*p(Y=j|x_i)</script><p>回顾到感知机的更新为用错误的样本对权重$w$进行更新，</p>
+<script type="math/tex; mode=display">
+W \leftarrow W - (-y_ix_i) \\
+b \leftarrow W - (-y_i)</script><p>可以看到softmax除了对错误样本进行更新和感知机是吻合的，不同指出是softmax也用正确的样本来更新权重。</p>
+<p>可以把$x_i(1-p(y=j|x_i))$ 重新写为：$-x_i(p(y=j|x_i) - 1)$</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/GBDT提升树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/GBDT提升树/" class="post-title-link" itemprop="url">GBDT提升树</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:54:36 / Geändert am: 14:55:13" itemprop="dateCreated datePublished" datetime="2019-07-13T14:54:36+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>提升树是以分类树或者回归树为基本分类器的提升方法。提升方法采用的加法模型和前向分布算法。提升树模型可以表示为决策树的加法模型：</p>
+<script type="math/tex; mode=display">
+f_M(x) = \Sigma_{m=1}^{M} T(x;W_m)</script><p>梯度提升树采用的是前向分布算法。第m步骤的模型为：</p>
+<script type="math/tex; mode=display">
+f_m(x;W_m)=f_{m-1} + T(x;W_m)</script><p>则，通过经验风险极小化来确定下一棵数的参数$W_m$, </p>
+<script type="math/tex; mode=display">
+\hat{W}_m  = argmin \ \Sigma_{n=1}^N L(y_n,f_{m-1}(x_n)+T(x_n;W_m))</script><h2 id="一阶的GBDT"><a href="#一阶的GBDT" class="headerlink" title="一阶的GBDT"></a>一阶的GBDT</h2><p>考虑一阶泰勒展开，对$obj(m)= \Sigma_{n=1}^N L(y_n,f_{m-1}(x_n)+T(x_n;W_m)$在$f_{m-1}(x)$处展开有：</p>
+<script type="math/tex; mode=display">
+obj(m) = \Sigma_{n=1}^N L(y_n,f_{m-1}(x_n)+T(x_n;W_m) \thickapprox  \Sigma_{n=1}^N L(y_n,f_{m-1}(x_n)) + \frac{\partial L(y_n,f(x_n))}{\partial f _{m-1}(x_n) }*T(x_n;W_m) + \varTheta (f(x_n))</script><p>对近似一阶展开最小化，可知：$L(y_n,f_{m-1}(x_n))$,$\frac{\partial L(y_n,f(x_n))}{\partial f _{m-1}(x_n) }$都是constant，因为为了最小化(4)，只要求：</p>
+<script type="math/tex; mode=display">
+T(x_n;W_m) = -1*\frac{\partial L(y_n,f(x_n))}{\partial f _{m-1}(x_n) }</script><p>这个就得到了梯度提升树的算法，新的一颗树是通过拟合负梯度得到的。</p>
+<p>需要注意的是，当$L(y,f_m(x))$选为平方函数的时候，上述的负梯度即残差。</p>
+<h2 id="二阶的GBDT"><a href="#二阶的GBDT" class="headerlink" title="二阶的GBDT"></a>二阶的GBDT</h2><p>考虑二阶展开，有：</p>
+<script type="math/tex; mode=display">
+obj(m) \thickapprox   \Sigma_{n=1}^N L(y_n,f_{m-1}(x_n)) + \frac{\partial L(y_n,f(x_n))}{\partial f _{m-1}(x_n) }*T(x_n;W_m)+ \frac{1}{2} \frac{\partial L(y_n,f(x_n))}{\partial^2f _{m-1}(x_n) }*T^2(x_n;W_m) +\varTheta (f(x_n))</script><p>可以缩写为：</p>
+<script type="math/tex; mode=display">
+obj(m) \thickapprox   \Sigma_{n=1}^N   L(y_n,f_{m-1}(x_n)) + g_n*T(x_n;W_m) + \frac{1}{2}*h_n*T^2(x_n;W_m)</script><p>由于函数中的常量在优化过程中不起影响，因此可以省略，(7)可以进一步写为：</p>
+<script type="math/tex; mode=display">
+obj(m) \thickapprox   \Sigma_{n=1}^N    g_n*T(x_n;W_m) + \frac{1}{2}*h_n*T^2(x_n;W_m)</script><p>在更一般的机器学习的目标函数中，会通过添加一个正则项，来达到一个最小化结构化误差的作用，因此(8)进一步写为：</p>
+<script type="math/tex; mode=display">
+obj(m) \thickapprox   \Sigma_{n=1}^N    g_n*T(x_n;W_m) + \frac{1}{2}*h_n*T^2(x_n;W_m)+\Omega(T(x;W_m))</script><p>最常见的一个二阶的GBDT模型为Xgboost模型。</p>
+<h2 id="Xgboost"><a href="#Xgboost" class="headerlink" title="Xgboost"></a>Xgboost</h2><p>这里假设一棵决策树，叶子节点个数为$M$,该决策树是由叶子节点上的值组成的向量$\omega \in R^M$，以及一个将一个特征向量映射到叶子节点的索引函数$q:R^d \rightarrow \{1,2,…,M\}$ 组成的。因此一个决策树可以重新写为：$T(x)=\omega_{q(x)}$</p>
+<p>此时正则项定义为：$\Omega(T) = \gamma M + \frac{1}{2}<em> \lambda</em> \Sigma_{j=1}^M\omega^2$来定义。此时为叶子j定义一个样本集合为：$I_j = \{n|q(x_n)=j\}$</p>
+<p>上面的目标函数可以重新写为：</p>
+<script type="math/tex; mode=display">
+obj(m) \thickapprox   \Sigma_{n=1}^N    g_n*T(x_n;W_m) + \frac{1}{2}*h_n*T^2(x_n;W_m)+\Omega(T(x;W_m)) \\
+obj(m)\thickapprox   \Sigma_{n=1}^N    g_n*\omega_{q(x_n)} + \frac{1}{2}*h_n*\omega^2_{q(x_n)}+\gamma M + \frac{1}{2}* \lambda* \Sigma_{j=1}^M\omega^2 \\
+obj(m)\thickapprox   \Sigma_{j=1}^M  (\Sigma_{n \in I_j}g_n)  *\omega_j + \frac{1}{2}*(\Sigma_{n \in I_j}h_n+\lambda)*\omega^2_{j}+\gamma M</script><p>定义$G_n = \Sigma_{n \in I_j}g_n,H_n=(\Sigma_{n \in I_j}h_n)$,那么上面的目标函数可以写为：</p>
+<script type="math/tex; mode=display">
+obj(m)\thickapprox   \Sigma_{j=1}^M  G_n *\omega_j + \frac{1}{2}*(H_n+\lambda)*\omega^2_{j}+\gamma M</script><p>对于一个单变量二次方程式:</p>
+<script type="math/tex; mode=display">
+argmin_x Gx+\frac{1}{2}Hx^2 = - \frac{G}{H}, H>0\\
+min_x Gx+\frac{1}{2}Hx^2 = - \frac{G^2}{H}</script><p> 假设树的结构是固定的，那么每个叶子的最佳权重为：</p>
+<script type="math/tex; mode=display">
+\omega_j^* = -\frac{G_j}{H_j+\lambda}</script><script type="math/tex; mode=display">
+obj = -\frac{1}{2}\Sigma_{j=1}^M \frac{G_j^2}{H_j + \lambda} + \gamma M</script><p>如果给定一个树的结果，可以用上面的公式计算出得分，并且为每个叶子赋值。但是问题是，如何找到一个合适的结构。</p>
+<p>xgb中的方法是贪婪的</p>
+<ul>
+<li><p>树从深度0开始</p>
+</li>
+<li><p>对树的每一个叶子节点，尝试增加一个划分。目标函数的变化程度为：</p>
+<script type="math/tex; mode=display">
+Gain= \frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda} - \frac{(G_L+G_R)^2}{H_L+H_R+\lambda} - \gamma</script></li>
+</ul>
+<p>对于每一个节点，遍历所有的特征：</p>
+<ul>
+<li>对于每一个特征，根据特征值对样本进行排序</li>
+<li>使用线性扫描的方法去决定特征的最佳划分</li>
+<li>选择所有特征中最佳的特征</li>
+</ul>
+<p>回到GBDT，生成的树要加到原来的模型上：</p>
+<script type="math/tex; mode=display">
+f_m(x;W_m)=f_{m-1} + \epsilon T(x;W_m)</script><p>这里$\epsilon$被称为步长或者收缩，一般设置为0.1左右。这个意味着在每一步没有做最好的优化，保留了后面的轮数，有助于防止过拟合。</p>
+<p>除了步长外，xgb还有其他的防止过拟合的措施：</p>
+<ul>
+<li><p>Early Stopping：本质是在某项指标达标后就停止训练，也就是设定了训练的轮数</p>
+</li>
+<li><p>Subsampling：无放回抽样，具体含义是每轮训练随机使用部分训练样本，其实这里是借鉴了随机森林的思想</p>
+</li>
+<li><p>colsample_bytree: 训练的过程中，使用的特征以一定的比例从所有的特征中采样。</p>
+</li>
+<li><p>max_depth: 树的深度，树越深越容易过拟合</p>
+</li>
+<li><p>min_child_weight: 值越大，越容易欠拟合。</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>  [李航《统计学习方法》]: </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/拉格朗日对偶性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/拉格朗日对偶性/" class="post-title-link" itemprop="url">拉格朗日对偶性</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:53:25 / Geändert am: 14:53:55" itemprop="dateCreated datePublished" datetime="2019-07-13T14:53:25+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>拉格朗日对偶是约束最优化问题中最常见的一种方法，将带约束的问题转化为不带约束的问题，并进行求解。除此之外，拉格朗日对偶性有这非常好的性质，例如：</p>
+<ul>
+<li>对偶问题可以给出原问题的一个下界</li>
+<li>无论原问题是否是凸的，对偶问题都是凸的</li>
+<li>当满足一定的条件的时候，原始问题和对偶问题完全等价。</li>
+</ul>
+<h3 id="原始问题"><a href="#原始问题" class="headerlink" title="原始问题"></a>原始问题</h3><p>首先我们先提到原始问题。考虑这么一个带约束的问题：</p>
+<script type="math/tex; mode=display">
+min_{x} f(x)\\
+s.t \ \ c_i(x) \le 0,\ i=1,2,...,k \\
+\ \ \ \  h_j(x) = 0, \ j=1,2,...,m</script><p>同时引入广义拉格朗日函数 ：</p>
+<script type="math/tex; mode=display">
+L(x,\alpha,\beta) = f(x)+ \sum_{i=1}^k{\alpha_i c_i(x)} + \sum_{j=1}^m{\beta_j h_j(x)}</script><p>其中$\alpha_i$,$\beta_i$是拉格朗日乘子，$\alpha_i\ge0$。那么考虑以下的函数：</p>
+<script type="math/tex; mode=display">
+\theta_p(x) = max_{\alpha,\beta;\alpha\ge0}L(x,\alpha,\beta)</script><p>假设存在一个$x$,$x$会是以下四种情况之一：</p>
+<ol>
+<li>$x$满足约束$c_i(x)\le0,h_j(x)=0$</li>
+<li>$x$不满足约束$c_i(x) \le 0 $</li>
+<li>$x$不满足约束$h_j(x)=0$</li>
+<li>$x$不满足约束$h_j(x)=0$和$h_j(x)=0$</li>
+</ol>
+<p>考虑第一种情况，此时$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\alpha_i = 0$,且$\beta_i$值任意，此时$\theta_p(x)$等价于$f(x)$.即此时$\theta_p(x)$等价于原问题。</p>
+<p>考虑第二种情况，此时$c_i(x) &gt; 0$.$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\alpha_i \rightarrow +\infty$,且$\beta_i$值任意，此时$\theta_p(x) \rightarrow +\infty$。</p>
+<p>考虑第三种情况，此时$h_j(x) \ne 0$,$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\beta_i \rightarrow +\infty或-\infty$,且$\alpha_i$值为0.此时，$\theta_p(x) \rightarrow +\infty$。</p>
+<p>考虑第四种情况，此时$h_j(x) \ne 0$，$c_i(x) &gt; 0$,$\theta_p(x)$里面的max为了最大化$L(x,\alpha,\beta)$, 会让$\beta_i \rightarrow +\infty或-\infty$,且$\alpha_i \rightarrow +\infty$，$\theta_p(x) \rightarrow +\infty$。</p>
+<p>因此可以看出$\theta_p(x)$的性质，</p>
+<script type="math/tex; mode=display">
+\theta _p=\begin{cases}
+    f\left( x \right)\\
+    +\infty\\
+\end{cases}</script><p>如果考虑问题</p>
+<script type="math/tex; mode=display">
+min_x  \theta_p(x)</script><p>该问题和原问题是等价的，即它们有等价的解或者同样无解。这样子就得到了广义拉格朗日函数的极小极大问题。定义原问题的最优解为：</p>
+<script type="math/tex; mode=display">
+p^* = min_x  \theta_p(x)</script><h3 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h3><p>定义问题：</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha,\beta)=min_x L(x,\alpha,\beta)</script><p>再考虑极大化$\theta_D(\alpha,\beta)=min_x=L(x,\alpha,\beta)$,即</p>
+<script type="math/tex; mode=display">
+max_{\alpha_i,\beta_j;\alpha_i\ge 0} \theta_D(\alpha,\beta) = max_{\alpha_i,\beta_j;\alpha_i\ge 0} min_x L(x,\alpha,\beta)</script><p>该问题被称为广义拉格朗日函数的极大极小问题。该问题表达为带约束的优化问题</p>
+<script type="math/tex; mode=display">
+max_{\alpha_i,\beta_j} min_x L(x,\alpha,\beta) \\
+s.t \ \ \alpha_i\ge 0, \ \ i=1,2,...,k</script><p>该带约束的问题被称为原始问题的对偶问题。同时定义该对偶问题的最优解为：</p>
+<script type="math/tex; mode=display">
+d^* = max_{\alpha_i,\beta_j} \theta_D(\alpha,\beta)</script><h3 id="对偶问题和原始问题的关系"><a href="#对偶问题和原始问题的关系" class="headerlink" title="对偶问题和原始问题的关系"></a>对偶问题和原始问题的关系</h3><h4 id="弱对偶性和强对偶性"><a href="#弱对偶性和强对偶性" class="headerlink" title="弱对偶性和强对偶性"></a>弱对偶性和强对偶性</h4><p>对偶问题和原始问题的最优解满足以下关系：</p>
+<script type="math/tex; mode=display">
+d^* \le p^*</script><p>证明很简单，即：</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha,\beta)=min_x L(x,\alpha,\beta) \le L(x,\alpha,\beta) \le max_{\alpha,\beta;\alpha\ge0}L(x,\alpha,\beta)=\theta_p(x)</script><p>即</p>
+<script type="math/tex; mode=display">
+\theta_D(\alpha,\beta) \le \theta_p(x)</script><p>则有</p>
+<script type="math/tex; mode=display">
+max_{\alpha,\beta} \  \theta_D(\alpha,\beta) \le min_x \ \theta_p(x) \\
+d^* \le p^*</script><p>这个性质也被称为<strong>弱对偶性</strong>，对所有的优化问题成立，即使原始问题非凸。相对于弱对偶性，也有<strong>强对偶性</strong>：</p>
+<script type="math/tex; mode=display">
+d^* = p^*</script><h4 id="Slater条件"><a href="#Slater条件" class="headerlink" title="Slater条件"></a>Slater条件</h4><p>考虑原始问题和对偶问题。假设函数$f(x) , c_i(x)$是凸函数，并且$h_j(x)$是仿射函数，并且不等式$c_i(x)$是严格可行的,即存在x,对于所有的i有$c_i(x) &lt; 0$则存在$x^<em>,\alpha^</em>,\beta^<em>$,使得$x^</em>$是原问题的最优解，$\alpha^<em>,\beta^</em>$是对偶问题的最优解，同时有：</p>
+<script type="math/tex; mode=display">
+d^* = p^* = L(x^*,\alpha^*,\beta^*)</script><p><strong>Note</strong>, 该slater条件对应SVM即要求数据集是线性可分的；如果数据是线性不可分的，那么此时使用SVM寻找分隔超平面也失去了意义。</p>
+<h4 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h4><p>对于原始问题和对偶问题，假设假设函数$f(x) , c_i(x)$是凸函数，并且$h_j(x)$是仿射函数，并且不等式$c_i(x)$是严格可行的，则$x^<em>$是原问题的最优解，$\alpha^</em>,\beta^<em>$是对偶问题的最优解的充分必要条件是$x^</em>$$\alpha^<em>,\beta^</em>$满足以下的KKT条件：</p>
+<script type="math/tex; mode=display">
+\begin{cases} \Delta_x L(x^*,\alpha^*,\beta^*) =0
+    \\ \Delta_\alpha L(x^*,\alpha^*,\beta^*) =0
+    \\ \Delta_\beta L(x^*,\alpha^*,\beta^*) =0
+     \\ \alpha_i^*c_i(x)=0, i=1,2,...,k 
+     \\ c_i(x^*) \le 0 , i=1,2,...,k 
+     \\ \alpha_i \ge 0 , i=1,2,...,k 
+     \\ h_j(x^*)=0, j=1,2,...,m
+\end{cases}</script><p>其中，$\alpha_i^<em>c_i(x)=0, i=1,2,…,k $被称为是KKT条件的对偶互补条件。由此条件可知：若$\alpha_i^</em> &gt;0$,则$c_i(x^*)=0$.</p>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>当原始问题为凸优化问题的时候，其对偶问题的强对偶性与KKT条件是互为充要的。</p>
+<p>当原始问题不为凸优化问题是，利用其对偶问题也可以得到原问题最优解的下界。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://blog.csdn.net/qq_32742009/article/details/81413068" target="_blank" rel="noopener">https://blog.csdn.net/qq_32742009/article/details/81413068</a></p>
+<p>统计学习方法附录C</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/13/基于梯度的优化算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/13/基于梯度的优化算法/" class="post-title-link" itemprop="url">基于梯度的优化算法</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-13 14:51:43 / Geändert am: 14:52:41" itemprop="dateCreated datePublished" datetime="2019-07-13T14:51:43+08:00">2019-07-13</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+                  . 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="Batch-gradient-descent"><a href="#Batch-gradient-descent" class="headerlink" title="Batch gradient descent"></a>Batch gradient descent</h4><p>使用整个训练集来优化权重，意思是用训练集中的所有样本的loss来更新模型的权重。此时，权重的梯度为：</p>
+<script type="math/tex; mode=display">
+\partial W = \frac{1}{N} \partial\Sigma_i^N \ L(f(x^{i}),y^{i}) \\
+ =  \frac{1}{N} \Sigma_i^N \partial\ L(f(x^{i}),y^{i})</script><p>可以看出权重的梯度是每个每个样本的梯度的期望。</p>
+<p>此时的更新过程为：</p>
+<script type="math/tex; mode=display">
+W := W -\eta \frac{1}{N} \Sigma_i^N \partial \ L(f(x^{i}),y^{i})</script><p>如果样本的个数的是10000， 100000个的时候，需要先遍历所有的样本在对权重$W$更新，这个是非常耗时的。因此有人提出了SGD</p>
+<h4 id="Stochastic-gradient-descent"><a href="#Stochastic-gradient-descent" class="headerlink" title="Stochastic gradient descent"></a>Stochastic gradient descent</h4><p>相比与batch gradient descent方法， SGD不适用全部的样本来估计权重的梯度，而是使用的一小部分的样本。主要的原因是一小部分的样本的梯度均值可以近似真实的梯度，而这部分样本的数量越多，估计的梯度越近似真实的梯度。另一方面，用小部分样本来估计的梯度是带有噪声的，在一定程度也起到了正则化的作用。</p>
+<p>此时的梯度为：</p>
+<script type="math/tex; mode=display">
+\partial W = \frac{1}{N} \partial\Sigma_i^m \ L(f(x^{i}),y^{i})</script><p>此时的更新过程为：</p>
+<script type="math/tex; mode=display">
+W := W -\eta \frac{1}{N} \Sigma_i^m \partial \ L(f(x^{i}),y^{i})</script><p>实际过程中，每次选取一部分的样本来估计梯度，并进行更新，这部分被叫做一个迭代；如果一整个的训练集都使用一次，就叫经过了一个 epoch。注意，每个epoch，样本都要被打散。</p>
+<h4 id="SGD-Momentum"><a href="#SGD-Momentum" class="headerlink" title="SGD+Momentum"></a>SGD+Momentum</h4><p>SGD方法存在这一个“震荡”的问题，如下图：</p>
+<p><img src="E:\刘志伟的文件\论文笔记\机器学习\assets\1562846876860.png" alt="1562846876860"></p>
+<p>可以看到在更新的过程中，梯度下降的迭方向会偏离实际中真正的下降方向。momentum就是为了克服</p>
+<p>这个震荡的问题。</p>
+<script type="math/tex; mode=display">
+v_{t} = \eta v_{t-1} + (1-\eta)\partial W_t \\
+W_t \ := W_{t-1}-\eta v_{t}</script><p>动量可以看作是迭代过程中下降方向，震荡的方向被消除了，使得权重更新的方向变得一致。</p>
+<h4 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h4><p>梯度下降中存在一个问题，如果使用相同的学习率，对于权重W中每一个元素$W_i$,如果他们的梯度值有较大的差别的时候，会导致权重在梯度值较小的维度上迭代过慢。Adagrad方法根据权重在每个维度上梯度值的大小来调整各个维度上的学习率，来避免统一学习率难以适应所有维度的问题。</p>
+<script type="math/tex; mode=display">
+s_t = s_{t-1} + \partial W_t \odot \partial W_t \\
+W_t \ := W_{t-1}-\frac{\eta}{\sqrt{s_t}}\partial W_t</script><p>Adagrad存在一个问题，有与$s_t$一致累加着梯度按元素平方的和，因此如果权重的某个元素的偏导数一直较大，会使得学习率下降较快；反之，如果某个元素的偏导数一直较小，学习率则会下降较慢。所以Adagrad在后期的时候，比较难找到一个合适的解。</p>
+<h4 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h4><p>由于Adagrad存在后期学习率低的问题，RMSprop对其做了一点小小的改动：</p>
+<script type="math/tex; mode=display">
+s_t =  \gamma s_{t-1} + (1-\gamma) \ \partial W_t \odot \partial W_t \\
+W_t \ := W_{t-1}-\frac{\eta}{\sqrt{s_t}}\partial W_t</script><p>RMSprop对这些梯度的平方做指数加权移动平均，使得每个权重的学习率不会一直降低或者不变。</p>
+<p>可以消除梯度下降过程中的摆动，包括mini-batch，允许使用更大的$\alpha$,加快算法学习速度</p>
+<h4 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h4><p>Adadelta也针对Adagrad做了改进，同样的，Adadelta也是了梯度平方的加权移动平均。但是它与RMSprop不同的是Adadelta还维护了一个额外的状态变量$\Delta W_t$ 来计算自变量的变化值：</p>
+<script type="math/tex; mode=display">
+W_t^/ = \sqrt{\frac{\Delta W_{t-1} + \epsilon}{s_t + \epsilon}} \odot W_t</script><p>然后更新权重：</p>
+<script type="math/tex; mode=display">
+W_t = W_{t-1} -W_t^/</script><p>最后使用$\Delta W_t$来记录权重变化量的指数加权移动平均：</p>
+<script type="math/tex; mode=display">
+\Delta W_t = \rho\Delta W_{t-1} + (1-\rho)W_t^/  \odot W_t^/</script><h4 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h4><p>Adam算法是将momentum和RMSprop结合起来</p>
+<script type="math/tex; mode=display">
+v_{t} = \beta_1 v_{t-1} + (1-\beta_1)\partial W_t \\
+s_{t} = \beta_2 s_{t-1} +(1-\beta_2)\partial W_t \\
+\hat{v}_{t} = \frac{v_{t}}{1-\beta_1^t}\\
+\hat{s}_{t} = \frac{S_{t}}{1-\beta_2^t} \\
+W_t:= W_{t-1}- \frac{\alpha \hat{v}_{t}}{\sqrt{\hat{s}_{t}+\epsilon}}</script><p>$\beta_1$常用为0.9，$\beta_2$常用为0.999，而$\epsilon$为10^-8。Adam还对动量项和 梯度平方项做了偏差修正，然后使用修正后的变量对权重进行更新。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/11/KL散度和交叉熵CE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -845,1314 +2291,11 @@ CE(P,Q) = H(P) + D_{KL}(P||Q)</script><p>需要注意的是，在机器学习中
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/长尾分布特征的处理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/长尾分布特征的处理/" class="post-title-link" itemprop="url">长尾分布特征的处理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 22:07:00 / Geändert am: 22:07:50" itemprop="dateCreated datePublished" datetime="2019-07-02T22:07:00+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对特征进行log处理</p>
-<p><img src="/images/assets/1557631665906.png" alt="1557631665906"></p>
-<p>log后</p>
-<p><img src="/images/assets/1557631687832.png" alt="1557631687832"></p>
-<p>在kaggle比赛中，不仅可以对特征进行这样的log矫正的，对目标值也可以进行这样的矫正。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Pytorch加载和读取模型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Pytorch加载和读取模型/" class="post-title-link" itemprop="url">Pytorch加载和读取模型</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 22:05:45 / Geändert am: 22:06:19" itemprop="dateCreated datePublished" datetime="2019-07-02T22:05:45+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>首先看下有关的函数：</p>
-<ol>
-<li>torch.save: 将一个文件保存到硬盘上，内部是用了pickle库</li>
-<li>troch.load：用的pickle的unpicking方法将存储在硬盘上的object读取到内存中</li>
-<li>torch.nn.Module.load_state_dict：从一个state_dict中加载一个模型的参数</li>
-</ol>
-<p>什么是state_dict:</p>
-<p>pytorch中的每个module的可学习的参数：如权重和bias等都在module.parameters()里面。</p>
-<p>一个state_dict简单来说就是一个字典object，可以把每一层映射到他的参数上去。可学习参数以及register buffer(bn)已经优化器都有state_dict。因为state_dict是python字典对象，因此很简单就可以保存，修改。</p>
-<p>下面是读取模型state_dict的例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> param_tensor <span class="keyword">in</span> model.state_dict():</span><br><span class="line">    print(param_tensor, <span class="string">"\t"</span>, model.state_dict()[param_tensor].size())</span><br></pre></td></tr></table></figure>
-<h2 id="两种方法"><a href="#两种方法" class="headerlink" title="两种方法"></a>两种方法</h2><p>回到正题，有两种方法可以保存和读取模型。</p>
-<p>第一种是通过模型的state_dict来进行读取和保存。特别是读取的时候，首先得新建一个模型object，然后加载参数。</p>
-<p><strong>Save:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
-<p><strong>Load:</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH))</span><br><span class="line">model.eval()</span><br></pre></td></tr></table></figure>
-<p>第二种方法之别保存和加载整个模型：</p>
-<p><strong>Save:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model, PATH)</span><br></pre></td></tr></table></figure>
-<p><strong>Load:</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Model class must be defined somewhere</span></span><br><span class="line">model = torch.load(PATH)</span><br><span class="line">model.eval()</span><br></pre></td></tr></table></figure>
-<p>这种方法的缺点是序列化数据绑定到特定类以及保存模型时使用的确切目录结构。这是因为pickle不保存模型类本身。相反，它会保存包含类的文件的路径，该文件在加载时使用。因此，当您在其他项目中或在重构之后使用时，您的代码可能会以各种方式中断。</p>
-<h2 id="保存checkpoint"><a href="#保存checkpoint" class="headerlink" title="保存checkpoint"></a>保存checkpoint</h2><p>可以保存checkpoint用于后续的推理和重新训练。和单独保存模型的参数不同，优化器的参数也会被保存，以便于后续的训练。</p>
-<h3 id="Save"><a href="#Save" class="headerlink" title="Save:"></a>Save:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line">            &apos;epoch&apos;: epoch,</span><br><span class="line">            &apos;model_state_dict&apos;: model.state_dict(),</span><br><span class="line">            &apos;optimizer_state_dict&apos;: optimizer.state_dict(),</span><br><span class="line">            &apos;loss&apos;: loss,</span><br><span class="line">            ...</span><br><span class="line">            &#125;, PATH)</span><br></pre></td></tr></table></figure>
-<h3 id="Load"><a href="#Load" class="headerlink" title="Load:"></a>Load:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">optimizer = TheOptimizerClass(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">checkpoint = torch.load(PATH)</span><br><span class="line">model.load_state_dict(checkpoint[<span class="string">'model_state_dict'</span>])</span><br><span class="line">optimizer.load_state_dict(checkpoint[<span class="string">'optimizer_state_dict'</span>])</span><br><span class="line">epoch = checkpoint[<span class="string">'epoch'</span>]</span><br><span class="line">loss = checkpoint[<span class="string">'loss'</span>]</span><br><span class="line"></span><br><span class="line">model.eval()</span><br><span class="line"><span class="comment"># - or -</span></span><br><span class="line">model.train()</span><br></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://pytorch.org/tutorials/beginner/saving_loading_models.html" target="_blank" rel="noopener">https://pytorch.org/tutorials/beginner/saving_loading_models.html</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Pytorch-TensorboardX-可视化/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Pytorch-TensorboardX-可视化/" class="post-title-link" itemprop="url">Pytorch TensorboardX 可视化</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 22:04:29" itemprop="dateCreated datePublished" datetime="2019-07-02T22:04:29+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2019-07-13 14:49:30" itemprop="dateModified" datetime="2019-07-13T14:49:30+08:00">2019-07-13</time>
-              </span>
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="安装tensorboard"><a href="#安装tensorboard" class="headerlink" title="安装tensorboard"></a>安装tensorboard</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorboardX</span><br><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h4 id="引入并创建一个SummaryWriter"><a href="#引入并创建一个SummaryWriter" class="headerlink" title="引入并创建一个SummaryWriter"></a>引入并创建一个SummaryWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from tensorboardX import SummaryWriter</span><br><span class="line">writer = SummaryWriter(&apos;./runs/dogcat1&apos;)  //log_dir is ./run/dogcat</span><br><span class="line">//need close</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
-<p>logdir参数要是不指定的话，会自动在生成run文件夹。另外还有一个comment参数，用于指定文件名称。</p>
-<h4 id="画loss曲线："><a href="#画loss曲线：" class="headerlink" title="画loss曲线："></a>画loss曲线：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_scalar(&apos;loss&apos;,loss, epoch)</span><br></pre></td></tr></table></figure>
-<p>第一个参数为保存参数的名称，第二个参数为Y轴的值，第三个参数为X轴的值</p>
-<p>运行该代码后，在log_dir下运行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir log_dir  //log_dir 为具体的文件夹</span><br></pre></td></tr></table></figure>
-<p>具体为：</p>
-<p><img src="/images/assets/1555679643005.png" alt="1555679643005"></p>
-<p>结果为：</p>
-<p><img src="/images/assets/1555681461022.png" alt="1555681461022"></p>
-<h4 id="画激活情况"><a href="#画激活情况" class="headerlink" title="画激活情况"></a>画激活情况</h4><p>用于检查深层网络里面的层激活和权值分布情况，避免梯度消失等。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for name, param in net.named_parameters():</span><br><span class="line">	writer.add_histogram(</span><br><span class="line">		name, param.cpu().clone().data.numpy(), epoch_index)</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，如果tensor在gpu需要将其转换到cpu中。</p>
-<p>结果为：</p>
-<p><img src="/images/assets/1555682223014.png" alt="1555682223014"></p>
-<h4 id="画网络结构图"><a href="#画网络结构图" class="headerlink" title="画网络结构图"></a>画网络结构图</h4><p>首先先对某个model进行实例化，如net。然后定义一个输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input = torch.rand(dim1,dim2,dim3,dim4)</span><br><span class="line"></span><br><span class="line">net = LeNet()</span><br><span class="line">writer.add_graph(net, input)</span><br></pre></td></tr></table></figure>
-<p>同样的，需要注意net要在cpu中。</p>
-<p>效果如下：</p>
-<p><img src="/images/assets/1555682403877.png" alt="1555682403877"></p>
-<h4 id="显示图片"><a href="#显示图片" class="headerlink" title="显示图片"></a>显示图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_image(&apos;name&apos;,image_object)</span><br></pre></td></tr></table></figure>
-<h4 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h4><p>使用PCA，T-SNE等方法将高位向量投影到三维坐标系。默认使用PCA，也可以选择T-SNE</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_embedding(mat, metadata=None, label_img=None, global_step=None, tag=&apos;default&apos;, metadata_header=None）</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>mat</strong> (<a href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" target="_blank" rel="noopener"><em>torch.Tensor</em></a> <em>or</em> <em>numpy.array</em>) – A matrix which each row is the feature vector of the data point</li>
-<li><strong>metadata</strong> (<a href="https://docs.python.org/3/library/stdtypes.html#list" target="_blank" rel="noopener"><em>list</em></a>) – A list of labels, each element will be convert to string</li>
-<li><strong>label_img</strong> (<a href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" target="_blank" rel="noopener"><em>torch.Tensor</em></a>) – Images correspond to each data point</li>
-<li><strong>global_step</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Global step value to record</li>
-<li><strong>tag</strong> (<em>string</em>) – Name for the embedding</li>
-</ul>
-<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://tensorboardx.readthedocs.io/en/latest/tensorboard.html" target="_blank" rel="noopener">https://tensorboardx.readthedocs.io/en/latest/tensorboard.html</a></p>
-<p><a href="http://www.pianshen.com/article/3479170564/" target="_blank" rel="noopener">http://www.pianshen.com/article/3479170564/</a></p>
-<p><a href="https://github.com/pytorch/pytorch/issues/2731" target="_blank" rel="noopener">https://github.com/pytorch/pytorch/issues/2731</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Normalize的作用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Normalize的作用/" class="post-title-link" itemprop="url">Normalize的作用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 22:00:04 / Geändert am: 22:01:02" itemprop="dateCreated datePublished" datetime="2019-07-02T22:00:04+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>normalize的最主要的一个作用是将数据中的不同的特征缩放到同一个量纲上（或者可以说无量纲化）。比如果说有一个特征值的范围是[0,1]另一个特征的范围是[0,1000],那么优化算法（尤其是基于梯度的优化方法）在更新的时候尤其会重视特征值大的特征，而忽视特征值小的特征。为了避免这个问题就需要normalization了，把所有的特征放在一个量纲上。</p>
-<p><img src="/images/assets/743682-20151108152327539-2039269197.png" alt="img"></p>
-<h2 id="常用的normalization的方法"><a href="#常用的normalization的方法" class="headerlink" title="常用的normalization的方法"></a>常用的normalization的方法</h2><p>主要有两种方法，min-max normalization 和 Z-score normalization。</p>
-<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><script type="math/tex; mode=display">
-x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}</script><p>主要有两个缺陷:</p>
-<ol>
-<li>新加入的数据会导致$x_{max}$和$x_{min}$ 会发生变化，需要重新定义</li>
-<li>异常值会极大地影响minmax的表现</li>
-<li>minmax不适用于长尾分布</li>
-</ol>
-<p>比较适合于min和max固定的任务，比如图像像素归一化。</p>
-<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><script type="math/tex; mode=display">
-x_{zscore} = \frac{x - min(x)}{stdev(x)}</script><p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
-<blockquote>
-<p>Caveat:<em> it is a common misconception that </em>standardized scores<em> such as </em>z-scores<em> alter the shape of a distribution; in particular, be aware that a </em>z*-scores cannot magically make a non-normal variable normal.</p>
-</blockquote>
-<p>其他的还有logistic，lognormal，TanH等，见</p>
-<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即</p>
-<script type="math/tex; mode=display">
-x = \frac{x}{norm(x)}</script><p>不同的norm会有不同的结果，常见的是L2 norm</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/PyTorch-weight-decay（转）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/PyTorch-weight-decay（转）/" class="post-title-link" itemprop="url">PyTorch weight decay（转）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:58:33 / Geändert am: 21:59:20" itemprop="dateCreated datePublished" datetime="2019-07-02T21:58:33+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>torch.optim 中实现了很多优化器，只需要指定优化器的权重衰减即可：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = optim.SGD(model.parameters(), lr = <span class="number">0.01</span>, momentum=<span class="number">0.9</span>,weight_decay=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
-<p>优化器同时还支持per-parameter options操作，就是对每一个参数进行特定的制定，以满足更为细致的要求。此时，传入优化器的是可迭代的字典，字典中必须有params的key，用于指定特定优化变量，而其他key需要匹配优化器本身的设置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">optim.SGD([</span><br><span class="line">                &#123;&apos;params&apos;: model.base.parameters()&#125;,</span><br><span class="line">                &#123;&apos;params&apos;: model.classifier.parameters(), &apos;lr&apos;: 1e-3&#125;</span><br><span class="line">            ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
-<p>可以灵活给每个子模块设置不同的学习率，权值衰减和momentum。也可以给权值设定权值衰减，而不作用于偏置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">weight_p, bias_p = [],[]</span><br><span class="line">for name, p in model.named_parameters():</span><br><span class="line">  if &apos;bias&apos; in name:</span><br><span class="line">     bias_p += [p]</span><br><span class="line">   else:</span><br><span class="line">     weight_p += [p]</span><br><span class="line"># 这里的model中每个参数的名字都是系统自动命名的，只要是权值都是带有weight，偏置都带有bias，</span><br><span class="line"></span><br><span class="line">optim.SGD([</span><br><span class="line">          &#123;&apos;params&apos;: weight_p, &apos;weight_decay&apos;:1e-5&#125;,</span><br><span class="line">          &#123;&apos;params&apos;: bias_p, &apos;weight_decay&apos;:0&#125;</span><br><span class="line">          ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.csdn.net/LoseInVain/article/details/81708474" target="_blank" rel="noopener">https://blog.csdn.net/LoseInVain/article/details/81708474</a> </p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/" class="post-title-link" itemprop="url">Softmax and Logsoftmax in Pytorch</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:57:25 / Geändert am: 21:57:58" itemprop="dateCreated datePublished" datetime="2019-07-02T21:57:25+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Output layer and criterion options (all are equivalent, 1 is most popular) :</p>
-<ol>
-<li>Linear + LogSoftMax + ClassNLLCriterion</li>
-<li>Linear + SoftMax + Log + ClassNLLCriterion</li>
-<li>Linear + CrossEntropyCriterion</li>
-</ol>
-<p>It should be noted that <strong>CrossEntropyLoss includes a softmax operation.</strong></p>
-<p>softmax with log-likelihood cost can be more fast compared with softmax with MSELoss.</p>
-<p>The <strong>log-likelihood loss</strong> is</p>
-<script type="math/tex; mode=display">
-C = - \Sigma_k y_klog(a_k)</script><p>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
-<p>The <strong>cross-entropy loss</strong> is </p>
-<script type="math/tex; mode=display">
-C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)</script><p>And what’s the logsoftmax?</p>
-<script type="math/tex; mode=display">
-Applies \ the \ `\log(\text{Softmax}(x))` function \  to \ an \ n-dimensional 
-    \ input \ Tensor. \\ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\\
-
-
-        \text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</script><p>what’s more, it’s actually realized in nn.functional</p>
-<script type="math/tex; mode=display">
-While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \\   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\\ This \  function \ 
-    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \\  and  \ gradient  \ correctly.</script><p>The <strong>NLLoss</strong> is:</p>
-<script type="math/tex; mode=display">
-Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
-<p>The <strong>BCELoss</strong> is a CrossEntropyLoss designed for binary classification. And it need a sigmoid function before useing the BCELoss. What’s more, <strong>BCEWithLogitsLoss</strong> includes the BCELoss and the sigmoid function.</p>
-<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://github.com/torch/nn/issues/357" target="_blank" rel="noopener">https://github.com/torch/nn/issues/357</a></p>
-<p><a href="https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax</a></p>
-<p><a href="https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Pytorch-SGDR/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Pytorch-SGDR/" class="post-title-link" itemprop="url">Pytorch SGDR</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:55:31 / Geändert am: 21:56:52" itemprop="dateCreated datePublished" datetime="2019-07-02T21:55:31+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="SGDR-paper"><a href="#SGDR-paper" class="headerlink" title="SGDR paper"></a>SGDR paper</h2><p>学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色</p>
-<p>的方块线。</p>
-<p><img src="/images/assets/1557729884981.png" alt="1557729884981"></p>
-<p>这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍达到一个好的效果或者更好的效果。</p>
-<p>warm started run SGD T_i 次，其中i是run的index。重要的是，重启不是从头开始执行，而是通过提高学习速率ηt来模拟，而旧的xt值用作初始解决方案</p>
-<p>在第i次run，lr decay 是对每个batch用cosine annealing.</p>
-<p><img src="E:\刘志伟的文件\论文笔记\pytorch\assets\1557730343579.png" alt="1557730343579"></p>
-<script type="math/tex; mode=display">
-\eta_{min} 和 \eta_{max}是学习率的范围。 \\
-T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch增加，他可以是小数。 \\
-当t=0\ and\ T_{cur} = 0时，T_{cur}=T_{max} \\
-当T_{cur}=T_{max}时， cos 函数会输出-1.因此，\eta_t = \eta_{min}^i</script><p>图1的绿色线、黑色线和灰色线显示了lr的变化过程。分别固定了$T_i$为50，100，200.</p>
-<p>SGDR更进一步选了这么一方法，首先开始的时候$T_i$很小，然后在每次restart都通过乘上一个 $T_{mult}$的因此来提高。例如图一中的暗绿和粉色线。</p>
-<h2 id="SGDR-in-pytorch"><a href="#SGDR-in-pytorch" class="headerlink" title="SGDR in pytorch"></a>SGDR in pytorch</h2><p>pytorch只实现了CosineAnnealingLR，并没有实现restart部分。</p>
-<p><code>torch.optim.lr_scheduler.CosineAnnealingLR</code>(<em>optimizer</em>, <em>T_max</em>, <em>eta_min=0</em>, <em>last_epoch=-1</em>)</p>
-<p><img src="/images/assets/1557731465430.png" alt="1557731465430"></p>
-<p>它的用法如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br></pre></td></tr></table></figure>
-<p>实际上，可以通过下面的方式来实现SGDR</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'Reset scheduler'</span>)</span><br><span class="line">    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br></pre></td></tr></table></figure>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18" target="_blank" rel="noopener">https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18</a></p>
-<p><a href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR" target="_blank" rel="noopener">https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR</a></p>
-<p><a href="https://arxiv.org/pdf/1608.03983.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1608.03983.pdf</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Nächste Seite"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Nächste Seite"></i></a>
   </nav>
 
 
@@ -2194,7 +2337,7 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
@@ -2219,7 +2362,7 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">Kategorien</span>
                   </a>
                 </div>
@@ -2266,7 +2409,25 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">schlagwörter</span>
                   </a>
                 </div>
@@ -2446,21 +2607,21 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
   
     
       
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
         
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
       
     
       

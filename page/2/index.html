@@ -274,6 +274,1309 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/长尾分布特征的处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/长尾分布特征的处理/" class="post-title-link" itemprop="url">长尾分布特征的处理</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 22:07:00 / Geändert am: 22:07:50" itemprop="dateCreated datePublished" datetime="2019-07-02T22:07:00+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对特征进行log处理</p>
+<p><img src="/images/assets/1557631665906.png" alt="1557631665906"></p>
+<p>log后</p>
+<p><img src="/images/assets/1557631687832.png" alt="1557631687832"></p>
+<p>在kaggle比赛中，不仅可以对特征进行这样的log矫正的，对目标值也可以进行这样的矫正。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Pytorch加载和读取模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Pytorch加载和读取模型/" class="post-title-link" itemprop="url">Pytorch加载和读取模型</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 22:05:45 / Geändert am: 22:06:19" itemprop="dateCreated datePublished" datetime="2019-07-02T22:05:45+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先看下有关的函数：</p>
+<ol>
+<li>torch.save: 将一个文件保存到硬盘上，内部是用了pickle库</li>
+<li>troch.load：用的pickle的unpicking方法将存储在硬盘上的object读取到内存中</li>
+<li>torch.nn.Module.load_state_dict：从一个state_dict中加载一个模型的参数</li>
+</ol>
+<p>什么是state_dict:</p>
+<p>pytorch中的每个module的可学习的参数：如权重和bias等都在module.parameters()里面。</p>
+<p>一个state_dict简单来说就是一个字典object，可以把每一层映射到他的参数上去。可学习参数以及register buffer(bn)已经优化器都有state_dict。因为state_dict是python字典对象，因此很简单就可以保存，修改。</p>
+<p>下面是读取模型state_dict的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> param_tensor <span class="keyword">in</span> model.state_dict():</span><br><span class="line">    print(param_tensor, <span class="string">"\t"</span>, model.state_dict()[param_tensor].size())</span><br></pre></td></tr></table></figure>
+<h2 id="两种方法"><a href="#两种方法" class="headerlink" title="两种方法"></a>两种方法</h2><p>回到正题，有两种方法可以保存和读取模型。</p>
+<p>第一种是通过模型的state_dict来进行读取和保存。特别是读取的时候，首先得新建一个模型object，然后加载参数。</p>
+<p><strong>Save:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), PATH)</span><br></pre></td></tr></table></figure>
+<p><strong>Load:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">model.load_state_dict(torch.load(PATH))</span><br><span class="line">model.eval()</span><br></pre></td></tr></table></figure>
+<p>第二种方法之别保存和加载整个模型：</p>
+<p><strong>Save:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model, PATH)</span><br></pre></td></tr></table></figure>
+<p><strong>Load:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Model class must be defined somewhere</span></span><br><span class="line">model = torch.load(PATH)</span><br><span class="line">model.eval()</span><br></pre></td></tr></table></figure>
+<p>这种方法的缺点是序列化数据绑定到特定类以及保存模型时使用的确切目录结构。这是因为pickle不保存模型类本身。相反，它会保存包含类的文件的路径，该文件在加载时使用。因此，当您在其他项目中或在重构之后使用时，您的代码可能会以各种方式中断。</p>
+<h2 id="保存checkpoint"><a href="#保存checkpoint" class="headerlink" title="保存checkpoint"></a>保存checkpoint</h2><p>可以保存checkpoint用于后续的推理和重新训练。和单独保存模型的参数不同，优化器的参数也会被保存，以便于后续的训练。</p>
+<h3 id="Save"><a href="#Save" class="headerlink" title="Save:"></a>Save:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.save(&#123;</span><br><span class="line">            &apos;epoch&apos;: epoch,</span><br><span class="line">            &apos;model_state_dict&apos;: model.state_dict(),</span><br><span class="line">            &apos;optimizer_state_dict&apos;: optimizer.state_dict(),</span><br><span class="line">            &apos;loss&apos;: loss,</span><br><span class="line">            ...</span><br><span class="line">            &#125;, PATH)</span><br></pre></td></tr></table></figure>
+<h3 id="Load"><a href="#Load" class="headerlink" title="Load:"></a>Load:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = TheModelClass(*args, **kwargs)</span><br><span class="line">optimizer = TheOptimizerClass(*args, **kwargs)</span><br><span class="line"></span><br><span class="line">checkpoint = torch.load(PATH)</span><br><span class="line">model.load_state_dict(checkpoint[<span class="string">'model_state_dict'</span>])</span><br><span class="line">optimizer.load_state_dict(checkpoint[<span class="string">'optimizer_state_dict'</span>])</span><br><span class="line">epoch = checkpoint[<span class="string">'epoch'</span>]</span><br><span class="line">loss = checkpoint[<span class="string">'loss'</span>]</span><br><span class="line"></span><br><span class="line">model.eval()</span><br><span class="line"><span class="comment"># - or -</span></span><br><span class="line">model.train()</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://pytorch.org/tutorials/beginner/saving_loading_models.html" target="_blank" rel="noopener">https://pytorch.org/tutorials/beginner/saving_loading_models.html</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Pytorch-TensorboardX-可视化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Pytorch-TensorboardX-可视化/" class="post-title-link" itemprop="url">Pytorch TensorboardX 可视化</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 22:04:29" itemprop="dateCreated datePublished" datetime="2019-07-02T22:04:29+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-07-13 14:49:30" itemprop="dateModified" datetime="2019-07-13T14:49:30+08:00">2019-07-13</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="安装tensorboard"><a href="#安装tensorboard" class="headerlink" title="安装tensorboard"></a>安装tensorboard</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorboardX</span><br><span class="line">pip install tensorflow</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h4 id="引入并创建一个SummaryWriter"><a href="#引入并创建一个SummaryWriter" class="headerlink" title="引入并创建一个SummaryWriter"></a>引入并创建一个SummaryWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from tensorboardX import SummaryWriter</span><br><span class="line">writer = SummaryWriter(&apos;./runs/dogcat1&apos;)  //log_dir is ./run/dogcat</span><br><span class="line">//need close</span><br><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
+<p>logdir参数要是不指定的话，会自动在生成run文件夹。另外还有一个comment参数，用于指定文件名称。</p>
+<h4 id="画loss曲线："><a href="#画loss曲线：" class="headerlink" title="画loss曲线："></a>画loss曲线：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_scalar(&apos;loss&apos;,loss, epoch)</span><br></pre></td></tr></table></figure>
+<p>第一个参数为保存参数的名称，第二个参数为Y轴的值，第三个参数为X轴的值</p>
+<p>运行该代码后，在log_dir下运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensorboard --logdir log_dir  //log_dir 为具体的文件夹</span><br></pre></td></tr></table></figure>
+<p>具体为：</p>
+<p><img src="/images/assets/1555679643005.png" alt="1555679643005"></p>
+<p>结果为：</p>
+<p><img src="/images/assets/1555681461022.png" alt="1555681461022"></p>
+<h4 id="画激活情况"><a href="#画激活情况" class="headerlink" title="画激活情况"></a>画激活情况</h4><p>用于检查深层网络里面的层激活和权值分布情况，避免梯度消失等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for name, param in net.named_parameters():</span><br><span class="line">	writer.add_histogram(</span><br><span class="line">		name, param.cpu().clone().data.numpy(), epoch_index)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，如果tensor在gpu需要将其转换到cpu中。</p>
+<p>结果为：</p>
+<p><img src="/images/assets/1555682223014.png" alt="1555682223014"></p>
+<h4 id="画网络结构图"><a href="#画网络结构图" class="headerlink" title="画网络结构图"></a>画网络结构图</h4><p>首先先对某个model进行实例化，如net。然后定义一个输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input = torch.rand(dim1,dim2,dim3,dim4)</span><br><span class="line"></span><br><span class="line">net = LeNet()</span><br><span class="line">writer.add_graph(net, input)</span><br></pre></td></tr></table></figure>
+<p>同样的，需要注意net要在cpu中。</p>
+<p>效果如下：</p>
+<p><img src="/images/assets/1555682403877.png" alt="1555682403877"></p>
+<h4 id="显示图片"><a href="#显示图片" class="headerlink" title="显示图片"></a>显示图片</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_image(&apos;name&apos;,image_object)</span><br></pre></td></tr></table></figure>
+<h4 id="Projection"><a href="#Projection" class="headerlink" title="Projection"></a>Projection</h4><p>使用PCA，T-SNE等方法将高位向量投影到三维坐标系。默认使用PCA，也可以选择T-SNE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.add_embedding(mat, metadata=None, label_img=None, global_step=None, tag=&apos;default&apos;, metadata_header=None）</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>mat</strong> (<a href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" target="_blank" rel="noopener"><em>torch.Tensor</em></a> <em>or</em> <em>numpy.array</em>) – A matrix which each row is the feature vector of the data point</li>
+<li><strong>metadata</strong> (<a href="https://docs.python.org/3/library/stdtypes.html#list" target="_blank" rel="noopener"><em>list</em></a>) – A list of labels, each element will be convert to string</li>
+<li><strong>label_img</strong> (<a href="https://pytorch.org/docs/master/tensors.html#torch.Tensor" target="_blank" rel="noopener"><em>torch.Tensor</em></a>) – Images correspond to each data point</li>
+<li><strong>global_step</strong> (<a href="https://docs.python.org/3/library/functions.html#int" target="_blank" rel="noopener"><em>int</em></a>) – Global step value to record</li>
+<li><strong>tag</strong> (<em>string</em>) – Name for the embedding</li>
+</ul>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://tensorboardx.readthedocs.io/en/latest/tensorboard.html" target="_blank" rel="noopener">https://tensorboardx.readthedocs.io/en/latest/tensorboard.html</a></p>
+<p><a href="http://www.pianshen.com/article/3479170564/" target="_blank" rel="noopener">http://www.pianshen.com/article/3479170564/</a></p>
+<p><a href="https://github.com/pytorch/pytorch/issues/2731" target="_blank" rel="noopener">https://github.com/pytorch/pytorch/issues/2731</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Normalize的作用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Normalize的作用/" class="post-title-link" itemprop="url">Normalize的作用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 22:00:04 / Geändert am: 22:01:02" itemprop="dateCreated datePublished" datetime="2019-07-02T22:00:04+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>normalize的最主要的一个作用是将数据中的不同的特征缩放到同一个量纲上（或者可以说无量纲化）。比如果说有一个特征值的范围是[0,1]另一个特征的范围是[0,1000],那么优化算法（尤其是基于梯度的优化方法）在更新的时候尤其会重视特征值大的特征，而忽视特征值小的特征。为了避免这个问题就需要normalization了，把所有的特征放在一个量纲上。</p>
+<p><img src="/images/assets/743682-20151108152327539-2039269197.png" alt="img"></p>
+<h2 id="常用的normalization的方法"><a href="#常用的normalization的方法" class="headerlink" title="常用的normalization的方法"></a>常用的normalization的方法</h2><p>主要有两种方法，min-max normalization 和 Z-score normalization。</p>
+<h3 id="min-max-normalization"><a href="#min-max-normalization" class="headerlink" title="min-max normalization"></a>min-max normalization</h3><script type="math/tex; mode=display">
+x_{minmax} = \frac{x - x_{min}}{x_{max} - x_{min}}</script><p>主要有两个缺陷:</p>
+<ol>
+<li>新加入的数据会导致$x_{max}$和$x_{min}$ 会发生变化，需要重新定义</li>
+<li>异常值会极大地影响minmax的表现</li>
+<li>minmax不适用于长尾分布</li>
+</ol>
+<p>比较适合于min和max固定的任务，比如图像像素归一化。</p>
+<h3 id="Z-score-normalization"><a href="#Z-score-normalization" class="headerlink" title="Z-score normalization"></a>Z-score normalization</h3><script type="math/tex; mode=display">
+x_{zscore} = \frac{x - min(x)}{stdev(x)}</script><p>z-score的问题没有min-max多，对异常值也较为鲁棒性。且经过处理的数据会较为贴近正态分布（不是变为），大多数的数据会聚集在0附近，方差为1.</p>
+<blockquote>
+<p>Caveat:<em> it is a common misconception that </em>standardized scores<em> such as </em>z-scores<em> alter the shape of a distribution; in particular, be aware that a </em>z*-scores cannot magically make a non-normal variable normal.</p>
+</blockquote>
+<p>其他的还有logistic，lognormal，TanH等，见</p>
+<h2 id="Normalizing"><a href="#Normalizing" class="headerlink" title="Normalizing"></a>Normalizing</h2><p>和上面不同的方式，是直接对样本进行单位化，即</p>
+<script type="math/tex; mode=display">
+x = \frac{x}{norm(x)}</script><p>不同的norm会有不同的结果，常见的是L2 norm</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/PyTorch-weight-decay（转）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/PyTorch-weight-decay（转）/" class="post-title-link" itemprop="url">PyTorch weight decay（转）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 21:58:33 / Geändert am: 21:59:20" itemprop="dateCreated datePublished" datetime="2019-07-02T21:58:33+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>torch.optim 中实现了很多优化器，只需要指定优化器的权重衰减即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">optimizer = optim.SGD(model.parameters(), lr = <span class="number">0.01</span>, momentum=<span class="number">0.9</span>,weight_decay=<span class="number">1e-5</span>)</span><br></pre></td></tr></table></figure>
+<p>优化器同时还支持per-parameter options操作，就是对每一个参数进行特定的制定，以满足更为细致的要求。此时，传入优化器的是可迭代的字典，字典中必须有params的key，用于指定特定优化变量，而其他key需要匹配优化器本身的设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">optim.SGD([</span><br><span class="line">                &#123;&apos;params&apos;: model.base.parameters()&#125;,</span><br><span class="line">                &#123;&apos;params&apos;: model.classifier.parameters(), &apos;lr&apos;: 1e-3&#125;</span><br><span class="line">            ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
+<p>可以灵活给每个子模块设置不同的学习率，权值衰减和momentum。也可以给权值设定权值衰减，而不作用于偏置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">weight_p, bias_p = [],[]</span><br><span class="line">for name, p in model.named_parameters():</span><br><span class="line">  if &apos;bias&apos; in name:</span><br><span class="line">     bias_p += [p]</span><br><span class="line">   else:</span><br><span class="line">     weight_p += [p]</span><br><span class="line"># 这里的model中每个参数的名字都是系统自动命名的，只要是权值都是带有weight，偏置都带有bias，</span><br><span class="line"></span><br><span class="line">optim.SGD([</span><br><span class="line">          &#123;&apos;params&apos;: weight_p, &apos;weight_decay&apos;:1e-5&#125;,</span><br><span class="line">          &#123;&apos;params&apos;: bias_p, &apos;weight_decay&apos;:0&#125;</span><br><span class="line">          ], lr=1e-2, momentum=0.9)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.csdn.net/LoseInVain/article/details/81708474" target="_blank" rel="noopener">https://blog.csdn.net/LoseInVain/article/details/81708474</a> </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/" class="post-title-link" itemprop="url">Softmax and Logsoftmax in Pytorch</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 21:57:25 / Geändert am: 21:57:58" itemprop="dateCreated datePublished" datetime="2019-07-02T21:57:25+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Output layer and criterion options (all are equivalent, 1 is most popular) :</p>
+<ol>
+<li>Linear + LogSoftMax + ClassNLLCriterion</li>
+<li>Linear + SoftMax + Log + ClassNLLCriterion</li>
+<li>Linear + CrossEntropyCriterion</li>
+</ol>
+<p>It should be noted that <strong>CrossEntropyLoss includes a softmax operation.</strong></p>
+<p>softmax with log-likelihood cost can be more fast compared with softmax with MSELoss.</p>
+<p>The <strong>log-likelihood loss</strong> is</p>
+<script type="math/tex; mode=display">
+C = - \Sigma_k y_klog(a_k)</script><p>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
+<p>The <strong>cross-entropy loss</strong> is </p>
+<script type="math/tex; mode=display">
+C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)</script><p>And what’s the logsoftmax?</p>
+<script type="math/tex; mode=display">
+Applies \ the \ `\log(\text{Softmax}(x))` function \  to \ an \ n-dimensional 
+    \ input \ Tensor. \\ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\\
+
+
+        \text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</script><p>what’s more, it’s actually realized in nn.functional</p>
+<script type="math/tex; mode=display">
+While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \\   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\\ This \  function \ 
+    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \\  and  \ gradient  \ correctly.</script><p>The <strong>NLLoss</strong> is:</p>
+<script type="math/tex; mode=display">
+Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
+<p>The <strong>BCELoss</strong> is a CrossEntropyLoss designed for binary classification. And it need a sigmoid function before useing the BCELoss. What’s more, <strong>BCEWithLogitsLoss</strong> includes the BCELoss and the sigmoid function.</p>
+<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://github.com/torch/nn/issues/357" target="_blank" rel="noopener">https://github.com/torch/nn/issues/357</a></p>
+<p><a href="https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax</a></p>
+<p><a href="https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Pytorch-SGDR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/02/Pytorch-SGDR/" class="post-title-link" itemprop="url">Pytorch SGDR</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-02 21:55:31 / Geändert am: 21:56:52" itemprop="dateCreated datePublished" datetime="2019-07-02T21:55:31+08:00">2019-07-02</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SGDR-paper"><a href="#SGDR-paper" class="headerlink" title="SGDR paper"></a>SGDR paper</h2><p>学习率schedule最常见的方法是用一个lr，然后每隔几个epoch除以一个数来减少lr。如下图中的蓝色⚪线和红色</p>
+<p>的方块线。</p>
+<p><img src="/images/assets/1557729884981.png" alt="1557729884981"></p>
+<p>这篇论文所提出的方法是SGD的warm restart版本，即在每次restart，lr都被设置到初始值，但是他的上一次restart到下一次restart之间的距离（schedule）会增加。作者的经验表明，他的这个方法可以比其他的方法快2~4倍达到一个好的效果或者更好的效果。</p>
+<p>warm started run SGD T_i 次，其中i是run的index。重要的是，重启不是从头开始执行，而是通过提高学习速率ηt来模拟，而旧的xt值用作初始解决方案</p>
+<p>在第i次run，lr decay 是对每个batch用cosine annealing.</p>
+<p><img src="E:\刘志伟的文件\论文笔记\pytorch\assets\1557730343579.png" alt="1557730343579"></p>
+<script type="math/tex; mode=display">
+\eta_{min} 和 \eta_{max}是学习率的范围。 \\
+T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch增加，他可以是小数。 \\
+当t=0\ and\ T_{cur} = 0时，T_{cur}=T_{max} \\
+当T_{cur}=T_{max}时， cos 函数会输出-1.因此，\eta_t = \eta_{min}^i</script><p>图1的绿色线、黑色线和灰色线显示了lr的变化过程。分别固定了$T_i$为50，100，200.</p>
+<p>SGDR更进一步选了这么一方法，首先开始的时候$T_i$很小，然后在每次restart都通过乘上一个 $T_{mult}$的因此来提高。例如图一中的暗绿和粉色线。</p>
+<h2 id="SGDR-in-pytorch"><a href="#SGDR-in-pytorch" class="headerlink" title="SGDR in pytorch"></a>SGDR in pytorch</h2><p>pytorch只实现了CosineAnnealingLR，并没有实现restart部分。</p>
+<p><code>torch.optim.lr_scheduler.CosineAnnealingLR</code>(<em>optimizer</em>, <em>T_max</em>, <em>eta_min=0</em>, <em>last_epoch=-1</em>)</p>
+<p><img src="/images/assets/1557731465430.png" alt="1557731465430"></p>
+<p>它的用法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br></pre></td></tr></table></figure>
+<p>实际上，可以通过下面的方式来实现SGDR</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">model = nn.Linear(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1.</span>)</span><br><span class="line">steps = <span class="number">10</span></span><br><span class="line">scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">    <span class="keyword">for</span> idx <span class="keyword">in</span> range(steps):</span><br><span class="line">        scheduler.step()</span><br><span class="line">        print(scheduler.get_lr())</span><br><span class="line">    </span><br><span class="line">    print(<span class="string">'Reset scheduler'</span>)</span><br><span class="line">    scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, steps)</span><br></pre></td></tr></table></figure>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18" target="_blank" rel="noopener">https://discuss.pytorch.org/t/how-to-implement-torch-optim-lr-scheduler-cosineannealinglr/28797/18</a></p>
+<p><a href="https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR" target="_blank" rel="noopener">https://pytorch.org/docs/master/optim.html#torch.optim.lr_scheduler.CosineAnnealingLR</a></p>
+<p><a href="https://arxiv.org/pdf/1608.03983.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1608.03983.pdf</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/PIL-使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -907,750 +2210,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Extract-Feature-from-a-Pretrained-Pytorch-Model/" class="post-title-link" itemprop="url">Extract Feature from a Pretrained Pytorch Model</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:46:18 / Geändert am: 21:47:14" itemprop="dateCreated datePublished" datetime="2019-07-02T21:46:18+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">import torchvision.models.vgg as models</span><br><span class="line">input = torch.rand(1, 3, 5, 5)</span><br><span class="line">vgg16 = models.vgg16(pretrained=True)</span><br><span class="line">output = vgg16.features\[:3\](input)</span><br><span class="line">print(output)</span><br></pre></td></tr></table></figure>
-<p>其中，vgg16.features[:3]的意思是只选取vgg16网络的前三层，然后input作为输入。</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://discuss.pytorch.org/t/extracting-and-using-features-from-a-pretrained-model/20723/11" target="_blank" rel="noopener">https://discuss.pytorch.org/t/extracting-and-using-features-from-a-pretrained-model/20723/11</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Snapshot-Ensembles/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Snapshot-Ensembles/" class="post-title-link" itemprop="url">Snapshot Ensembles</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:35:51 / Geändert am: 21:42:42" itemprop="dateCreated datePublished" datetime="2019-07-02T21:35:51+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/deep-learning/" itemprop="url" rel="index"><span itemprop="name">deep learning</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Ensembles work best if the individual models</p>
-<p> (1) have low test error and </p>
-<p>(2) do not overlap in the set of examples they misclassify. </p>
-<p><img src="/images/assets/1558078009871.png" alt="1558078009871"></p>
-<h3 id="Snapshot-Ensembling"><a href="#Snapshot-Ensembling" class="headerlink" title="Snapshot Ensembling."></a>Snapshot Ensembling.</h3><p>Figure 2 depicts the training process using cyclic and traditional learning rate schedules. At the end of each training cycle, it is apparent that the <strong>model reaches a local minimum with respect to the training loss</strong>. Thus, before raising the learning rate, we take a “snapshot” of the model weights (indicated as vertical dashed black lines). After training M cycles, we have M model snapshots,$ f_1$ . . .$ f_M$ , each of which will be used in the final ensemble.</p>
-<h3 id="Ensembling-at-Test-Time"><a href="#Ensembling-at-Test-Time" class="headerlink" title="Ensembling at Test Time."></a>Ensembling at Test Time.</h3><p>The ensemble prediction at test time is the average of the last m (m ≤ M) model’s softmax outputs. Let x be a test sample and let $ h_i (x)$ be the softmax score of snapshot i. The output of the ensemble is a simple average of the last m models:</p>
-<script type="math/tex; mode=display">
-h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensemble the last m models, as these models tend to have the lowest test error.</p>
-<h3 id="Ensemble-Size"><a href="#Ensemble-Size" class="headerlink" title="Ensemble Size."></a>Ensemble Size.</h3><p>In some applications, it may be beneficial to vary the size of the ensemble dynamically at test time depending on available resources. Figure 3 displays the performance of DenseNet-40 on the CIFAR-100 dataset as the effective ensemble size, m, is varied. Each ensemble consists of snapshots from later cycles, as these snapshots have received the most training and therefore have likely converged to better minima. Although ensembling more models generally gives better performance, <strong>we observe significant drops in error when the second and third models are added to the ensemble</strong>. In most cases, an ensemble of two models outperforms the baseline model.</p>
-<h3 id="Restart-Learning-Rate"><a href="#Restart-Learning-Rate" class="headerlink" title="Restart Learning Rate."></a>Restart Learning Rate.</h3><p>The effect of the restart learning rate can be observed in Figure 3. The left two plots show performance when using a restart learning rate of α0 = 0.1 at the beginning of each cycle, and the right two plots show α0 = 0.2. <strong>In most cases, ensembles with the larger restart learning rate perform better, presumably because the strong perturbation in between cycles increases the diversity of local minima.</strong></p>
-<p><img src="/images/assets/1558078640762.png" alt="1558078640762"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Git-Quick-Tutorial/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/Git-Quick-Tutorial/" class="post-title-link" itemprop="url">Git Quick Tutorial</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:11:38 / Geändert am: 21:41:55" itemprop="dateCreated datePublished" datetime="2019-07-02T21:11:38+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>I have just combined two popular tutorial for better understanding. You can found the two tutorial in the reference part, and this post was for personal understanding only.</p>
-<h2 id="install-and-setup"><a href="#install-and-setup" class="headerlink" title="install and setup"></a>install and setup</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git-all</span><br></pre></td></tr></table></figure>
-<h2 id="basic-setup"><a href="#basic-setup" class="headerlink" title="basic setup"></a>basic setup</h2><p>save your git username and email so that you won’t have to enter them in again for future git commands</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;user name&quot;</span><br><span class="line">git config --global user.email &quot;email&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="colours"><a href="#colours" class="headerlink" title="colours"></a>colours</h2><p>enable some extra colouring to git, so that you can read the output of the commands easier</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global coler.ui true</span><br></pre></td></tr></table></figure>
-<h2 id="create-a-new-repository"><a href="#create-a-new-repository" class="headerlink" title="create a new repository"></a>create a new repository</h2><p>using the starndard ‘cd’ command to navigate the directory you want to setup version. Now you can initialize a git repository like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>this create a new subdirectory name .git that contained all of your necessary repository files - a Git repository skeleton. At this point, nothing in you project in tracked yet.</p>
-<h2 id="checkout-a-repository"><a href="#checkout-a-repository" class="headerlink" title="checkout a repository"></a>checkout a repository</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone /path/to/repository</span><br></pre></td></tr></table></figure>
-<p>when using a remote server, your command will be</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone username@hose:/path/to/repository</span><br></pre></td></tr></table></figure>
-<h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><p><strong>local  repository</strong> consists of three “trees” maintained by git. the fist one is your <strong>Working Directory</strong> which holds the actual files. the second one is the <strong>Index</strong> which acts as a staging area (充当临时区域) and finally the <strong>HEAD</strong> which points to the last commit you’ve made.</p>
-<p><img src="/images/assets/1562033018197.png" alt="1562033018197"></p>
-<h2 id="add-amp-commit"><a href="#add-amp-commit" class="headerlink" title="add &amp; commit"></a>add &amp; commit</h2><p>To start version-controlling existing files you should start by tracking those files and do an initial commit. To accomplish that, you start by adding the files to git that you would like to be attached to you git project.</p>
-<p>you can popose changes (add it to the Index) using </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add *</span><br></pre></td></tr></table></figure>
-<p>This is the first step in the basic git workflow. To actually commit these change use</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commmit -m &quot;commit message&quot;</span><br></pre></td></tr></table></figure>
-<p>Now the file is committed to the HEAD,  but no in your remote repository yet.</p>
-<h2 id="remote-backup"><a href="#remote-backup" class="headerlink" title="remote backup"></a>remote backup</h2><p>if you want to save and backup your project remotely, you’ll need to create a remote repository on GitHub. So first head on over github.com and create a repository. Then, use the link of the repository to add it as the origin of your local git project i.e. where that code wil be stored</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin \</span><br><span class="line">https://github.com/user/repo.git</span><br></pre></td></tr></table></figure>
-<p>then you can go ahead and push you code to github… you’ve backed up your code</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<h2 id="pushing-changes"><a href="#pushing-changes" class="headerlink" title="pushing changes"></a>pushing changes</h2><p>your changes are now in the HEAD of your local working copy. To send those changes to your remote repository, execute</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
-<p>change <em>master</em> to whatever branch you want to push your changes to</p>
-<p>If you have not cloned an existing repository and want to connect your repository to a remote server, you need to add it with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin &lt;server&gt;</span><br></pre></td></tr></table></figure>
-<p>Now you are able to push your changes to the selected remote server.</p>
-<h2 id="status-checking"><a href="#status-checking" class="headerlink" title="status checking"></a>status checking</h2><p>git status can used to determine which files are in which state. </p>
-<p>It allows you to see which of your files have already been committed and which haven’t. If you run this command when all files have already been committed and pushed, you should see something like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line"># On branch master</span><br><span class="line">nothing to commit (working directory clean)</span><br></pre></td></tr></table></figure>
-<p>If you add a new file to your project, and the file didn’t exist before, when you run git status you should see your untracked file like this:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line"># On branch master</span><br><span class="line"># Untracked files:</span><br><span class="line">#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)</span><br><span class="line">#</span><br><span class="line">#   README</span><br><span class="line">nothing added to commit but untracked files present (use &quot;git add&quot; to track)</span><br></pre></td></tr></table></figure>
-<p>This make git status really useful for a quick check of what you have backed up already and what you only have locally.</p>
-<h2 id="advanced-file-adding"><a href="#advanced-file-adding" class="headerlink" title="advanced file adding"></a>advanced file adding</h2><p>Instead of trying to look for all the files that have changed and adding them one-by-one, we can do the following:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">### Adding files one by one</span><br><span class="line">git add filename</span><br><span class="line"></span><br><span class="line">### Adding all files in the current directory</span><br><span class="line">git add -A</span><br><span class="line"></span><br><span class="line">### Adding all files changes in the current directory</span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line">### Choosing what changes to add (this will got through all your  ### changes and you can &apos;Y&apos; or &apos;N&apos; the changes)</span><br><span class="line">git add -p</span><br></pre></td></tr></table></figure>
-<h2 id="advanced-commits"><a href="#advanced-commits" class="headerlink" title="advanced commits"></a>advanced commits</h2><p>if you want to do something more elaborate you’ll need a bit more:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">### Commit staged file(s) </span><br><span class="line">### This is typically used for shorter commit messages</span><br><span class="line">git commit -m &apos;commit message&apos;</span><br><span class="line"></span><br><span class="line">### Add file and commit in one shot</span><br><span class="line">git commit filename -m &apos;commit message&apos;</span><br><span class="line"></span><br><span class="line">### Add file and commit staged file</span><br><span class="line">git commit -am &apos;insert commit message&apos;</span><br><span class="line"></span><br><span class="line">### Changing your most recent commit message</span><br><span class="line">git commit --amend &apos;new commit message&apos; </span><br><span class="line"></span><br><span class="line"># Combine a sequence of commits together into a single one </span><br><span class="line">### You might use this to organise a messy commit history</span><br><span class="line">git rebase -i</span><br><span class="line">### This will give you an interface on your core editor:</span><br><span class="line"># Commands:</span><br><span class="line">#  p, pick = use commit</span><br><span class="line">#  r, reword = use commit, but edit the commit message</span><br><span class="line">#  e, edit = use commit, but stop for amending</span><br><span class="line">#  s, squash = use commit, but meld into previous commit</span><br><span class="line">#  f, fixup = like &quot;squash&quot;, but discard this commit&apos;s log message</span><br><span class="line">#  x, exec = run command (the rest of the line) using shell</span><br></pre></td></tr></table></figure>
-<h1 id="Branching-and-merging"><a href="#Branching-and-merging" class="headerlink" title="Branching and merging"></a>Branching and merging</h1><p>The <strong>master</strong> branch of your GitHub repository should always contain <strong>working and stable code</strong>. However, you may want to also back up some code that you are currently working on, but isn’t entirely stable. Maybe you’re adding a new feature, you’re experimenting and breaking the code a lot, but you still want to keep a back up to save your progress!</p>
-<p>Branching allows you to work on a <em>separate</em> copy of your code without affecting the master branch. When you first create a branch, a complete clone of your master branch is created under a new name. You can then modify the code in this new branch independently, including committing files and such. Once you’re new feature has been fully integrated and the code is stable, you <em>merge</em> it into the master branch!</p>
-<h2 id="branching"><a href="#branching" class="headerlink" title="branching"></a>branching</h2><p>branches are used to develop features isolated from each other. The master branch is the “default” branch when you create a repository. Use other branches for devolopment and merge then back  to the master branch upon compleiton.</p>
-<p><img src="/images/assets/1562034120363.png" alt="1562034120363"></p>
-<p>create a new branch named ‘feature_x” and switch to it using </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b feature_x</span><br></pre></td></tr></table></figure>
-<p>switch back to master</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
-<p>and delete the branch again</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d feature_x</span><br></pre></td></tr></table></figure>
-<p>a branch  is not available to others unless you push the branch to you remote repository</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;branch&gt;</span><br></pre></td></tr></table></figure>
-<p>Here’s all of the things you need to create and work on a branch:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">### Create a local branch to work on</span><br><span class="line">git checkout -b branchname</span><br><span class="line"></span><br><span class="line">### Switching between 2 branches </span><br><span class="line">git checkout branch_1</span><br><span class="line">git checkout branch_2</span><br><span class="line">### Pushing your new local branch to remote as backup</span><br><span class="line">git push -u origin branch_2</span><br><span class="line"></span><br><span class="line">### Deleting a local branch - this won&apos;t let you delete a branch  ### that hasn&apos;t been merged yet</span><br><span class="line">git branch -d branch_2</span><br><span class="line"></span><br><span class="line">### Deleting a local branch - this WILL delete a branch even if it ### hasn&apos;t been merged yet!</span><br><span class="line">git branch -D branch_2</span><br><span class="line"></span><br><span class="line">### Viewing all current branches for the repository, including both ### local and remote branches. Great to see if you already have a ### branch for a particular feature addition, especially on bigger ### projects</span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line">### Viewing all branches that have been merged into your current  ### branch, including local and remote. Great for seeing where all ### your code has come from!</span><br><span class="line">git branch -a --merged</span><br><span class="line"></span><br><span class="line">### Viewing all branches that haven&apos;t been merged into your current ### branch, including local and remote</span><br><span class="line">git branch -a --no-merged</span><br><span class="line"></span><br><span class="line">### Viewing all local branches</span><br><span class="line">git branch</span><br><span class="line"></span><br><span class="line">### Viewing all remote branches</span><br><span class="line">git branch -r</span><br><span class="line"></span><br><span class="line"># Rebase master branch into local branch</span><br><span class="line">$ git rebase origin/master</span><br><span class="line"></span><br><span class="line"># Pushing local branch after rebasing master into local branch</span><br><span class="line">$ git push origin +branchname</span><br></pre></td></tr></table></figure>
-<h2 id="update-amp-merge"><a href="#update-amp-merge" class="headerlink" title="update &amp; merge"></a>update &amp; merge</h2><p>to update your local repository to newest commit, execute</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-<p>in your working directory to fetch and merge remote changes.</p>
-<p>to merge another branch into your active branch (e.g. master), use</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge &lt;branch&gt;</span><br></pre></td></tr></table></figure>
-<p>in both cases git tries to auto-merge changes. unfortunately, this is not always possible and results in conflicts, you are responsible to merge those conflicts manually by editing the files shown by git. After changing, you need to mark them as merged with</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<p>before merging changes, you can also preview them by using </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff &lt;source_branch&gt; &lt;target_branch&gt;</span><br></pre></td></tr></table></figure>
-<p>Once you’re done adding the new feature to your branch, you’ll want to merge it back into the master branch, so that your master has all of the latest code features.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">### First make sure you&apos;re looking at master branch</span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line">### Now merge your branch to master</span><br><span class="line">git merge branch_2</span><br></pre></td></tr></table></figure>
-<h2 id="tagging"><a href="#tagging" class="headerlink" title="tagging"></a>tagging</h2><p>it’s recommended to create tags for software releases, this is a known concept, which also exists in SVN. you can  create a new tag named 1.0.0 by executing </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git tag 1.0.0 1b2e1d63ff</span><br></pre></td></tr></table></figure>
-<p>1b2e1d63ff stands for the first 10 characters of the commit id you want to reference with your tag. you can get the commit id by looking ant the …</p>
-<h2 id="replace-local-changes"><a href="#replace-local-changes" class="headerlink" title="replace local changes"></a>replace local changes</h2><p>In case you did something wrong, which for sure never happends :), you can replace local changes using the command</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout --&lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<p>this replace the changes in your working tree with the last content int HEAD. Changes already added to the index, as well as new files, will be kept.</p>
-<p>if you instead want to drop all your local changes and commits, fetch the latest history  form the server and point your local master branch at it like this</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin</span><br><span class="line">git reset --hard origin/master</span><br></pre></td></tr></table></figure>
-<h1 id="Fixing-mistakes-and-backtracking"><a href="#Fixing-mistakes-and-backtracking" class="headerlink" title="Fixing mistakes and backtracking"></a>Fixing mistakes and backtracking</h1><p>Mistakes happen …. and they happen frequently with coding! The important thing is that we’re able to fix them.</p>
-<p>Have no fear here! Git has everything you need in case you make a mistake with the code you push, overwrote something, or just want to make a correction to something you pushed.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">### Switch to the version of the code of the most recent commit</span><br><span class="line">git reset HEAD </span><br><span class="line">git reset HEAD -- filename # for a specific file</span><br><span class="line">### Switch to the version of the code before the most recent commit</span><br><span class="line">git reset HEAD^ -- filename</span><br><span class="line">git reset HEAD^ -- filename # for a specific file</span><br><span class="line">### Switch back 3 or 5 commits</span><br><span class="line">git reset HEAD~3 -- filename</span><br><span class="line">git reset HEAD~3 -- filename # for a specific file</span><br><span class="line">git reset HEAD~5 -- filename</span><br><span class="line">git reset HEAD~5 -- filename # for a specific file</span><br><span class="line">### Switch back to a specific commit</span><br><span class="line">### Where the &apos;0766c053&apos; is the commit ID</span><br><span class="line">git reset 0766c053 -- filename</span><br><span class="line">git reset 0766c053 -- filename # for a specific file</span><br><span class="line">### The previous commands were what&apos;s known as &quot;soft&quot; resets. Your ### code is reset, but git will still keep a copy of the other code ### handy in case you need it. On the other hand, the --hard flag ### tells Git to overwrite all changes in the working directory.</span><br><span class="line">git reset --hard 0766c053</span><br></pre></td></tr></table></figure>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://rogerdudler.github.io/git-guide/" target="_blank" rel="noopener">https://rogerdudler.github.io/git-guide/</a></p>
-<p><a href="https://medium.com/@george.seif94/a-full-tutorial-on-how-to-use-github-88466bac7d42" target="_blank" rel="noopener">https://medium.com/@george.seif94/a-full-tutorial-on-how-to-use-github-88466bac7d42</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 19:34:26" itemprop="dateCreated datePublished" datetime="2019-07-02T19:34:26+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Vorherige Seite"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Vorherige Seite"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Nächste Seite"></i></a>
   </nav>
 
 
@@ -1692,7 +2256,7 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
@@ -1717,7 +2281,7 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">Kategorien</span>
                   </a>
                 </div>
@@ -1764,7 +2328,25 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">schlagwörter</span>
                   </a>
                 </div>
@@ -1942,6 +2524,12 @@ h_{Ensemble} = \frac{1}{m}\Sigma_0^{m-1}\ h_{M-i}(x)</script><p>.We always ensem
 
   
   
+    
+      
+    
+      
+    
+      
     
       
     
