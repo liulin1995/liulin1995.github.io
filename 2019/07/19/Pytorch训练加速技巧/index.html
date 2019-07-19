@@ -90,18 +90,18 @@
 
 
 
-  <meta name="description" content="Output layer and criterion options (all are equivalent, 1 is most popular) :  Linear + LogSoftMax + ClassNLLCriterion Linear + SoftMax + Log + ClassNLLCriterion Linear + CrossEntropyCriterion  It shou">
-<meta name="keywords" content="cnn,softmax,cross-entropy">
+  <meta name="description" content="Pytorch训练模型，如果数据集比较大的话，需要一块GPU。而如何高效利用这块GPU来，来使得训练速度加快是一件非常重要的是。以下是我实践中的经验和搜索到的一些经验：  dataloader中设置num_worker&amp;gt;1, pin_memory=True。num_worker是用于读取数据用的线程数，pin_memory： 是否将数据放在锁页内存，而不是放在缓存区域，因为GPU的显存都在锁">
+<meta name="keywords" content="Pytorch">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Softmax and Logsoftmax in Pytorch">
-<meta property="og:url" content="liulin1995@github.io/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/index.html">
+<meta property="og:title" content="Pytorch训练加速技巧">
+<meta property="og:url" content="liulin1995@github.io/2019/07/19/Pytorch训练加速技巧/index.html">
 <meta property="og:site_name" content="LZW&#39; Blog">
-<meta property="og:description" content="Output layer and criterion options (all are equivalent, 1 is most popular) :  Linear + LogSoftMax + ClassNLLCriterion Linear + SoftMax + Log + ClassNLLCriterion Linear + CrossEntropyCriterion  It shou">
+<meta property="og:description" content="Pytorch训练模型，如果数据集比较大的话，需要一块GPU。而如何高效利用这块GPU来，来使得训练速度加快是一件非常重要的是。以下是我实践中的经验和搜索到的一些经验：  dataloader中设置num_worker&amp;gt;1, pin_memory=True。num_worker是用于读取数据用的线程数，pin_memory： 是否将数据放在锁页内存，而不是放在缓存区域，因为GPU的显存都在锁">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-02T13:57:58.426Z">
+<meta property="og:updated_time" content="2019-07-19T12:28:39.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Softmax and Logsoftmax in Pytorch">
-<meta name="twitter:description" content="Output layer and criterion options (all are equivalent, 1 is most popular) :  Linear + LogSoftMax + ClassNLLCriterion Linear + SoftMax + Log + ClassNLLCriterion Linear + CrossEntropyCriterion  It shou">
+<meta name="twitter:title" content="Pytorch训练加速技巧">
+<meta name="twitter:description" content="Pytorch训练模型，如果数据集比较大的话，需要一块GPU。而如何高效利用这块GPU来，来使得训练速度加快是一件非常重要的是。以下是我实践中的经验和搜索到的一些经验：  dataloader中设置num_worker&amp;gt;1, pin_memory=True。num_worker是用于读取数据用的线程数，pin_memory： 是否将数据放在锁页内存，而不是放在缓存区域，因为GPU的显存都在锁">
 
 
 
@@ -109,7 +109,7 @@
 
   
   
-  <link rel="canonical" href="liulin1995@github.io/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">
+  <link rel="canonical" href="liulin1995@github.io/2019/07/19/Pytorch训练加速技巧/">
 
 
 
@@ -119,7 +119,7 @@
   };
 </script>
 
-  <title>Softmax and Logsoftmax in Pytorch | LZW' Blog</title>
+  <title>Pytorch训练加速技巧 | LZW' Blog</title>
   
 
 
@@ -278,7 +278,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Softmax-and-Logsoftmax-in-Pytorch/">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/19/Pytorch训练加速技巧/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhiwei Liu">
@@ -295,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Softmax and Logsoftmax in Pytorch
+          <h1 class="post-title" itemprop="name headline">Pytorch训练加速技巧
 
               
             
@@ -321,7 +321,7 @@
                 
               
 
-              <time title="Erstellt: 2019-07-02 21:57:25 / Geändert am: 21:57:58" itemprop="dateCreated datePublished" datetime="2019-07-02T21:57:25+08:00">2019-07-02</time>
+              <time title="Erstellt: 2019-07-19 20:27:48 / Geändert am: 20:28:39" itemprop="dateCreated datePublished" datetime="2019-07-19T20:27:48+08:00">2019-07-19</time>
             </span>
           
 
@@ -380,35 +380,23 @@
       
 
       
-        <p>Output layer and criterion options (all are equivalent, 1 is most popular) :</p>
-<ol>
-<li>Linear + LogSoftMax + ClassNLLCriterion</li>
-<li>Linear + SoftMax + Log + ClassNLLCriterion</li>
-<li>Linear + CrossEntropyCriterion</li>
-</ol>
-<p>It should be noted that <strong>CrossEntropyLoss includes a softmax operation.</strong></p>
-<p>softmax with log-likelihood cost can be more fast compared with softmax with MSELoss.</p>
-<p>The <strong>log-likelihood loss</strong> is</p>
-<script type="math/tex; mode=display">
-C = - \Sigma_k y_klog(a_k)</script><p>where $a_k$ is the output of a neuron, and $y_k$ is the truth.</p>
-<p>The <strong>cross-entropy loss</strong> is </p>
-<script type="math/tex; mode=display">
-C_{CE} = -\Sigma_k \ y_klog(a_k) + (1-y_k)log(1-a_k)</script><p>And what’s the logsoftmax?</p>
-<script type="math/tex; mode=display">
-Applies \ the \ `\log(\text{Softmax}(x))` function \  to \ an \ n-dimensional 
-    \ input \ Tensor. \\ The \ LogSoftmax \ formulation \ can \ be \ simplified \ as:\\
-
-
-        \text{LogSoftmax}(x_{i}) = \log\left(\frac{\exp(x_i) }{ \sum_j \exp(x_j)} \right)</script><p>what’s more, it’s actually realized in nn.functional</p>
-<script type="math/tex; mode=display">
-While \ mathematically \ equivalent \  to \   log(softmax(x)), \  doing \  these \\   two \ operations \  separately  \ is  \ slower,  \  and  \ numerically  \ unstable.\\ This \  function \ 
-    \  uses \  an \  alternative \  formulation \  to  \ compute  \ the  \ output \\  and  \ gradient  \ correctly.</script><p>The <strong>NLLoss</strong> is:</p>
-<script type="math/tex; mode=display">
-Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
-<p>The <strong>BCELoss</strong> is a CrossEntropyLoss designed for binary classification. And it need a sigmoid function before useing the BCELoss. What’s more, <strong>BCEWithLogitsLoss</strong> includes the BCELoss and the sigmoid function.</p>
-<h4 id="References"><a href="#References" class="headerlink" title="References"></a>References</h4><p><a href="https://github.com/torch/nn/issues/357" target="_blank" rel="noopener">https://github.com/torch/nn/issues/357</a></p>
-<p><a href="https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/_modules/torch/nn/functional.html#log_softmax</a></p>
-<p><a href="https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax" target="_blank" rel="noopener">https://pytorch.org/docs/stable/nn.html?highlight=log_softmax#torch.nn.functional.log_softmax</a></p>
+        <p>Pytorch训练模型，如果数据集比较大的话，需要一块GPU。而如何高效利用这块GPU来，来使得训练速度加快是一件非常重要的是。以下是我实践中的经验和搜索到的一些经验：</p>
+<ul>
+<li><p>dataloader中设置num_worker&gt;1, pin_memory=True。num_worker是用于读取数据用的线程数，pin_memory： 是否将数据放在锁页内存，而不是放在缓存区域，因为GPU的显存都在锁页内存中。</p>
+<p>需要注意的是，这个技巧和个人使用的电脑配置有关。在我个人的实验中，通过将num_worker设置为4， pin_memory=True，我训练一个百万图像数据集（224*224）的时间从3个小时缩短到1.5个小时（resnet34为基准）。十几种最好划分出一部分的数据进行“调参”。</p>
+</li>
+<li><p>使用sgd+momentum这样的需要较少显存的优化器。主要有两个原因，sgd+momentum的效果不比其他的优化器差，反而更能够比Adam达到最优点（即不容易陷在局部极值点和鞍点）。第二个原因是，sgd+momentum只需要对每个参数保存梯度信息和动量信息。而对于类似Adam，额外需要一个二阶信息，这个会加大显存的要求。</p>
+</li>
+<li><p>使用固态硬盘。我实际中把训练数据放在系统盘，因为系统盘是固态硬盘。把验证集数据放在机械硬盘，毕竟验证过程中可以加大batchsize，且不需要记录梯度信息，显存不会爆炸。</p>
+</li>
+<li><p>避免将不需要的数据从GPU中拷贝出来。实际中，我们常需要把每个batch的统计信息比如loss，acc或其他数据显示出来。实际上可以在这些数据在GPU中进行累积，在每个epoch结束的 时候显示出来。</p>
+</li>
+<li><p>torch.cuda.emptyCache()：释放PyTorch的缓存分配器中的缓存内存块，用于防止一不小使用大grad_require=True的变量。同时使用del来删除不需要的变量来释放内存</p>
+</li>
+<li><p>预先读取下一次迭代用的数据：最近才看到一个，mark。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">作者：巽二</span><br><span class="line">链接：https://zhuanlan.zhihu.com/p/68191407</span><br><span class="line">来源：知乎</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br><span class="line"></span><br><span class="line">class data_prefetcher():</span><br><span class="line">    def __init__(self, loader):</span><br><span class="line">        self.loader = iter(loader)</span><br><span class="line">        # self.stream = torch.cuda.Stream()</span><br><span class="line">        self.preload()</span><br><span class="line"></span><br><span class="line">    def preload(self):</span><br><span class="line">        try:</span><br><span class="line">            self.next_data = next(self.loader)</span><br><span class="line">        except StopIteration:</span><br><span class="line">            self.next_input = None</span><br><span class="line">            return</span><br><span class="line">        # with torch.cuda.stream(self.stream):</span><br><span class="line">        #     self.next_data = self.next_data.cuda(non_blocking=True)</span><br><span class="line">            </span><br><span class="line">    def next(self):</span><br><span class="line">        # torch.cuda.current_stream().wait_stream(self.stream)</span><br><span class="line">        data = self.next_data</span><br><span class="line">        self.preload()</span><br><span class="line">        return data</span><br><span class="line"></span><br><span class="line">###</span><br><span class="line">正常定义train_loader</span><br><span class="line">###</span><br><span class="line"></span><br><span class="line">prefetcher = data_prefetcher(train_loader)</span><br><span class="line">data = prefetcher.next()</span><br><span class="line">i = 0</span><br><span class="line">while data is not None:</span><br><span class="line">    print(i, len(data))</span><br><span class="line">    i += 1</span><br><span class="line">    data = prefetcher.next()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -439,11 +427,7 @@ Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
         
         <div class="post-tags">
           
-            <a href="/tags/cnn/" rel="tag"># cnn</a>
-          
-            <a href="/tags/softmax/" rel="tag"># softmax</a>
-          
-            <a href="/tags/cross-entropy/" rel="tag"># cross-entropy</a>
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
           
         </div>
       
@@ -456,8 +440,8 @@ Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/07/02/Pytorch-SGDR/" rel="next" title="Pytorch SGDR">
-                <i class="fa fa-chevron-left"></i> Pytorch SGDR
+              <a href="/2019/07/13/将python代码打包成exe文件/" rel="next" title="将python代码打包成exe文件">
+                <i class="fa fa-chevron-left"></i> 将python代码打包成exe文件
               </a>
             
           </div>
@@ -465,10 +449,6 @@ Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/02/PyTorch-weight-decay（转）/" rel="prev" title="PyTorch weight decay（转）">
-                PyTorch weight decay（转） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -512,17 +492,8 @@ Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -675,23 +646,6 @@ Loss \ = - w_nx_{n,y_n}</script><p>where $w_n$ default is 1.</p>
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

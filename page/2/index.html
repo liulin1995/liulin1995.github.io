@@ -274,6 +274,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/11/KL散度和交叉熵CE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhiwei Liu">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LZW' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/11/KL散度和交叉熵CE/" class="post-title-link" itemprop="url">KL散度和交叉熵CE</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-11 15:04:13 / Geändert am: 15:53:24" itemprop="dateCreated datePublished" datetime="2019-07-11T15:04:13+08:00">2019-07-11</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/machine-learning/" itemprop="url" rel="index"><span itemprop="name">machine learning</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="KL散度"><a href="#KL散度" class="headerlink" title="KL散度"></a>KL散度</h3><p>首先回顾熵的定义：</p>
+<script type="math/tex; mode=display">
+H(x)=E_{x \sim  p}[I(x)]</script><p>其中$I[x]$是时间x=x的自信息：</p>
+<script type="math/tex; mode=display">
+I[x]=-log \ p(x)</script><p>自信息只处理单个输出，但是熵可以对整个分布的不确定性信息总量进行量化。</p>
+<p>如果对于同一个随机变量x有两个单独的概率分布$P(x)$和$Q(x)$，可以使用KL散度来衡量这两个分布的差异。</p>
+<script type="math/tex; mode=display">
+D_{KL}(P||Q)= E_{x \sim  p}[log \frac{P(x)}{Q(x)}]=E_{x \sim  p}[log \ P(x) - log \ Q(x)]</script><p>需要注意的是$D_{KL}(P||Q)$不等于$D_{KL}(Q||P)$，KL散度并不是一个距离，因此他们有对称性。</p>
+<p>KL散度的离散情况为：</p>
+<script type="math/tex; mode=display">
+D_{KL}(P||Q)= \Sigma_x\ P(x) [log\frac{P(x)}{Q(x)}] \\
+= \Sigma_x\ P(x) [log\ P(x)-log \ Q(x)] \\
+= \Sigma_x\ P(x) \ log\ P(x) - \Sigma_x\ P(x)\ log \ Q(x) \\</script><p>可以看的出来，KL散度表达的是一种编码在另一种编码表示下，所需要增加的熵的信息。</p>
+<h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>交叉熵的定义为：</p>
+<script type="math/tex; mode=display">
+CE(P,Q)=-E_{x \sim  p}[log \ Q(x)]</script><p>离散情况为：</p>
+<script type="math/tex; mode=display">
+CE(P,Q) = \Sigma_x\ P(x)logQ(x)</script><p>它和KL散度很相似，二者只相差了左边的一项：</p>
+<script type="math/tex; mode=display">
+CE(P,Q) = H(P) + D_{KL}(P||Q)</script><p>需要注意的是，在机器学习中CE常被用作分类任务的loss函数。此时，由于样本的标签是固定的，则$ H(P)$的值是固定的，那么最小化CE就等价于最小化KL散度。这里的一个思想是吧样本的标签看作一个分布，样本的预测标签看成另一个分布。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/Cyclical-Learning-Rates-for-Training-Neural-Networks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1964,223 +2148,6 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="liulin1995@github.io/2019/07/02/PIL-使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zhiwei Liu">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LZW' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/02/PIL-使用/" class="post-title-link" itemprop="url">PIL 使用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-02 21:53:55 / Geändert am: 21:54:35" itemprop="dateCreated datePublished" datetime="2019-07-02T21:53:55+08:00">2019-07-02</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">in</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Pillow 是PIL全称，是一个python图像处理库，由Fredrik Lundh and Contributors创建的。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><figcaption><span>basic</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install Pillow</span><br></pre></td></tr></table></figure>
-<p>基本上安装python和pip就可以安装pil。</p>
-<h2 id="入门教程"><a href="#入门教程" class="headerlink" title="入门教程"></a>入门教程</h2><h3 id="Image-class"><a href="#Image-class" class="headerlink" title="Image class"></a>Image class</h3><p>PIL中最重要的类是<strong>Image</strong>，定义在PIL 底下的Image中。可以通过以下方式来创建一个<strong>Image</strong>类对象：</p>
-<ul>
-<li>通过打开一个图片文件来创建</li>
-<li>通过处理其他的图片</li>
-<li>从头创建图片</li>
-</ul>
-<p>从图片文件中打开文件的：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im = Image.open(<span class="string">'pic.png'</span>)</span><br></pre></td></tr></table></figure>
-<p>如果成功，函数会返回一个Image对象。可以通过检查它的属性来查看它的内容：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(im.format, im.size, im.mode)</span><br></pre></td></tr></table></figure>
-<p>其中，</p>
-<ul>
-<li>im.format是该图片的来源，如果不是来自图像文件，则会使None</li>
-<li>im.size是图片的大小，是一个二维数组，单位是pixel</li>
-<li>im.mode 是图片的显示模式，定义了图片的色带个数和名字；或像素的类型和深度；常见的模式有“L”是灰度图，“RGB”是真彩图片，“CMYK”是预印图片。</li>
-</ul>
-<p>如果文件不能打开，则会返回一个<strong>IOError</strong>异常。</p>
-<p>图片的显示：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im.show()</span><br></pre></td></tr></table></figure>
-<p>图片的保存：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im.save(<span class="string">"..."</span>)</span><br></pre></td></tr></table></figure>
-<p>其他的图像打开方式：</p>
-<h5 id="从打开的文件中读取："><a href="#从打开的文件中读取：" class="headerlink" title="从打开的文件中读取："></a>从打开的文件中读取：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">"hopper.ppm"</span>, <span class="string">"rb"</span>) <span class="keyword">as</span> fp:</span><br><span class="line">    im = Image.open(fp)</span><br></pre></td></tr></table></figure>
-<h5 id="从string中读取："><a href="#从string中读取：" class="headerlink" title="从string中读取："></a>从string中读取：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> StringIO</span><br><span class="line"></span><br><span class="line">im = Image.open(StringIO.StringIO(buffer))</span><br></pre></td></tr></table></figure>
-<h5 id="从tar文件中读取"><a href="#从tar文件中读取" class="headerlink" title="从tar文件中读取"></a>从tar文件中读取</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, TarIO</span><br><span class="line"></span><br><span class="line">fp = TarIO.TarIO(<span class="string">"Tests/images/hopper.tar"</span>, <span class="string">"hopper.jpg"</span>)</span><br><span class="line">im = Image.open(fp)</span><br></pre></td></tr></table></figure>
-<h3 id="读写图片"><a href="#读写图片" class="headerlink" title="读写图片"></a>读写图片</h3><h4 id="将文件转换成JPEG"><a href="#将文件转换成JPEG" class="headerlink" title="将文件转换成JPEG"></a>将文件转换成JPEG</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">    f, e = os.path.splitext(infile)</span><br><span class="line">    outfile = f + <span class="string">".jpg"</span></span><br><span class="line">    <span class="keyword">if</span> infile != outfile:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            Image.open(infile).save(outfile)</span><br><span class="line">        <span class="keyword">except</span> IOError:</span><br><span class="line">            print(<span class="string">"cannot convert"</span>, infile)</span><br></pre></td></tr></table></figure>
-<p>思路是将文件打开，再保存到jpeg文件即可。需要注意，打开文件需要try except以防IOError</p>
-<h4 id="创建JPEG文件的缩略图"><a href="#创建JPEG文件的缩略图" class="headerlink" title="创建JPEG文件的缩略图"></a>创建JPEG文件的缩略图</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os, sys</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">size = (<span class="number">128</span>, <span class="number">128</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">    outfile = os.path.splitext(infile)[<span class="number">0</span>] + <span class="string">".thumbnail"</span></span><br><span class="line">    <span class="keyword">if</span> infile != outfile:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            im = Image.open(infile)</span><br><span class="line">            im.thumbnail(size)</span><br><span class="line">            im.save(outfile, <span class="string">"JPEG"</span>)</span><br><span class="line">        <span class="keyword">except</span> IOError:</span><br><span class="line">            print(<span class="string">"cannot create thumbnail for"</span>, infile)</span><br></pre></td></tr></table></figure>
-<p>思路是使用自带的thumbnai函数。</p>
-<h4 id="鉴定图片"><a href="#鉴定图片" class="headerlink" title="鉴定图片"></a>鉴定图片</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> sys.argv[<span class="number">1</span>:]:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> Image.open(infile) <span class="keyword">as</span> im:</span><br><span class="line">            print(infile, im.format, <span class="string">"%dx%d"</span> % im.size, im.mode)</span><br><span class="line">    <span class="keyword">except</span> IOError:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<h4 id="剪切合并图片"><a href="#剪切合并图片" class="headerlink" title="剪切合并图片"></a>剪切合并图片</h4><p><strong>Image</strong> class可以通过crop()函数来提取局部区域图片。</p>
-<h5 id="复制图像的一个长方形区域："><a href="#复制图像的一个长方形区域：" class="headerlink" title="复制图像的一个长方形区域："></a>复制图像的一个长方形区域：</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">box = (<span class="number">100</span>, <span class="number">100</span>, <span class="number">400</span>, <span class="number">400</span>)</span><br><span class="line">region = im.crop(box)</span><br></pre></td></tr></table></figure>
-<p>box是一个四维tuple，定义了（左，上，右，下）。该库的坐标系是将左上角定义为原点（0，0），同时所采用的距离是pixel。</p>
-<h5 id="处理长方形区域并paste回去"><a href="#处理长方形区域并paste回去" class="headerlink" title="处理长方形区域并paste回去"></a>处理长方形区域并paste回去</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">region = region.transpose(Image.ROTATE_180)</span><br><span class="line">im.paste(region, box)</span><br></pre></td></tr></table></figure>
-<p>paste函数要求region和box需要一致。</p>
-<h5 id="分离合并图像channel"><a href="#分离合并图像channel" class="headerlink" title="分离合并图像channel"></a>分离合并图像channel</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r, g, b = im.split()</span><br><span class="line">im = Image.merge(<span class="string">"RGB"</span>, (b, g, r))</span><br></pre></td></tr></table></figure>
-<h4 id="集合转换"><a href="#集合转换" class="headerlink" title="集合转换"></a>集合转换</h4><h5 id="图片resize和旋转"><a href="#图片resize和旋转" class="headerlink" title="图片resize和旋转"></a>图片resize和旋转</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">out = im.resize((<span class="number">128</span>, <span class="number">128</span>))</span><br><span class="line">out = im.rotate(<span class="number">45</span>) <span class="comment"># degrees counter-clockwise</span></span><br></pre></td></tr></table></figure>
-<h5 id="图片翻转"><a href="#图片翻转" class="headerlink" title="图片翻转"></a>图片翻转</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">out = im.transpose(Image.FLIP_LEFT_RIGHT)</span><br><span class="line">out = im.transpose(Image.FLIP_TOP_BOTTOM)</span><br><span class="line">out = im.transpose(Image.ROTATE_90)</span><br><span class="line">out = im.transpose(Image.ROTATE_180)</span><br><span class="line">out = im.transpose(Image.ROTATE_270)</span><br></pre></td></tr></table></figure>
-<h4 id="颜色转换"><a href="#颜色转换" class="headerlink" title="颜色转换"></a>颜色转换</h4><h5 id="不同图像mode转换"><a href="#不同图像mode转换" class="headerlink" title="不同图像mode转换"></a>不同图像mode转换</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">im = Image.open(<span class="string">"hopper.ppm"</span>).convert(<span class="string">"L"</span>)</span><br></pre></td></tr></table></figure>
-<h4 id="图像增强"><a href="#图像增强" class="headerlink" title="图像增强"></a>图像增强</h4><h5 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageFilter</span><br><span class="line">out = im.filter(ImageFilter.DETAIL)</span><br></pre></td></tr></table></figure>
-<h5 id="点操作"><a href="#点操作" class="headerlink" title="点操作"></a>点操作</h5><p>用于操作图像的像素值。</p>
-<h5 id="应用点操作"><a href="#应用点操作" class="headerlink" title="应用点操作"></a>应用点操作</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># multiply each pixel by 1.2</span></span><br><span class="line">out = im.point(<span class="keyword">lambda</span> i: i * <span class="number">1.2</span>)</span><br></pre></td></tr></table></figure>
-<h5 id="处理单个通道"><a href="#处理单个通道" class="headerlink" title="处理单个通道"></a>处理单个通道</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># split the image into individual bands</span></span><br><span class="line">source = im.split()</span><br><span class="line"></span><br><span class="line">R, G, B = <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># select regions where red is less than 100</span></span><br><span class="line">mask = source[R].point(<span class="keyword">lambda</span> i: i &lt; <span class="number">100</span> <span class="keyword">and</span> <span class="number">255</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># process the green band</span></span><br><span class="line">out = source[G].point(<span class="keyword">lambda</span> i: i * <span class="number">0.7</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># paste the processed band back, but only where red was &lt; 100</span></span><br><span class="line">source[G].paste(out, <span class="literal">None</span>, mask)</span><br><span class="line"></span><br><span class="line"><span class="comment"># build a new multiband image</span></span><br><span class="line">im = Image.merge(im.mode, source)</span><br></pre></td></tr></table></figure>
-<h5 id="增强图片"><a href="#增强图片" class="headerlink" title="增强图片"></a>增强图片</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageEnhance</span><br><span class="line"></span><br><span class="line">enh = ImageEnhance.Contrast(im)</span><br><span class="line">enh.enhance(<span class="number">1.3</span>).show(<span class="string">"30% more contrast"</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="图像序列"><a href="#图像序列" class="headerlink" title="图像序列"></a>图像序列</h3><p>PIL支持FLI、FLC、GIF等图像序列文件。</p>
-<p>当使用图像序列文件，PIL会自动地打开序列中的第一帧。可以使用seek和tell方法来移动帧。</p>
-<h4 id="读取序列"><a href="#读取序列" class="headerlink" title="读取序列"></a>读取序列</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">im = Image.open(<span class="string">"animation.gif"</span>)</span><br><span class="line">im.seek(<span class="number">1</span>) <span class="comment"># skip to the second frame</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        im.seek(im.tell()+<span class="number">1</span>)</span><br><span class="line">        <span class="comment"># do something to im</span></span><br><span class="line"><span class="keyword">except</span> EOFError:</span><br><span class="line">    <span class="keyword">pass</span> <span class="comment"># end of sequence</span></span><br></pre></td></tr></table></figure>
-<p>在序列停止的时候，会返还一个EOFError。</p>
-<h4 id="使用ImageSequen-Iterator-class"><a href="#使用ImageSequen-Iterator-class" class="headerlink" title="使用ImageSequen Iterator class"></a>使用ImageSequen Iterator class</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageSequence</span><br><span class="line"><span class="keyword">for</span> frame <span class="keyword">in</span> ImageSequence.Iterator(im):</span><br><span class="line">    <span class="comment"># ...do something to frame...</span></span><br></pre></td></tr></table></figure>
-<h3 id="Postscript-printing"><a href="#Postscript-printing" class="headerlink" title="Postscript printing"></a>Postscript printing</h3><p>用Postscript printers来打印图片文本和图像</p>
-<h4 id="Drawing-Postscript"><a href="#Drawing-Postscript" class="headerlink" title="Drawing Postscript"></a>Drawing Postscript</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> PSDraw</span><br><span class="line"></span><br><span class="line">im = Image.open(<span class="string">"hopper.ppm"</span>)</span><br><span class="line">title = <span class="string">"hopper"</span></span><br><span class="line">box = (<span class="number">1</span>*<span class="number">72</span>, <span class="number">2</span>*<span class="number">72</span>, <span class="number">7</span>*<span class="number">72</span>, <span class="number">10</span>*<span class="number">72</span>) <span class="comment"># in points</span></span><br><span class="line"></span><br><span class="line">ps = PSDraw.PSDraw() <span class="comment"># default is sys.stdout</span></span><br><span class="line">ps.begin_document(title)</span><br><span class="line"></span><br><span class="line"><span class="comment"># draw the image (75 dpi)</span></span><br><span class="line">ps.image(box, im, <span class="number">75</span>)</span><br><span class="line">ps.rectangle(box)</span><br><span class="line"></span><br><span class="line"><span class="comment"># draw title</span></span><br><span class="line">ps.setfont(<span class="string">"HelveticaNarrow-Bold"</span>, <span class="number">36</span>)</span><br><span class="line">ps.text((<span class="number">3</span>*<span class="number">72</span>, <span class="number">4</span>*<span class="number">72</span>), title)</span><br><span class="line"></span><br><span class="line">ps.end_document()</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2229,7 +2196,7 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">Artikel</span>
                   </a>
                 </div>
@@ -2325,7 +2292,9 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
                     
                       
                     
-                    <span class="site-state-item-count">28</span>
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">schlagwörter</span>
                   </a>
                 </div>
@@ -2520,6 +2489,8 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
   
     
       
+        
+      
     
       
     
@@ -2541,6 +2512,46 @@ T_{cur}是距离上次restart所经过的epoch的数量。T_{cur}是每个batch�
     
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
